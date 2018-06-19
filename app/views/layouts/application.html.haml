@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    = render 'layouts/meta'
+  %body
+    %header.navbar.navbar-fixed-top.navbar-inverse
+      = render 'layouts/header'
+    - flash.each do |message_type, message|
+      %div{:class => "alert alert-#{message_type} alert-dismissible text-center position-absolute fade in"}
+        %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        = message
+    .container.text-center
+      = yield
+  %footer.footer
+    Copyrights © 2018 | All Rights Reserved

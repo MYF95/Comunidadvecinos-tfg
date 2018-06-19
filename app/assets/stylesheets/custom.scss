@@ -1,0 +1,222 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* Bootstrap */
+
+.container{
+  min-height: 100%;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > [class*='col-']{
+  display: flex;
+  flex-direction: column;
+}
+
+/* Universal */
+/* TODO Properly clean up and understand what each variable does in CSS */
+
+html{
+  height: 100%;
+  margin: 0;
+}
+
+body{
+  margin: 0;
+  overflow: auto;
+  height: 100vh;
+  padding-top: 50px;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+}
+
+h3 {
+  padding-top: 10px;
+}
+
+h1, h2, h3, h4, h5, h6{
+  //font-family: "Fluid Lighter";
+  margin: 10px 0 10px 0;
+  font-weight: normal;
+}
+
+.glyphicon{
+  font-size: 25px;
+}
+
+.wrapper {
+  padding-top: 50px;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+
+/* Header */
+
+#logo {
+  float: left;
+  font-size: 1.7em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #FFBF4B;
+  text-decoration-line: none;
+}
+
+.navbar{
+  background-color: #FFD994;
+}
+
+.nav {
+  font-weight: bold;
+
+  li:hover {
+    background-color: #FFBF4B;
+
+    a:hover{
+      color: black;
+    }
+
+    a:focus {
+      color: black;
+    }
+  }
+}
+
+/* Footer */
+
+.footer{
+  position: fixed;
+  padding: 1rem;
+  background-color: #FFD994;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+/* Lists */
+
+.lists {
+  border-style: solid;
+  border-radius: 10px;
+  margin: 10px;
+  position: relative;
+
+  ul{
+    list-style-type: none;
+    padding-left: 0;
+  }
+}
+
+.list-image{
+  border-style: solid;
+  border-radius: 100px;
+  text-align: left;
+  width: 100px;
+}
+
+.list-text {
+  padding-top: 10px;
+  text-align: left;
+}
+
+.list-buttons{
+  margin: auto;
+}
+
+.list-settings{
+  margin: auto;
+}
+
+.product-lists {
+  border-style: solid;
+  border-radius: 10px;
+  padding-top : 10px;
+  margin-bottom: 30px;
+
+  ul{
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li{
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+  &:hover .overlay{
+    opacity: 1;
+    background: #FFBF4B;
+  }
+}
+
+.product-quantity-form{
+  padding-bottom: 10px;
+}
+
+.overlay{
+  bottom: 0;
+  background: #FFBF4B;
+  width: 100%;
+  transition: .5s ease;
+  opacity:0;
+  font-size: 20px;
+  text-align: center;
+}
+
+.users-list {
+  border-style: solid;
+  border-radius: 10px;
+
+  ul{
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li{
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
+
+/* Alert messages */
+
+//TODO fix alert when logged out, it doesn't dissappear automatically sometimes
+
+.alert-notice {
+  @extend .alert-info
+}
+
+.alert{
+  position: fixed;
+  width: 100%;
+}
+
+/* Tab content */
+
+.product-image{
+  margin: 10px;
+  border-style: solid;
+}
+
+.tabcontent {
+  border-style: solid;
+  border-radius: 10px;
+  margin: 10px;
+  display: none;
+
+  &:nth-child(5) {
+    display:block;
+  }
+
+  p {
+    margin: 10px;
+  }
+}

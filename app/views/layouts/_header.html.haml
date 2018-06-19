@@ -1,0 +1,13 @@
+.container
+  .navbar-header
+    %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#navbar-collapse-header", "data-toggle" => "collapse", :type => "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    = link_to 'Logo', root_path , id: 'logo', class: 'navbar-brand'
+  #navbar-collapse-header.collapse.navbar-collapse
+    %ul.nav.navbar-nav.navbar-right
+      %li= link_to 'Home', root_path
+      %li= link_to 'Help', help_path
+      %li= link_to 'About', about_path

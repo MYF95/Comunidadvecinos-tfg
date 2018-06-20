@@ -1,6 +1,10 @@
 class ApartmentsController < ApplicationController
   #TODO make this options available only to Admin
 
+  def index
+    @apartments = Apartment.all
+  end
+
   def new
     @apartment = Apartment.new
   end
@@ -24,9 +28,6 @@ class ApartmentsController < ApplicationController
   end
 
   def destroy
-  end
-
-  def index
   end
 
   private

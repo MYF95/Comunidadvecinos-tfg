@@ -1,1 +1,5 @@
+-#TODO añadir columnas de bootstrap en las páginas
+
 %h1 Aquí están todas las viviendas
+-@apartments.each do |apartment|
+  %p= link_to "Vivienda #{fullname(apartment)}", apartment_path(apartment)

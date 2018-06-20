@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_164535) do
+ActiveRecord::Schema.define(version: 2018_06_20_215153) do
 
   create_table "apartments", force: :cascade do |t|
     t.string "owner"
     t.integer "floor"
     t.string "letter"
     t.integer "fee"
-    t.integer "balance"
+    t.integer "balance", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

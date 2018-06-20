@@ -1,0 +1,28 @@
+- provide(:title, 'Crear vivienda')
+- provide(:button_text, 'Crear vivienda')
+
+%h2 Crea una nueva vivienda
+= form_for(@apartment) do |f|
+  = render 'shared/error_message', object: f.object
+  .field
+    = f.label 'Dueño'
+    %br/
+    = f.text_field :owner, autofocus: true
+
+  .field
+    = f.label 'Piso'
+    %br/
+    = f.number_field :floor
+
+  .field
+    = f.label 'Letra'
+    %br/
+    = f.text_field :letter
+
+    .field
+    = f.label 'Cuota'
+    %br/
+    = f.number_field :fee
+
+  .actions
+    = f.submit 'Crear vivienda'

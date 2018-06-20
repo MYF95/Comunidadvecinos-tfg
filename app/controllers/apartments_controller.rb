@@ -28,6 +28,14 @@ class ApartmentsController < ApplicationController
   end
 
   def destroy
+    @apartment = Apartment.find(params[:id])
+    if @apartment.destroy
+      flash[:info] = 'Vivienda borrada'
+      redirect_to apartments_path
+    else
+      flash[:error] = 'Ha habido un error en el sistema, por favor, vuelva a intentarlo.'
+      redirect_to root_url
+    end
   end
 
   private

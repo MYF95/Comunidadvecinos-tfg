@@ -2,4 +2,6 @@
 
 %h1 Aquí están todas las viviendas
 -@apartments.each do |apartment|
-  %p= link_to "Vivienda #{fullname(apartment)}", apartment_path(apartment)
+  %p
+    =link_to "Vivienda #{fullname(apartment)} | ", apartment_path(apartment)
+    =link_to 'Borrar vivienda', apartment, method: :delete, data: { confirm: '¿Estás seguro?'}

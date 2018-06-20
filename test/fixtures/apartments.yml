@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner: MyString
+  floor: 1
+  letter: MyString
+  fee: 1
+  balance: 1
+
+two:
+  owner: MyString
+  floor: 1
+  letter: MyString
+  fee: 1
+  balance: 1

@@ -1,0 +1,36 @@
+%h2 Solicitar una cuenta
+-#TODO hacer que la creación de cuenta sea una solicitud que necesite confirmación del administrador
+= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = devise_error_messages!
+
+  .field
+    = f.label 'Nombre'
+    %br/
+    = f.text_field :first_name, autofocus: true
+  .field
+    = f.label 'Apellidos'
+    %br/
+    = f.text_field :last_name, autofocus: true
+  .field
+    = f.label 'Fecha de nacimiento'
+    %br/
+    = f.date_field :birthday, autofocus: true
+
+  .field
+    = f.label 'Correo electrónico'
+    %br/
+    = f.email_field :email, autofocus: true
+  .field
+    = f.label 'Contraseña'
+    - if @minimum_password_length
+      %em
+        (#{@minimum_password_length} caracteres mínimo)
+    %br/
+    = f.password_field :password, autocomplete: "off"
+  .field
+    = f.label 'Confirmación de contraseña'
+    %br/
+    = f.password_field :password_confirmation, autocomplete: "off"
+  .actions
+    = f.submit 'Solicitar cuenta'
+= render "devise/shared/links"

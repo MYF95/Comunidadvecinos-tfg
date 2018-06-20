@@ -1,0 +1,50 @@
+%h2
+  Editando #{resource_name.to_s.humanize}
+= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  = devise_error_messages!
+
+  .field
+    = f.label 'Nombre'
+    %br/
+    = f.text_field :first_name, autofocus: true
+  .field
+    = f.label 'Apellidos'
+    %br/
+    = f.text_field :last_name, autofocus: true
+  .field
+    = f.label 'Fecha de nacimiento'
+    %br/
+    = f.date_field :birthday, autofocus: true
+
+  .field
+    = f.label 'Correo electrónico'
+    %br/
+    = f.email_field :email, autofocus: true, autocomplete: "email"
+  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+    %div
+      Esperando confirmación de: #{resource.unconfirmed_email}
+  .field
+    = f.label 'Contraseña'
+    %i (déjalo en blanco si no lo quieres cambiar)
+    %br/
+    = f.password_field :password, autocomplete: "off"
+    - if @minimum_password_length
+      %br/
+      %em
+        = @minimum_password_length
+        characters minimum
+  .field
+    = f.label 'Confirmación de contraseña'
+    %br/
+    = f.password_field :password_confirmation, autocomplete: "off"
+  .field
+    = f.label 'Contraseña actual'
+    %i (necesitamos tu contraseña actual para realizar los cambios)
+    %br/
+    = f.password_field :current_password, autocomplete: "off"
+  .actions
+    = f.submit 'Actualizar'
+%h3 Cancelar mi cuenta
+%p
+  ¿Insatisfecho? #{button_to "Borrar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás seguro?" }, method: :delete}
+= link_to "Atrás", :back

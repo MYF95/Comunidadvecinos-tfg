@@ -12,10 +12,10 @@ class ApartmentsController < ApplicationController
   end
 
   def create
-    if @user.admin
+    if current_user.admin?
       @apartment = Apartment.new(apartment_params)
       if @apartment.save
-        flash[:info] = "Nueva vivienda #{@apartment.floor}º#{@apartment.letter} created!"
+        flash[:info] = "¡Nueva vivienda #{@apartment.floor}º#{@apartment.letter} creada!"
         redirect_to @apartment
       else
         flash[:error] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
@@ -33,10 +33,10 @@ class ApartmentsController < ApplicationController
   def edit
   end
 
-  #TODO Ver que hacer con los flash error
+  #TODO Flash errors in spanish
 
   def update
-    if @user.admin
+    if current_user.admin
       if @apartment.update_attributes(apartment_params)
         flash[:info] = 'Vivienda actualizada'
         redirect_to @apartment
@@ -50,7 +50,7 @@ class ApartmentsController < ApplicationController
   end
 
   def destroy
-    if @user.admin
+    if current_user.admin
       if @apartment.destroy
         flash[:info] = 'Vivienda borrada'
         redirect_to apartments_path

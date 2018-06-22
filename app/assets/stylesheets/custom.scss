@@ -21,7 +21,6 @@
 }
 
 /* Universal */
-/* TODO Properly clean up and understand what each variable does in CSS */
 
 html{
   height: 100%;
@@ -188,7 +187,6 @@ h1, h2, h3, h4, h5, h6{
 
 /* Alert messages */
 
-//TODO fix alert when logged out, it doesn't dissappear automatically sometimes
 
 .alert-notice {
   @extend .alert-info

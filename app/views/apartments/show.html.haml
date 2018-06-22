@@ -2,3 +2,4 @@
 %p= "Dueño de la vivienda: #{@apartment.owner}"
 %p= "Cuota de la vivienda: #{@apartment.fee}€"
 %p= "Saldo de la vivienda actual: #{@apartment.balance}€"
+%p= link_to 'Actualizar vivienda', edit_apartment_path(@apartment), class: 'btn btn-primary'

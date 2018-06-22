@@ -1,6 +1,6 @@
 module ApartmentsHelper
 
-  def fullname(apartment)
+  def full_name_apartment(apartment)
     "#{apartment.floor}º#{apartment.letter}"
   end
 

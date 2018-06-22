@@ -19,6 +19,7 @@ gem 'jquery-rails'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem 'haml-rails', '~> 1.0'
+gem 'pry-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -35,6 +36,7 @@ group :development do
 end
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'minitest',                 '~> 5.11.3'
   gem 'minitest-reporters',       '~> 1.1.14'
 end

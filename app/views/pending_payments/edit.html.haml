@@ -1,2 +1,6 @@
-%h1 PendingPayments#edit
-%p Find me in app/views/pending_payments/edit.html.haml
+- provide(:title, 'Actualizar pago pendiente')
+- provide(:button_text, 'Actualizar pago pendiente')
+
+%h2 Actualiza un pago pendiente
+= form_for(@pending_payment) do |f|
+  = render 'form', f: f

@@ -1,2 +1,7 @@
-%h1 PendingPayments#index
-%p Find me in app/views/pending_payments/index.html.haml
+-#TODO añadir columnas de bootstrap en las páginas
+
+%h1 Aquí están todos los pagos pendientes de la comunidad
+-@pending_payments.each do |pending_payment|
+  %p
+    =link_to "Pago pendiente #{pending_payment.concept} | ", pending_payment_path(pending_payment)
+    =link_to 'Borrar pago pendiente', pending_payment, method: :delete, data: { confirm: '¿Estás seguro?'}

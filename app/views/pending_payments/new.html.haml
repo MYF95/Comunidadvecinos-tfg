@@ -1,2 +1,6 @@
-%h1 PendingPayments#new
-%p Find me in app/views/pending_payments/new.html.haml
+- provide(:title, 'Crear pago pendiente')
+- provide(:button_text, 'Crear pago pendiente')
+
+%h2 Crea un nuevo pago pendiente
+= form_for(@pending_payment) do |f|
+  = render 'form', f: f

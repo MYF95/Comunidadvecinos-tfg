@@ -1,2 +1,6 @@
-%h1 PendingPayments#show
-%p Find me in app/views/pending_payments/show.html.haml
+%h1= "Estos son los datos del pago pendiente"
+%p= "Concepto: #{@pending_payment.concept}"
+%p= "Fecha: #{@pending_payment.date}"
+%p= "Cantidad: #{@pending_payment.amount}€"
+%p= "Descripción: #{@pending_payment.description}"
+%p= link_to 'Actualizar pago pendiente', edit_pending_payment_path(@pending_payment), class: 'btn btn-primary'

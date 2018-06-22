@@ -20,6 +20,14 @@
             %li= link_to 'Nueva vivienda', new_apartment_path
         %li.dropdown
           %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
+            Extractos bancarios
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to 'Extractos bancarios', statements_path
+            %li= link_to 'Nuevo extracto bancario', new_statement_path
+            %li= link_to 'Importar extracto bancario', statements_import_path
+        %li.dropdown
+          %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
             Pagos pendientes
             %b.caret
           %ul.dropdown-menu

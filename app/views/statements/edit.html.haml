@@ -1,2 +1,6 @@
-%h1 Statements#edit
-%p Find me in app/views/statements/edit.html.haml
+- provide(:title, 'Actualizar extracto bancario')
+- provide(:button_text, 'Actualizar extracto bancario')
+
+%h2 Actualizar extracto bancario #{@statement.name}
+= form_for(@statement) do |f|
+  = render 'form', f: f

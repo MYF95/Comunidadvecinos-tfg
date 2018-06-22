@@ -1,2 +1,7 @@
-%h1 Statements#index
-%p Find me in app/views/statements/index.html.haml
+-#TODO añadir columnas de bootstrap en las páginas
+
+%h1 Aquí están todos los extractos bancarios
+-@statements.each do |statement|
+  %p
+    =link_to "Extracto #{statement.name} | ", statement_path(statement)
+    =link_to 'Borrar extracto bancario', statement, method: :delete, data: { confirm: '¿Estás seguro?'}

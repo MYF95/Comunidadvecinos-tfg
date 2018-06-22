@@ -18,7 +18,7 @@ class ApartmentsController < ApplicationController
         flash[:info] = "¡Nueva vivienda #{@apartment.floor}º#{@apartment.letter} creada!"
         redirect_to @apartment
       else
-        flash[:error] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
         render 'new'
       end
     else

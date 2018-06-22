@@ -1,2 +1,6 @@
-%h1 Statements#new
-%p Find me in app/views/statements/new.html.haml
+- provide(:title, 'Crear extracto bancario')
+- provide(:button_text, 'Crear extracto bancario')
+
+%h2 Crea un nuevo extracto bancario
+= form_for(@statement) do |f|
+  = render 'form', f: f

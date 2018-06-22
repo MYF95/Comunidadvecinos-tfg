@@ -1,2 +1,4 @@
-%h1 Statements#show
-%p Find me in app/views/statements/show.html.haml
+%h1= "Estos del extracto bancario #{@statement.name}"
+%p= "Nombre del extracto: #{@statement.name}"
+%p= "Fecha del extracto: #{@statement.date}"
+%p= link_to 'Actualizar extracto', edit_statement_path(@statement), class: 'btn btn-primary'

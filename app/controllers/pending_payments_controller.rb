@@ -18,7 +18,7 @@ class PendingPaymentsController < ApplicationController
         flash[:info] = "¡Nuevo pago pendiente creado!"
         redirect_to @pending_payment
       else
-        flash[:error] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
         render 'new'
       end
     else

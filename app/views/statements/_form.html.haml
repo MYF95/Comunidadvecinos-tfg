@@ -1,0 +1,14 @@
+= render 'shared/error_message', object: f.object
+
+.field
+  = f.label 'Nombre'
+  %br/
+  = f.text_field :name, autofocus: true
+
+.field
+  = f.label 'Fecha'
+  %br/
+  = f.date_field :date
+
+.actions
+  = f.submit yield(:button_text)

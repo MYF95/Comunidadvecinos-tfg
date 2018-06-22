@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
 
   root                    to: 'static_pages#home'
@@ -7,5 +6,6 @@ Rails.application.routes.draw do
   get '/about',           to: 'static_pages#about'
 
   resources :apartments
+  resources :pending_payments
   resources :users
 end

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  concept: MyText
+  date: 2018-06-22
+  amount: 1
+  description: MyText
+  paid: false
+
+two:
+  concept: MyText
+  date: 2018-06-22
+  amount: 1
+  description: MyText
+  paid: false

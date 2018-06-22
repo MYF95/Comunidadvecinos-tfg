@@ -38,7 +38,6 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   # TODO Averiguar por qué los tests con usuarios no están funcionando
-  # TODO test de pisos duplicados
 
   # test 'create as non-admin user should redirect to homepage with message' do
   #   log_in_as(@user)

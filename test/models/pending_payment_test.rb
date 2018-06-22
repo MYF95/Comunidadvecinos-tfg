@@ -5,7 +5,7 @@ class PendingPaymentTest < ActiveSupport::TestCase
     @pending_payment = pending_payments(:cuota1a)
   end
 
-  test 'apartment should be valid' do
+  test 'pending payment should be valid' do
     assert @pending_payment.valid?
   end
 

@@ -1,5 +1,6 @@
 class ApartmentsController < ApplicationController
   #TODO make this options available only to Admin
+  before_action :logged_in_user, only: [:create, :destroy, :update]
   before_action :apartment_getter, except: [:index, :new, :create]
 
   def index
@@ -11,13 +12,18 @@ class ApartmentsController < ApplicationController
   end
 
   def create
-    @apartment = Apartment.new(apartment_params)
-    if @apartment.save
-      flash[:info] = "Nueva vivienda #{@apartment.floor}º#{@apartment.letter} created!"
-      redirect_to @apartment
+    if @user.admin
+      @apartment = Apartment.new(apartment_params)
+      if @apartment.save
+        flash[:info] = "Nueva vivienda #{@apartment.floor}º#{@apartment.letter} created!"
+        redirect_to @apartment
+      else
+        flash[:error] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+        render 'new'
+      end
     else
-      flash[:error] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-      render 'new'
+      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+      redirect_to root_path
     end
   end
 
@@ -30,22 +36,30 @@ class ApartmentsController < ApplicationController
   #TODO Ver que hacer con los flash error
 
   def update
-    if @apartment.update_attributes(apartment_params)
-      flash[:info] = 'Vivienda actualizada'
-      redirect_to @apartment
+    if @user.admin
+      if @apartment.update_attributes(apartment_params)
+        flash[:info] = 'Vivienda actualizada'
+        redirect_to @apartment
+      else
+        render 'edit'
+      end
     else
-      # flash[:danger] = 'No se ha podido actualizar la vivienda, vuelva a intentarlo.'
-      render 'edit'
+      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+      redirect_to root_path
     end
   end
 
   def destroy
-    if @apartment.destroy
-      flash[:info] = 'Vivienda borrada'
-      redirect_to apartments_path
+    if @user.admin
+      if @apartment.destroy
+        flash[:info] = 'Vivienda borrada'
+        redirect_to apartments_path
+      else
+        redirect_to root_url
+      end
     else
-      # flash[:danger] = 'Ha habido un error en el sistema, por favor, vuelva a intentarlo.'
-      redirect_to root_url
+      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+      redirect_to root_path
     end
   end
 

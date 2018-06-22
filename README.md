@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Para probar la aplicación:
 
-Things you may want to cover:
+Descargar la aplicación o clonarlo a un directorio.
 
-* Ruby version
+A ser posible, crear un nuevo gemset usando Ruby 2.3.4
 
-* System dependencies
+Instalar todas las gemas con bundle install
 
-* Configuration
+Realizar un rails db:migrate
 
-* Database creation
+Realizar un rails db:seed para tener los usuarios admin (admin@test.com /// chicken)
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Iniciar el servidor con rails server

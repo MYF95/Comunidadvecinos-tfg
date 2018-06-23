@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :apartments
   resources :statements
+  resources :transactions
   resources :pending_payments
   resources :users
 end

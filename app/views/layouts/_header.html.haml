@@ -35,6 +35,13 @@
             %li= link_to 'Nuevo pago pendiente', new_pending_payment_path
         %li.dropdown
           %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
+            Movimientos bancarios
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to 'Movimientos bancarios', transactions_path
+            %li= link_to 'Nuevo movimiento bancario', new_transaction_path
+        %li.dropdown
+          %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
             Cuenta
             %b.caret
           %ul.dropdown-menu

@@ -1,0 +1,7 @@
+-#TODO añadir columnas de bootstrap en las páginas
+
+%h1 Aquí están todos los movimientos bancarios
+-@transactions.each do |transaction|
+  %p
+    =link_to "Movimiento #{transaction.concept} | ", transaction_path(transaction)
+    =link_to 'Borrar movimiento bancario', transaction, method: :delete, data: { confirm: '¿Estás seguro?'}

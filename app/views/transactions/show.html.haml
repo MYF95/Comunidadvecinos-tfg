@@ -1,0 +1,5 @@
+%h1= "Datos del movimiento bancario #{@transaction.concept}"
+%p= "Fecha del movimiento: #{@transaction.date}"
+%p= "Cantidad del movimiento: #{@transaction.amount}€"
+%p= "Descripción del movimiento: #{@transaction.description}"
+%p= link_to 'Actualizar movimiento', edit_transaction_path(@transaction), class: 'btn btn-primary'

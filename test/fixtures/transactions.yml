@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  concept: MyText
+ingreso1:
+  concept: Ingreso de Ponsan
   date: 2018-06-23
-  amount: 1
-  description: MyText
+  amount: 50
+  description: Ingreso de Ponsan de vivienda 1ºA
 
-two:
-  concept: MyText
+ingreso2:
+  concept: Ingreso de Tsukki
   date: 2018-06-23
-  amount: 1
-  description: MyText
+  amount: 60
+  description: Ingreso de Tsukki de vivienda 2ºA

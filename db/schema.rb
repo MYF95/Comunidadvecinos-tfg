@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_24_170947) do
+ActiveRecord::Schema.define(version: 2018_06_24_183443) do
 
   create_table "apartments", force: :cascade do |t|
     t.string "owner"
@@ -37,6 +37,13 @@ ActiveRecord::Schema.define(version: 2018_06_24_170947) do
     t.integer "amount"
     t.text "description"
     t.boolean "paid", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "statement_movements", force: :cascade do |t|
+    t.integer "statement_id"
+    t.integer "movement_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

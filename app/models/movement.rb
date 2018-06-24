@@ -1,4 +1,6 @@
 class Movement < ApplicationRecord
+  has_many :statement_movements
+  has_many :statements, through: :statement_movements
 
   validates :concept, presence: true
   validates :date, presence: true

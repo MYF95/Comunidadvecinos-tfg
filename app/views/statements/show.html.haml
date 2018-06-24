@@ -2,3 +2,17 @@
 %p= "Nombre del extracto: #{@statement.name}"
 %p= "Fecha del extracto: #{@statement.date}"
 %p= link_to 'Actualizar extracto', edit_statement_path(@statement), class: 'btn btn-primary'
+
+%h2= 'Movimientos del extracto'
+%table
+  %tr
+    %th Concepto
+    %th Fecha
+    %th Cantidad
+    %th Descripción
+  -@statement.movements.each do |movement|
+    %tr
+      %td= "#{movement.concept}"
+      %td= "#{movement.date}"
+      %td= "#{movement.amount}€"
+      %td= "#{movement.description}"

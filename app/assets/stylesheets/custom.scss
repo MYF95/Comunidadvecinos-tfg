@@ -100,91 +100,6 @@ h1, h2, h3, h4, h5, h6{
   text-align: center;
 }
 
-/* Lists */
-
-.lists {
-  border-style: solid;
-  border-radius: 10px;
-  margin: 10px;
-  position: relative;
-
-  ul{
-    list-style-type: none;
-    padding-left: 0;
-  }
-}
-
-.list-image{
-  border-style: solid;
-  border-radius: 100px;
-  text-align: left;
-  width: 100px;
-}
-
-.list-text {
-  padding-top: 10px;
-  text-align: left;
-}
-
-.list-buttons{
-  margin: auto;
-}
-
-.list-settings{
-  margin: auto;
-}
-
-.product-lists {
-  border-style: solid;
-  border-radius: 10px;
-  padding-top : 10px;
-  margin-bottom: 30px;
-
-  ul{
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  li{
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-
-  &:hover .overlay{
-    opacity: 1;
-    background: #FFBF4B;
-  }
-}
-
-.product-quantity-form{
-  padding-bottom: 10px;
-}
-
-.overlay{
-  bottom: 0;
-  background: #FFBF4B;
-  width: 100%;
-  transition: .5s ease;
-  opacity:0;
-  font-size: 20px;
-  text-align: center;
-}
-
-.users-list {
-  border-style: solid;
-  border-radius: 10px;
-
-  ul{
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  li{
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-}
-
 /* Alert messages */
 
 
@@ -197,24 +112,8 @@ h1, h2, h3, h4, h5, h6{
   width: 100%;
 }
 
-/* Tab content */
+/* Tables */
 
-.product-image{
-  margin: 10px;
-  border-style: solid;
-}
-
-.tabcontent {
-  border-style: solid;
-  border-radius: 10px;
-  margin: 10px;
-  display: none;
-
-  &:nth-child(5) {
-    display:block;
-  }
-
-  p {
-    margin: 10px;
-  }
+th{
+  text-align: center;
 }

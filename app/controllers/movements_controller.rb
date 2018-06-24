@@ -8,6 +8,7 @@ class MovementsController < ApplicationController
 
   def new
     @movement = Movement.new
+    @statement = Statement.find_by(id: params[:id])
   end
 
   def create
@@ -21,8 +22,7 @@ class MovementsController < ApplicationController
         render 'new'
       end
     else
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      permissions
     end
   end
 
@@ -41,8 +41,7 @@ class MovementsController < ApplicationController
         render 'edit'
       end
     else
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      permissions
     end
   end
 
@@ -55,8 +54,28 @@ class MovementsController < ApplicationController
         redirect_to root_url
       end
     else
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      permissions
+    end
+  end
+
+  def create_for_statement
+    if current_user.admin
+      @movement = Movement.new(movement_params)
+      @statement = Statement.find(params[:id])
+      if @movement.save
+        @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @movement.id)
+        if @statementmovement.save
+          flash[:info] = "Movimiendo creado para el extracto '#{@statement.name}'"
+          redirect_to @statement
+        else
+          flash[:danger] = 'Ha ocurrido un error a la hora de crear el movimiento para el extracto.'
+          redirect_to root_url
+        end
+      else
+        flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
+      end
+    else
+      permissions
     end
   end
 
@@ -68,5 +87,10 @@ class MovementsController < ApplicationController
 
   def movement_params
     params.require(:movement).permit(:concept, :date, :amount, :description)
+  end
+
+  def permissions
+    flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+    redirect_to root_path
   end
 end

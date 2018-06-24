@@ -105,5 +105,10 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   #   end
   #   assert_redirected_to transactions_path
   # end
-
+  #
+  # test 'create for statement' do
+  # end
+  #
+  # test 'divide movement' do
+  # end
 end

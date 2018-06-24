@@ -19,4 +19,4 @@
         %td= "#{movement.date}"
         %td= "#{movement.amount}€"
         %td= "#{movement.description}"
-        %td= "opciones"
+        %td= link_to 'Dividir cantidad', divide_path(@statement, movement)

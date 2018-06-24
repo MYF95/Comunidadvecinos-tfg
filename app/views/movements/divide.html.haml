@@ -1,0 +1,6 @@
+- provide(:title, 'Dividir movimiento bancario')
+- provide(:button_text, 'Dividir movimiento bancario')
+
+%h2 Dividir movimiento bancario #{@movement.concept}
+= form_for(@movement, url: divide_movement_path(@statement, @movement)) do |f|
+  = render 'form', f: f

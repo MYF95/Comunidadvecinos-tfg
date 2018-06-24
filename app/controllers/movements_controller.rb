@@ -1,21 +1,21 @@
-class TransactionsController < ApplicationController
+class MovementsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy, :update]
-  before_action :transaction_getter, except: [:index, :new, :create]
+  before_action :movement_getter, except: [:index, :new, :create]
 
   def index
-    @transactions = Transaction.all
+    @movements = Movement.all
   end
 
   def new
-    @transaction = Transaction.new
+    @movement = Movement.new
   end
 
   def create
     if current_user.admin?
-      @transaction = Transaction.new(transaction_params)
-      if @transaction.save
-        flash[:info] = "¡Nuevo movimiento #{@transaction.concept} creado!"
-        redirect_to @transaction
+      @movement = Movement.new(movement_params)
+      if @movement.save
+        flash[:info] = "¡Nuevo movimiento #{@movement.concept} creado!"
+        redirect_to @movement
       else
         flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
         render 'new'
@@ -34,9 +34,9 @@ class TransactionsController < ApplicationController
 
   def update
     if current_user.admin
-      if @transaction.update_attributes(transaction_params)
+      if @movement.update_attributes(movement_params)
         flash[:info] = 'Movimiento actualizado'
-        redirect_to @transaction
+        redirect_to @movement
       else
         render 'edit'
       end
@@ -48,9 +48,9 @@ class TransactionsController < ApplicationController
 
   def destroy
     if current_user.admin
-      if @transaction.destroy
+      if @movement.destroy
         flash[:info] = 'Movimiento borrado'
-        redirect_to transactions_path
+        redirect_to movements_path
       else
         redirect_to root_url
       end
@@ -62,11 +62,11 @@ class TransactionsController < ApplicationController
 
   private
 
-  def transaction_getter
-    @transaction = Transaction.find(params[:id])
+  def movement_getter
+    @movement = Movement.find(params[:id])
   end
 
-  def transaction_params
-    params.require(:transaction).permit(:concept, :date, :amount, :description)
+  def movement_params
+    params.require(:movement).permit(:concept, :date, :amount, :description)
   end
 end

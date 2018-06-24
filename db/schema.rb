@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_23_135513) do
+ActiveRecord::Schema.define(version: 2018_06_24_170947) do
 
   create_table "apartments", force: :cascade do |t|
     t.string "owner"
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 2018_06_23_135513) do
     t.string "letter"
     t.integer "fee"
     t.integer "balance", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movements", force: :cascade do |t|
+    t.text "concept"
+    t.date "date"
+    t.integer "amount"
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,15 +44,6 @@ ActiveRecord::Schema.define(version: 2018_06_23_135513) do
   create_table "statements", force: :cascade do |t|
     t.text "name"
     t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "transactions", force: :cascade do |t|
-    t.text "concept"
-    t.date "date"
-    t.integer "amount"
-    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

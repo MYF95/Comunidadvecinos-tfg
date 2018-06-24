@@ -1,4 +1,4 @@
-class Transaction < ApplicationRecord
+class Movement < ApplicationRecord
 
   validates :concept, presence: true
   validates :date, presence: true

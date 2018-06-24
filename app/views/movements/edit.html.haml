@@ -1,6 +1,6 @@
 - provide(:title, 'Actualizar movimiento bancario')
 - provide(:button_text, 'Actualizar movimiento bancario')
 
-%h2 Actualizar movimiento bancario #{@transaction.concept}
-= form_for(@transaction) do |f|
+%h2 Actualizar movimiento bancario #{@movement.concept}
+= form_for(@movement) do |f|
   = render 'form', f: f

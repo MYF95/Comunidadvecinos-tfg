@@ -105,4 +105,13 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   #
   # test 'create apartment should not work for duplicate floor and letter' do
   # end
+  #
+  # test 'show users from apartment' do
+  # end
+  #
+  # test 'add user to apartment' do
+  # end
+  #
+  # test 'remove user from apartment' do
+  # end
 end

@@ -1,0 +1,5 @@
+%h1= "Elige un usuario al que añadir a la vivienda #{full_name_apartment(@apartment)}"
+
+- @users.each do |user|
+  %p= "#{full_name(user)}"
+  %p= link_to 'Añadir usuario', add_user_path(@apartment, user), class: 'btn btn-primary'

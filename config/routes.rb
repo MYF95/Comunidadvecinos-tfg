@@ -1,18 +1,25 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root                                        to: 'static_pages#home'
-  get '/help',                                to: 'static_pages#help'
-  get '/about',                               to: 'static_pages#about'
+  root                                          to: 'static_pages#home'
+  get '/help',                                  to: 'static_pages#help'
+  get '/about',                                 to: 'static_pages#about'
 
-  get '/profile/:id',                         to: 'users#show', as: 'user'
+  # User custom routes
+  get '/profile/:id',                           to: 'users#show', as: 'user'
+  get '/:id/users',                             to: 'users#index', as: 'userlist'
 
   # Statement with movement routes
-  get '/statements/import',                   to: 'statements#import'
-  get '/statements/:id/new_movement',         to: 'movements#new', as: 'new_statement_movement'
-  post '/statements/:id/new_movement',        to: 'movements#create_for_statement', as: 'create_statement_movement'
-  get '/statements/:id/:id_movement/divide',  to: 'movements#divide', as: 'divide'
-  patch '/statements/:id/:id_movement/divide', to: 'movements#divide_movement', as: 'divide_movement'
+  get '/statements/import',                     to: 'statements#import'
+  get '/statements/:id/new_movement',           to: 'movements#new', as: 'new_statement_movement'
+  post '/statements/:id/new_movement',          to: 'movements#create_for_statement', as: 'create_statement_movement'
+  get '/statements/:id/:id_movement/divide',    to: 'movements#divide', as: 'divide'
+  patch '/statements/:id/:id_movement/divide',  to: 'movements#divide_movement', as: 'divide_movement'
+
+  # Apartment with user routes
+  get '/apartments/:id/users',                  to: 'apartments#users', as: 'apartment_users'
+  get '/apartments/:id/users/:user_id',        to: 'apartments#add_user', as: 'add_user'
+  delete '/apartments/:id/users/:user_id',      to: 'apartments#remove_user', as: 'remove_user'
 
   resources :apartments
   resources :statements

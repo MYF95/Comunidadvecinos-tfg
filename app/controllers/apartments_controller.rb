@@ -22,8 +22,7 @@ class ApartmentsController < ApplicationController
         render 'new'
       end
     else
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      permissions
     end
   end
 
@@ -44,8 +43,7 @@ class ApartmentsController < ApplicationController
         render 'edit'
       end
     else
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      permissions
     end
   end
 
@@ -58,9 +56,30 @@ class ApartmentsController < ApplicationController
         redirect_to root_url
       end
     else
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      permissions
     end
+  end
+
+  def users
+  end
+
+  def add_user
+    if current_user.admin
+      @user = User.find(params[:user_id])
+      @userapartment = UserApartment.new(user_id: @user.id, apartment_id: @apartment.id)
+      if @userapartment.save
+        flash[:info] = "#{@user.first_name} añadido a la vivienda"
+        redirect_to apartment_users_path(@apartment)
+      else
+        flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
+        redirect_to @apartment
+      end
+    else
+      permissions
+    end
+  end
+
+  def remove_user
   end
 
   private
@@ -73,4 +92,8 @@ class ApartmentsController < ApplicationController
       params.require(:apartment).permit(:owner, :floor, :letter, :fee, :balance)
     end
 
+    def permissions
+      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+      redirect_to root_path
+    end
 end

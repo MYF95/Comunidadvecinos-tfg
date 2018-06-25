@@ -1,0 +1,8 @@
+%h1 Usuario #{@user.first_name} #{@user.last_name}
+
+%p= "Correo: #{@user.email}"
+%p= "Fecha de nacimiento: #{@user.birthday}"
+
+%p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
+
+%h2 Viviendas asociadas

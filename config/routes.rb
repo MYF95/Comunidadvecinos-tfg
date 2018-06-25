@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get '/help',                                to: 'static_pages#help'
   get '/about',                               to: 'static_pages#about'
 
+  get '/profile/:id',                         to: 'users#show', as: 'user'
+
   # Statement with movement routes
   get '/statements/import',                   to: 'statements#import'
   get '/statements/:id/new_movement',         to: 'movements#new', as: 'new_statement_movement'
@@ -16,5 +18,4 @@ Rails.application.routes.draw do
   resources :statements
   resources :movements
   resources :pending_payments
-  resources :users
 end

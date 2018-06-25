@@ -44,7 +44,7 @@
             Cuenta
             %b.caret
           %ul.dropdown-menu
-            %li= link_to 'Editar perfil', edit_user_registration_path
+            %li= link_to 'Ver perfil', user_path(current_user)
             %li.divider
             %li= link_to 'Logout', destroy_user_session_path, :method => :delete
       - else

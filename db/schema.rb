@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_25_175408) do
+ActiveRecord::Schema.define(version: 2018_06_25_181550) do
 
   create_table "apartments", force: :cascade do |t|
     t.string "owner"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2018_06_25_175408) do
     t.integer "movement_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["statement_id", "movement_id"], name: "index_statement_movements_on_statement_id_and_movement_id", unique: true
   end
 
   create_table "statements", force: :cascade do |t|

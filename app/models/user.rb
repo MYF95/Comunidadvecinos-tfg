@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   #TODO Devise flash messages in español
+
+  has_many :user_apartments
+  has_many :apartments, through: :user_apartments
 end

@@ -8,4 +8,4 @@
 %h2 Viviendas asociadas
 
 -@user.apartments.each do |apartment|
-  %p= link_to "#{full_name_apartment(apartment)}"
+  %p= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)

@@ -66,12 +66,18 @@ class ApartmentsController < ApplicationController
   def add_user
     if current_user.admin
       @user = User.find(params[:user_id])
-      @userapartment = UserApartment.new(user_id: @user.id, apartment_id: @apartment.id)
-      if @userapartment.save
-        flash[:info] = "#{@user.first_name} añadido a la vivienda"
-        redirect_to apartment_users_path(@apartment)
+      @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
+      if @userapartment.blank?
+        @userapartment = UserApartment.new(user_id: @user.id, apartment_id: @apartment.id)
+        if @userapartment.save!
+          flash[:info] = "#{@user.first_name} añadido a la vivienda"
+          redirect_to apartment_users_path(@apartment)
+        else
+          flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
+          redirect_to @apartment
+        end
       else
-        flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
+        flash[:danger] = 'El usuario ya está en la vivienda'
         redirect_to @apartment
       end
     else

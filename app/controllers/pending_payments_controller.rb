@@ -1,5 +1,4 @@
 class PendingPaymentsController < ApplicationController
-  #TODO make this options available only to Admin
   before_action :logged_in_user, only: [:create, :destroy, :update]
   before_action :pending_payment_getter, except: [:index, :new, :create]
 
@@ -32,8 +31,6 @@ class PendingPaymentsController < ApplicationController
 
   def edit
   end
-
-  #TODO Flash errors in spanish
 
   def update
     if current_user.admin

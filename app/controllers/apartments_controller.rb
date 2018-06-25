@@ -1,5 +1,4 @@
 class ApartmentsController < ApplicationController
-  #TODO make this options available only to Admin
   before_action :logged_in_user, only: [:create, :destroy, :update]
   before_action :apartment_getter, except: [:index, :new, :create]
 
@@ -31,8 +30,6 @@ class ApartmentsController < ApplicationController
 
   def edit
   end
-
-  #TODO Flash errors in spanish
 
   def update
     if current_user.admin
@@ -86,6 +83,22 @@ class ApartmentsController < ApplicationController
   end
 
   def remove_user
+    if current_user.admin
+      @user = User.find(params[:user_id])
+      @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
+      if @userapartment.blank?
+        flash[:danger] = "#{@user.first_name} no está en la vivienda"
+        redirect_to @apartment
+      else
+        if @userapartment.destroy
+          flash[:info] = "#{@user.first_name} ha sido quitado de la vivienda"
+          redirect_to @apartment
+        else
+          flash[:danger] = 'Hubo un problema quitando el usuario de la vivienda'
+          redirect_to @apartment
+        end
+      end
+    end
   end
 
   private

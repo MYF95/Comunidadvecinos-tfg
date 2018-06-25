@@ -1,8 +1,10 @@
+-#TODO el flash message de añadir usuarios no desaparece automáticamente
+
 %h1= "Usuarios de la vivienda #{full_name_apartment(@apartment)}"
 
 -@apartment.users.each do |user|
   %p
-    =link_to "#{full_name(user)}", user_path(user)
-    -#=link_to 'Quitar usuario', remove_user_path(@apartment, user), method: :delete, data: { confirm: '¿Estás seguro?'}
+    =link_to "#{full_name(user)} |", user_path(user)
+    =link_to 'Quitar usuario', remove_user_path(@apartment, user), method: :delete, data: { confirm: '¿Estás seguro?'}
 
 %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'

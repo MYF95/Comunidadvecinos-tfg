@@ -1,5 +1,4 @@
 class StatementsController < ApplicationController
-  #TODO make this options available only to Admin
   before_action :logged_in_user, only: [:create, :destroy, :update]
   before_action :statement_getter, except: [:index, :new, :create, :import]
 

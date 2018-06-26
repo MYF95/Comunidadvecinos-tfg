@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Minitest::Result" skipped="0" failures="0" errors="1" tests="33" assertions="36" time="1.4057482910004637">
+  <testcase name="test_should_get_correct_statement" classname="Minitest::Result" assertions="2" time="0.8180434450000575">
+  </testcase>
+  <testcase name="test_should_get_index" classname="Minitest::Result" assertions="1" time="0.04486678400007804">
+  </testcase>
+  <testcase name="test_should_get_new" classname="Minitest::Result" assertions="1" time="0.07729053299999578">
+  </testcase>
+  <testcase name="test_should_get_show" classname="Minitest::Result" assertions="0" time="0.001266477999934068">
+    <error type="test_should_get_show" message="ActionController::UrlGenerationError: No route matches {:action=&gt;&quot;show&quot;, :controller=&gt;&quot;users&quot;}, missing required keys: [:id]...">
+Failure:
+test_should_get_show(Minitest::Result) [/home/mikota/.rvm/gems/ruby-2.3.4@tfg/gems/actionpack-5.2.0/lib/action_dispatch/journey/formatter.rb:57]:
+ActionController::UrlGenerationError: No route matches {:action=&gt;"show", :controller=&gt;"users"}, missing required keys: [:id]
+    test/controllers/users_controller_test.rb:5:in `block in &lt;class:UsersControllerTest&gt;'
+    </error>
+  </testcase>
+  <testcase name="test_should_get_index" classname="Minitest::Result" assertions="1" time="0.04235106800001631">
+  </testcase>
+  <testcase name="test_should_get_new" classname="Minitest::Result" assertions="1" time="0.06892219700011992">
+  </testcase>
+  <testcase name="test_should_get_correct_pending_payment" classname="Minitest::Result" assertions="2" time="0.037236592999988716">
+  </testcase>
+  <testcase name="test_amount_should_be_present" classname="Minitest::Result" assertions="1" time="0.0032743230001415213">
+  </testcase>
+  <testcase name="test_amount_should_not_be_negative" classname="Minitest::Result" assertions="1" time="0.002690837999807627">
+  </testcase>
+  <testcase name="test_concept_should_be_present" classname="Minitest::Result" assertions="1" time="0.024986011000009967">
+  </testcase>
+  <testcase name="test_date_should_be_present" classname="Minitest::Result" assertions="1" time="0.0014614270000947727">
+  </testcase>
+  <testcase name="test_pending_payment_should_be_valid" classname="Minitest::Result" assertions="1" time="0.000949795999986236">
+  </testcase>
+  <testcase name="test_should_get_correct_apartment" classname="Minitest::Result" assertions="2" time="0.05036714600009873">
+  </testcase>
+  <testcase name="test_should_get_new" classname="Minitest::Result" assertions="1" time="0.029695544000105656">
+  </testcase>
+  <testcase name="test_should_get_index" classname="Minitest::Result" assertions="1" time="0.022601686999905723">
+  </testcase>
+  <testcase name="test_letter_should_be_present" classname="Minitest::Result" assertions="1" time="0.0020729540001411806">
+  </testcase>
+  <testcase name="test_floor_should_not_be_negative" classname="Minitest::Result" assertions="1" time="0.0019389399999454326">
+  </testcase>
+  <testcase name="test_apartment_should_be_valid" classname="Minitest::Result" assertions="1" time="0.001953629999889017">
+  </testcase>
+  <testcase name="test_floor_should_be_present" classname="Minitest::Result" assertions="1" time="0.002438206999840986">
+  </testcase>
+  <testcase name="test_should_get_about" classname="Minitest::Result" assertions="1" time="0.017793197999935728">
+  </testcase>
+  <testcase name="test_should_get_help" classname="Minitest::Result" assertions="1" time="0.010697448999962944">
+  </testcase>
+  <testcase name="test_should_get_home" classname="Minitest::Result" assertions="1" time="0.01729750200001945">
+  </testcase>
+  <testcase name="test_should_get_correct_@movement" classname="Minitest::Result" assertions="2" time="0.035340785000016695">
+  </testcase>
+  <testcase name="test_should_get_index" classname="Minitest::Result" assertions="1" time="0.03534226200008561">
+  </testcase>
+  <testcase name="test_should_get_new" classname="Minitest::Result" assertions="1" time="0.04299963500011472">
+  </testcase>
+  <testcase name="test_date_should_be_present" classname="Minitest::Result" assertions="1" time="0.0017941210001026775">
+  </testcase>
+  <testcase name="test_name_should_be_present" classname="Minitest::Result" assertions="1" time="0.0013731620001635747">
+  </testcase>
+  <testcase name="test_statement_should_be_valid" classname="Minitest::Result" assertions="1" time="0.0009610189999875729">
+  </testcase>
+  <testcase name="test_amount_should_be_present" classname="Minitest::Result" assertions="1" time="0.001967203000049267">
+  </testcase>
+  <testcase name="test_amount_should_not_be_negative" classname="Minitest::Result" assertions="1" time="0.0018364239999755227">
+  </testcase>
+  <testcase name="test_concept_should_be_present" classname="Minitest::Result" assertions="1" time="0.0013723479999043775">
+  </testcase>
+  <testcase name="test_@movement_should_be_valid" classname="Minitest::Result" assertions="1" time="0.0012290590000247903">
+  </testcase>
+  <testcase name="test_date_should_be_present" classname="Minitest::Result" assertions="1" time="0.001336522999963563">
+  </testcase>
+</testsuite>

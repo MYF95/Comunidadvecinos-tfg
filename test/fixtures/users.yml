@@ -10,6 +10,7 @@ user:
   last_name: Yao
   birthday: 2018-06-27
   admin: false
+  encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>
 
 admin:
   email: tsukki@test.com
@@ -17,3 +18,4 @@ admin:
   last_name: Yao
   birthday: 2018-06-27
   admin: true
+  encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>

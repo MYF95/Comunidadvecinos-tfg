@@ -23,16 +23,19 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
+    log_in_as(@user)
     get new_movement_path
     assert_response :success
   end
 
   test 'should get index' do
+    log_in_as(@user)
     get movements_path
     assert_response :success
   end
 
   test 'should get correct @movement' do
+    log_in_as(@user)
     get movement_path(@movement)
     assert_template 'movements/show'
     assert_select 'h1', "Datos del movimiento bancario #{@movement.concept}"

@@ -1,5 +1,5 @@
 class MovementsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy, :update]
+  before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create]
   before_action :divide_getter, only: [:divide, :divide_movement]
 

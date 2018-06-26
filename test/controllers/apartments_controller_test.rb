@@ -18,16 +18,19 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
+    log_in_as(@user)
     get new_apartment_path
     assert_response :success
   end
 
   test 'should get index' do
+    log_in_as(@user)
     get apartments_path
     assert_response :success
   end
 
   test 'should get correct apartment' do
+    log_in_as(@user)
     get apartment_path(@apartment)
     assert_template 'apartments/show'
     assert_select 'h1', "Estos son los datos de la vivienda #{full_name_apartment @apartment}"

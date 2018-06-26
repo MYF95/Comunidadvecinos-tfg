@@ -21,16 +21,19 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
+    log_in_as(@user)
     get new_statement_path
     assert_response :success
   end
 
   test 'should get index' do
+    log_in_as(@user)
     get statements_path
     assert_response :success
   end
 
   test 'should get correct statement' do
+    log_in_as(@user)
     get statement_path(@statement)
     assert_template 'statements/show'
     assert_select 'p', "Nombre del extracto: #{@statement.name}"

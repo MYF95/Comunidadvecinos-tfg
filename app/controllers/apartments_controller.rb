@@ -1,5 +1,5 @@
 class ApartmentsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy, :update]
+  before_action :logged_in_user
   before_action :apartment_getter, except: [:index, :new, :create]
 
   def index

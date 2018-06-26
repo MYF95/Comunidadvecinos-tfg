@@ -1,5 +1,5 @@
 class PendingPaymentsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy, :update]
+  before_action :logged_in_user
   before_action :pending_payment_getter, except: [:index, :new, :create]
 
   def index

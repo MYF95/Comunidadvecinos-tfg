@@ -22,16 +22,19 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
+    log_in_as(@user)
     get new_pending_payment_path
     assert_response :success
   end
 
   test 'should get index' do
+    log_in_as(@user)
     get pending_payments_path
     assert_response :success
   end
 
   test 'should get correct pending payment' do
+    log_in_as(@user)
     get pending_payment_path(@pending_payment)
     assert_template 'pending_payments/show'
     assert_select 'p', "Concepto: #{@pending_payment.concept}"

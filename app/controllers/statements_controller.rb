@@ -1,5 +1,5 @@
 class StatementsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy, :update]
+  before_action :logged_in_user
   before_action :statement_getter, except: [:index, :new, :create, :import]
 
   def index

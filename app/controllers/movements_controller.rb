@@ -111,6 +111,37 @@ class MovementsController < ApplicationController
     end
   end
 
+  def apartments
+    @apartments = Apartment.all
+  end
+
+  def associate_apartment
+    if current_user.admin?
+      @apartment = Apartment.find(params[:apartment_id])
+      @apartmentmovement = ApartmentMovement.find_by(movement: @movement)
+      if @apartmentmovement.nil?
+        @apartmentmovement = ApartmentMovement.new(apartment: @apartment, movement: @movement)
+        if @apartmentmovement.save
+          @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
+          flash[:info] = "Se ha asociado el movimiento a la vivienda #{full_name_apartment(@apartment)}"
+          redirect_to statement_path(@movement.statements.first)
+        end
+      else
+        old_apartment = @apartmentmovement.apartment
+        if @apartmentmovement.update_attribute(:apartment, @apartment)
+          old_apartment.update_attribute(:balance, old_apartment.balance - @movement.amount)
+          @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
+          flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
+          redirect_to old_apartment
+        else
+          flash[:danger] = "Ha ocurrido un error al intentar cambiar la asociación del movimiento"
+        end
+      end
+    else
+      permissions
+    end
+  end
+
   private
 
   def movement_getter

@@ -106,11 +106,14 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to movements_path
   end
 
-  #TODO tests para crear un extracto, dividir un movimiento
+  #TODO tests para crear un extracto, dividir un movimiento, asociar un movimiento a una vivienda
 
   # test 'create for statement' do
   # end
   #
   # test 'divide movement' do
+  # end
+  #
+  # test 'associate movement' do
   # end
 end

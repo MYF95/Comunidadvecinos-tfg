@@ -1,6 +1,7 @@
 class ApartmentsController < ApplicationController
   before_action :logged_in_user
   before_action :apartment_getter, except: [:index, :new, :create]
+  before_action :balance_checker, except: [:index, :new, :create]
 
   def index
     @apartments = Apartment.all
@@ -101,6 +102,9 @@ class ApartmentsController < ApplicationController
     end
   end
 
+  def movements
+  end
+
   private
 
     def apartment_getter
@@ -114,5 +118,14 @@ class ApartmentsController < ApplicationController
     def permissions
       flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
       redirect_to root_path
+    end
+
+    def balance_checker
+      @apartment = Apartment.find(params[:id])
+      balance = 0
+      @apartment.movements.each do |movement|
+        balance += movement.amount
+      end
+      @apartment.update_attribute(:balance, balance)
     end
 end

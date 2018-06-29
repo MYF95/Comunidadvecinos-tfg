@@ -1,0 +1,16 @@
+%h1= "Movimientos asociados de la vivienda #{full_name_apartment(@apartment)}"
+
+%table.table.table-hover
+  %tr
+    %th Concepto
+    %th Fecha
+    %th Cantidad
+    %th Descripción
+    %th Opciones
+  -@apartment.movements.each do |movement|
+    %tr
+      %td= "#{movement.concept}"
+      %td= "#{movement.date}"
+      %td= "#{movement.amount}€"
+      %td= "#{movement.description}"
+      %td= link_to 'Asociar movimiento a otro usuario', '#'

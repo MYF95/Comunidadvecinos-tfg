@@ -18,8 +18,11 @@ Rails.application.routes.draw do
 
   # Apartment with user routes
   get '/apartments/:id/users',                  to: 'apartments#users', as: 'apartment_users'
-  get '/apartments/:id/users/:user_id',        to: 'apartments#add_user', as: 'add_user'
+  get '/apartments/:id/users/:user_id',         to: 'apartments#add_user', as: 'add_user'
   delete '/apartments/:id/users/:user_id',      to: 'apartments#remove_user', as: 'remove_user'
+
+  # Apartment with movement routes
+  get '/apartments/:id/movements',              to: 'apartments#movements', as: 'apartment_movements'
 
   resources :apartments
   resources :statements

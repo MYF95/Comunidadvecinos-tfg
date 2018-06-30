@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  apartment_id: 1
+  pending_payment_id: 1
+
+two:
+  apartment_id: 1
+  pending_payment_id: 1

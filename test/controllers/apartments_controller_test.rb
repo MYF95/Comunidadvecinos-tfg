@@ -102,7 +102,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to apartments_path
   end
 
-  # TODO test de pisos duplicados, usuarios de la vivienda, añadir usuario a vivienda, quitar usuario de vivienda
+  # TODO test de pisos duplicados, usuarios de la vivienda, añadir usuario a vivienda, quitar usuario de vivienda, historial, pagos pendientes, pagar pago pendiente
 
   # test 'create apartment should not work for duplicate floor and letter' do
   # end
@@ -114,5 +114,14 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # end
   #
   # test 'remove user from apartment' do
+  # end
+  #
+  # test 'history' do
+  # end
+  #
+  # test 'pending_payments' do
+  # end
+  #
+  # test 'pay_pending_payments' do
   # end
 end

@@ -14,4 +14,6 @@
         %td= "#{pending_payment.date}"
         %td= "#{pending_payment.amount}€"
         %td= "#{pending_payment.description}"
-        %td= link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Estás seguro?'}
+        %td
+          = link_to 'Pagar |', pay_pending_payment_path(@apartment, pending_payment), data: { confirm: "¿Quieres pagar el pago pendiente #{pending_payment.concept}?" }
+          = link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Estás seguro?'}

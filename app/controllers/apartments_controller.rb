@@ -58,6 +58,8 @@ class ApartmentsController < ApplicationController
     end
   end
 
+  # User related actions
+
   def users
   end
 
@@ -102,13 +104,37 @@ class ApartmentsController < ApplicationController
     end
   end
 
+  # Movement related actions
+
   def movements
   end
+
+  # Pending Payments related actions
 
   def history
   end
 
   def pending_payments
+  end
+
+  def pay_pending_payment
+    if current_user.admin
+      @pendingpayment = PendingPayment.find(params[:pending_payment_id])
+      if @apartment.balance >= @pendingpayment.amount
+        if @pendingpayment.update_attribute(:paid, true)
+          flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
+          redirect_to apartment_pending_payments_path(@apartment)
+        else
+          flash[:danger] = 'Ha ocurrido un error a la hora de pagar el pago pendiente'
+          redirect_to apartment_pending_payments_path(@apartment)
+        end
+      else
+        flash[:danger] = "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
+        redirect_to apartment_pending_payments_path(@apartment)
+      end
+    else
+      permissions
+    end
   end
 
   private
@@ -131,6 +157,9 @@ class ApartmentsController < ApplicationController
       balance = 0
       @apartment.movements.each do |movement|
         balance += movement.amount
+      end
+      @apartment.pending_payments.each do |pending_payment|
+        balance -= pending_payment.amount if pending_payment.paid?
       end
       @apartment.update_attribute(:balance, balance)
     end

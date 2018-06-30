@@ -8,8 +8,8 @@
     = link_to 'Logo', root_path , id: 'logo', class: 'navbar-brand'
   #navbar-collapse-header.collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right
-      %li= link_to 'Ayuda', help_path
-      %li= link_to 'Sobre nosotros', about_path
+      -#%li= link_to 'Ayuda', help_path
+      -#%li= link_to 'Sobre nosotros', about_path
       - if user_signed_in?
         %li.dropdown
           %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}

@@ -4,6 +4,6 @@
 %p= "Saldo de la vivienda actual: #{@apartment.balance}€"
 %p= link_to 'Actualizar vivienda', edit_apartment_path(@apartment), class: 'btn btn-primary'
 %p= link_to 'Editar usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
-%p= link_to 'Ver pagos pendientes', '#', class: 'btn btn-primary'
-%p= link_to 'Historial pagos', '#', class: 'btn btn-primary'
+%p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
+%p= link_to 'Historial pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
 %p= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'

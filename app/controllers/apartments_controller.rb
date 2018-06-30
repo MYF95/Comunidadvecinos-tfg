@@ -105,6 +105,12 @@ class ApartmentsController < ApplicationController
   def movements
   end
 
+  def history
+  end
+
+  def pending_payments
+  end
+
   private
 
     def apartment_getter

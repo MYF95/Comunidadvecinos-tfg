@@ -1,4 +1,4 @@
-%h1 Aquí están todos los pagos pendientes de la comunidad
+%h1= "Historial de pagos de la vivienda #{full_name_apartment(@apartment)}"
 
 %table.table.table-hover
   %tr
@@ -8,7 +8,7 @@
     %th Descripción
     %th ¿Pagado?
     %th Opciones
-  -@pending_payments.each do |pending_payment|
+  -@apartment.pending_payments.each do |pending_payment|
     %tr
       %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
       %td= "#{pending_payment.date}"

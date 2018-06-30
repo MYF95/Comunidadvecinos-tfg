@@ -20,5 +20,10 @@
   %br/
   = f.text_field :description
 
+.field
+  = f.label '¿Pagado?'
+  %br/
+  = f.check_box :paid
+
 .actions
   = f.submit yield(:button_text)

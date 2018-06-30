@@ -1,0 +1,17 @@
+%h1= "Pagos pendientes de la vivienda #{full_name_apartment(@apartment)}"
+
+%table.table.table-hover
+  %tr
+    %th Concepto
+    %th Fecha
+    %th Cantidad
+    %th Descripción
+    %th Opciones
+  -@apartment.pending_payments.each do |pending_payment|
+    - unless pending_payment.paid?
+      %tr
+        %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
+        %td= "#{pending_payment.date}"
+        %td= "#{pending_payment.amount}€"
+        %td= "#{pending_payment.description}"
+        %td= link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Estás seguro?'}

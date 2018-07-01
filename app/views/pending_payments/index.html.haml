@@ -6,6 +6,7 @@
     %th Fecha
     %th Cantidad
     %th Descripción
+    %th Vivienda asociada
     %th ¿Pagado?
     %th Opciones
   -@pending_payments.each do |pending_payment|
@@ -14,5 +15,10 @@
       %td= "#{pending_payment.date}"
       %td= "#{pending_payment.amount}€"
       %td= "#{pending_payment.description}"
+      %td
+        - if pending_payment.apartment.blank?
+          = link_to 'Asociar a vivienda', pending_payment_apartment_list_path(pending_payment)
+        - else
+          = link_to "#{full_name_apartment(pending_payment.apartment)}", apartment_path(pending_payment.apartment)
       %td= pending_payment.paid? ? "Si" : "No"
       %td= link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Estás seguro?'}

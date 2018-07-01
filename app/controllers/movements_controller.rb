@@ -125,6 +125,9 @@ class MovementsController < ApplicationController
           @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
           flash[:info] = "Se ha asociado el movimiento a la vivienda #{full_name_apartment(@apartment)}"
           redirect_to statement_path(@movement.statements.first)
+        else
+          flash[:danger] = 'Ha ocurrido un error al intentar crear la asociación del movimiento'
+          redirect_to statement_path(@movement.statements.first)
         end
       else
         old_apartment = @apartmentmovement.apartment
@@ -134,7 +137,8 @@ class MovementsController < ApplicationController
           flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
           redirect_to old_apartment
         else
-          flash[:danger] = "Ha ocurrido un error al intentar cambiar la asociación del movimiento"
+          flash[:danger] = 'Ha ocurrido un error al intentar cambiar la asociación del movimiento'
+          redirect_to old_apartment
         end
       end
     else

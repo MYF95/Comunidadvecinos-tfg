@@ -60,6 +60,37 @@ class PendingPaymentsController < ApplicationController
     end
   end
 
+  def apartments
+    @apartments = Apartment.all
+  end
+
+  def associate_apartment
+    if current_user.admin
+      @apartment = Apartment.find(params[:apartment_id])
+      @apartmentpendingpayment = ApartmentPendingPayment.find_by(pending_payment: @pending_payment)
+      if @apartmentpendingpayment.nil?
+        @apartmentpendingpayment = ApartmentPendingPayment.new(apartment: @apartment, pending_payment: @pending_payment)
+        if @apartmentpendingpayment.save
+          flash[:info] = "Se ha asociado el pago pendiente a la vivienda #{full_name_apartment(@apartment)}"
+          redirect_to pending_payments_path
+        else
+          flash[:danger] = 'Ha ocurrido un error al intentar crear la asociación del pago pendiente'
+          redirect_to pending_payments_path
+        end
+      else
+        if @apartmentpendingpayment.update_attribute(:apartment, @apartment)
+          flash[:info] = "Se ha cambiado la asociación del pago pendiente a la vivienda #{full_name_apartment(@apartment)}"
+          redirect_to pending_payments_path
+        else
+          flash[:danger] = 'Ha ocurrido un error al intentar cambiar la asociación del pago pendiente'
+          redirect_to pending_payments_path
+        end
+      end
+    else
+      permissions
+    end
+  end
+
   private
 
   def pending_payment_getter

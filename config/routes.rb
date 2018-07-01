@@ -30,7 +30,8 @@ Rails.application.routes.draw do
   get '/apartments/:id/pendingpayments',                      to: 'apartments#pending_payments', as: 'apartment_pending_payments'
   get '/apartments/:id/history',                              to: 'apartments#history', as: 'apartment_history'
   get '/apartments/:id/pendingpayments/:pending_payment_id',  to: 'apartments#pay_pending_payment', as: 'pay_pending_payment'
-
+  get '/pending_payments/:id/apartments',                     to: 'pending_payments#apartments', as: 'pending_payment_apartment_list'
+  get '/pending_payments/:id/apartments/:apartment_id',       to: 'pending_payments#associate_apartment', as: 'associate_pending_payment_apartment'
 
   resources :apartments
   resources :statements

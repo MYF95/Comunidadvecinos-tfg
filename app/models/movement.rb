@@ -1,4 +1,6 @@
 class Movement < ApplicationRecord
+  before_destroy :destroy_apartment_movements
+
   has_many :statement_movements
   has_many :statements, through: :statement_movements
 
@@ -9,4 +11,9 @@ class Movement < ApplicationRecord
   validates :date, presence: true
   validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
 
+  private
+
+    def destroy_apartment_movements
+      self.apartment_movement.destroy
+    end
 end

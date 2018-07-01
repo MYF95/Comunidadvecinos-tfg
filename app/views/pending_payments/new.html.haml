@@ -25,7 +25,7 @@
     %br/
     - @apartments.each do |apartment|
       = f.label "#{full_name_apartment(apartment)}"
-      = f.check_box :apartment, {multiple: true}, apartment, false
+      = f.check_box :apartment, {multiple: true}, apartment.id, false
       %br/
   .actions
     = f.submit yield(:button_text)

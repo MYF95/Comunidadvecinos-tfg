@@ -13,13 +13,23 @@ class PendingPaymentsController < ApplicationController
 
   def create
     if current_user.admin?
-      @pending_payment = PendingPayment.new(pending_payment_params)
-      if @pending_payment.save
-        flash[:info] = "¡Nuevo pago pendiente creado!"
-        redirect_to @pending_payment
+      apartments = params[:pending_payment][:apartment]
+      if apartments.nil?
+        create_pending_payment
       else
-        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-        render 'new'
+        apartments.each do |id|
+          @pending_payment = PendingPayment.create!(pending_payment_params)
+          @apartment = Apartment.find(id)
+          @apartmentpendingpayment = ApartmentPendingPayment.new(apartment: @apartment, pending_payment: @pending_payment)
+          if @apartmentpendingpayment.save
+            flash[:info] = '¡Nuevo pago pendiente creado!'
+          else
+            flash[:danger] = 'Ha ocurrido un error a la hora de crear un pago pendiente para las viviendas elegidas'
+            redirect_to pending_payments_path
+            return
+          end
+        end
+        redirect_to pending_payments_path
       end
     else
       flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
@@ -99,6 +109,17 @@ class PendingPaymentsController < ApplicationController
   end
 
   def pending_payment_params
-    params.require(:pending_payment).permit(:concept, :date, :amount, :description, :paid, :apartments)
+    params.require(:pending_payment).permit(:concept, :date, :amount, :description, :paid)
+  end
+
+  def create_pending_payment
+    @pending_payment = PendingPayment.new(pending_payment_params)
+    if @pending_payment.save
+      flash[:info] = "¡Nuevo pago pendiente creado!"
+      redirect_to @pending_payment
+    else
+      flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+      render 'new'
+    end
   end
 end

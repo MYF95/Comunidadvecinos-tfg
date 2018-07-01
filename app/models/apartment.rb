@@ -20,10 +20,14 @@ class Apartment < ApplicationRecord
   private
 
     def destroy_apartment_movements
-      self.apartment_movements.destroy_all
+      unless self.movements.blank?
+        self.apartment_movements.destroy_all
+      end
     end
 
     def destroy_apartment_pending_payments
-      self.apartment_pending_payments.destroy.all
+      unless self.pending_payments.blank?
+        self.apartment_pending_payments.destroy.all
+      end
     end
 end

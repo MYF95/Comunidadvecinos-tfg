@@ -3,4 +3,25 @@
 
 %h2 Actualiza un pago pendiente
 = form_for(@pending_payment) do |f|
-  = render 'form', f: f
+  = render 'shared/error_message', object: f.object
+  .field
+    = f.label 'Concepto'
+    %br/
+    = f.text_field :concept, autofocus: true
+  .field
+    = f.label 'Fecha'
+    %br/
+    = f.date_field :date
+  .field
+    = f.label 'Cantidad'
+    %br/
+    = f.number_field :amount
+  .field
+    = f.label 'Description'
+    %br/
+    = f.text_field :description
+  .field
+    = f.label 'Pagado?'
+    = f.check_box :paid
+  .actions
+    = f.submit yield(:button_text)

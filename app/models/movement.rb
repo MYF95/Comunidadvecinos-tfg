@@ -14,6 +14,8 @@ class Movement < ApplicationRecord
   private
 
     def destroy_apartment_movements
-      self.apartment_movement.destroy
+      unless self.apartment.nil?
+        self.apartment_movement.destroy
+      end
     end
 end

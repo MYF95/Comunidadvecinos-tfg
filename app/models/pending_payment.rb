@@ -10,6 +10,8 @@ class PendingPayment < ApplicationRecord
 
   private
     def destroy_apartment_pending_payments
-      self.apartment_pending_payment.destroy
+      unless self.apartment.nil?
+        self.apartment_pending_payment.destroy
+      end
     end
 end

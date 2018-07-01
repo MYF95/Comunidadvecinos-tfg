@@ -8,6 +8,7 @@ class PendingPaymentsController < ApplicationController
 
   def new
     @pending_payment = PendingPayment.new
+    @apartments = Apartment.all
   end
 
   def create
@@ -98,6 +99,6 @@ class PendingPaymentsController < ApplicationController
   end
 
   def pending_payment_params
-    params.require(:pending_payment).permit(:concept, :date, :amount, :description, :paid)
+    params.require(:pending_payment).permit(:concept, :date, :amount, :description, :paid, :apartments)
   end
 end

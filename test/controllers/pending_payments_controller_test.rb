@@ -104,4 +104,9 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to pending_payments_path
   end
+
+  #TODO associate apartment pending payment
+  #
+  # test 'associate pending_payment to apartment' do
+  # end
 end

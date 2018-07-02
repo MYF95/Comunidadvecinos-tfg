@@ -10,10 +10,5 @@
   %br/
   = f.date_field :date
 
-.field
-  = f.label 'Fichero CSV a importar'
-  %br/
-  = f.file_field :bank_statement, multiple: false, direct_upload: true, options: { class: "btn btn-success" }
-
 .actions
   = f.submit yield(:button_text)

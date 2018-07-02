@@ -9,7 +9,7 @@ class MovementsController < ApplicationController
 
   def new
     @movement = Movement.new
-    @statement = Statement.find_by(id: params[:id])
+    # @statement = Statement.find_by(id: params[:id])
   end
 
   def create

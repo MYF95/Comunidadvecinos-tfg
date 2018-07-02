@@ -1,16 +1,19 @@
-%h1= "Estos del extracto bancario #{@statement.name}"
+%h1= "#{@statement.name}"
 %p= "Nombre del extracto: #{@statement.name}"
 %p= "Fecha del extracto: #{@statement.date}"
-%p= link_to 'Actualizar extracto', edit_statement_path(@statement), class: 'btn btn-primary'
-%p= link_to 'Crear movimiento', new_statement_movement_path(@statement), class: 'btn btn-primary'
 
-.container
-  %h2= 'Movimientos del extracto'
-  %table.table.table-hover
+-#%p= link_to 'Crear movimiento', new_statement_movement_path(@statement), class: 'btn btn-primary'
+
+%h2= 'Movimientos del extracto'
+.full-width
+  %table.table.table-hover.table-statement-movements
     %tr
       %th Concepto
       %th Fecha
       %th Cantidad
+      %th Concepto1
+      %th Concepto3
+      %th Concepto5
       %th Descripción
       %th Vivienda asociada
       %th Opciones
@@ -19,6 +22,9 @@
         %td= "#{movement.concept}"
         %td= "#{movement.date}"
         %td= "#{movement.amount}€"
+        %td= "#{movement.concept1}"
+        %td= "#{movement.concept3}"
+        %td= "#{movement.concept5}"
         %td= "#{movement.description}"
         %td
           - if movement.apartment.blank?
@@ -26,4 +32,3 @@
           - else
             = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
         %td= link_to 'Dividir cantidad', divide_path(@statement, movement)
-%p= @statement.bank_statement

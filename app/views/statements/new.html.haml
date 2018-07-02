@@ -1,24 +1,24 @@
-- provide(:title, 'Crear extracto bancario')
-- provide(:button_text, 'Crear extracto bancario')
+%h2 Importar extracto bancario
+%p Para importar un extracto bancario, se necesita el extracto bancario en formato CSV.
+%p Por el momento el programa acepta ficheros de Bankia.
 
-%h2 Crea un nuevo extracto bancario
 = form_for(@statement, method: :post, multipart: true) do |f|
   = render 'shared/error_message', object: f.object
 
-  .field
+  .form-group
     = f.label 'Nombre'
     %br/
     = f.text_field :name, autofocus: true
 
-  .field
+  .form-group
     = f.label 'Fecha'
     %br/
     = f.date_field :date
 
-  .field
-    = f.label 'Fichero CSV a importar'
+  .form-group.center-block
+    = f.label 'Selecciona un fichero para importar'
     %br/
     = f.file_field :bank_statement, multiple: false, direct_upload: true
 
   .actions
-    = f.submit 'Crear extracto bancario'
+    = f.submit 'Importar extracto bancario'

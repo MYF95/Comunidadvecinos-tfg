@@ -1,13 +1,21 @@
-%h1 Aquí están todos los extractos bancarios
-= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
-%table.table.table-hover
+%h1 Extractos bancarios de la comunidad
+.row
+  .col-xs-12.col-sm-6.col-md-4.col-md-offset-4
+    %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+%table.table.table-hover.table-statement
   %tr
     %th Nombre
     %th Fecha
-    %th Opciones
+    %th.options Opciones
   -@statements.each do |statement|
     %tr
-      %td= link_to "Extracto #{statement.name}", statement_path(statement)
+      %td= link_to "#{statement.name}", statement_path(statement)
       %td #{statement.date}
-      %td= link_to 'Borrar extracto bancario', statement, method: :delete, data: { confirm: '¿Estás seguro?'}
-= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+      %td.options
+        = link_to edit_statement_path(statement), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-pencil
+        = link_to statement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
+          %span.glyphicon.glyphicon-trash
+.row
+  .col-xs-12.col-sm-6.col-md-4.col-md-offset-4
+    %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'

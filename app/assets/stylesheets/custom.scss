@@ -28,6 +28,7 @@ html{
 }
 
 body{
+  position: relative;
   margin: 0;
   overflow: auto;
   height: 100vh;
@@ -102,7 +103,6 @@ h1, h2, h3, h4, h5, h6{
 
 /* Alert messages */
 
-
 .alert-notice {
   @extend .alert-info
 }
@@ -114,6 +114,44 @@ h1, h2, h3, h4, h5, h6{
 
 /* Tables */
 
-th{
+table .glyphicon {
+  font-size: 25px;
+  padding-top: 5px;
+}
+
+.table-statement-movements th{
+  text-align: center;
+}
+
+.table.table-hover.table-statement td{
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table.table-hover.table-statement  {
+  th.options{
+    text-align: center;
+  }
+  td.options{
+    text-align: center;
+  }
+  a{
+    margin-right: 10px;
+  }
+}
+
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Forms */
+
+#statement_bank_statement{
+  display: inline;
   text-align: center;
 }

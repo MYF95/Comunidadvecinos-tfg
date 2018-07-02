@@ -15,4 +15,5 @@
 //= require rails-ujs
 //= require turbolinks
 //= require alerts
+//= require activestorage
 //= require_tree .

@@ -90,4 +90,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = { host: 'http://comunidad-vecinos.herokuapp.com/', port: 3000 }
+
+  config.active_storage.service = :amazon
+
+  config.require_master_key = true
 end

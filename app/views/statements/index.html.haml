@@ -1,4 +1,5 @@
 %h1 Aquí están todos los extractos bancarios
+= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
 %table.table.table-hover
   %tr
     %th Nombre
@@ -9,3 +10,4 @@
       %td= link_to "Extracto #{statement.name}", statement_path(statement)
       %td #{statement.date}
       %td= link_to 'Borrar extracto bancario', statement, method: :delete, data: { confirm: '¿Estás seguro?'}
+= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'

@@ -2,6 +2,7 @@ require 'test_helper'
 
 class MovementTest < ActiveSupport::TestCase
 
+  #TODO nuevo test para los campos nuevos
   def setup
     @movement = movements(:ingreso1)
   end
@@ -22,11 +23,6 @@ class MovementTest < ActiveSupport::TestCase
 
   test 'amount should be present' do
     @movement.amount = "";
-    assert_not @movement.valid?
-  end
-
-  test 'amount should not be negative' do
-    @movement.amount = -1
     assert_not @movement.valid?
   end
 end

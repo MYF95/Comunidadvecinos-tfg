@@ -26,3 +26,4 @@
           - else
             = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
         %td= link_to 'Dividir cantidad', divide_path(@statement, movement)
+%p= @statement.bank_statement

@@ -1,12 +1,12 @@
 %h2 Crea un nuevo pago pendiente para todas las viviendas
-= form_for(@pending_payment) do |f|
+= form_for(PendingPayment.new, url: pending_payment_create_all_path) do |f|
   = render 'shared/error_message', object: f.object
   .field
     = f.label 'Concepto'
     %br/
     = f.text_field :concept, autofocus: true
   .field
-    = f.label 'Fecha'
+    = f.label 'Fecha de inicio'
     %br/
     = f.date_field :date
   .field
@@ -18,7 +18,8 @@
     %br/
     = f.text_field :description
   .field
-    = f.label 'Viviendas a la que asociar el pago pendiente'
+    = f.label 'Meses'
     %br/
+    = f.number_field :months, min: 0
   .actions
-    = f.submit yield(:button_text)
+    = f.submit 'Crear pago pendiente'

@@ -1,6 +1,6 @@
 class PendingPaymentsController < ApplicationController
   before_action :logged_in_user
-  before_action :pending_payment_getter, except: [:index, :new, :create]
+  before_action :pending_payment_getter, except: [:index, :new, :create, :new_all,:create_all]
 
   def index
     @pending_payments = PendingPayment.all
@@ -107,7 +107,39 @@ class PendingPaymentsController < ApplicationController
     end
   end
 
+  def new_all
+  end
+
   def create_all
+    if current_user.admin?
+      if total_apartment_contribution(Apartment.first).equal?(1.0)
+        months = params[:pending_payment][:months].to_i
+        amount = params[:pending_payment][:amount].to_f
+        Apartment.all.each do |apartment|
+          apartment_fee = pending_payment_fee_calculator(months, amount, apartment)
+          for i in 0..months-1
+            date = params[:pending_payment][:date].to_date
+            month = l(date + i.month, format: "%B")
+            @pending_payment = PendingPayment.new(concept: params[:pending_payment][:concept] + " vivienda #{full_name_apartment(apartment)} de #{month}",
+                                                  date: (date + i.month).to_s, amount: apartment_fee, description: params[:pending_payment][:description],
+                                                  months: params[:pending_payment][:months])
+            if @pending_payment.save
+              ApartmentPendingPayment.create!(apartment: apartment, pending_payment: @pending_payment)
+              flash[:info] = "Se han creado los pagos pendientes de #{params[:pending_payment][:concept]} correctamente"
+            else
+              flash[:danger] = "Se ha producido un error generando los pagos pendientes de la vivienda #{full_name_apartment(@apartment)}"
+              break
+            end
+          end
+        end
+        redirect_to pending_payments_path
+      else
+        flash[:danger] = 'La contribución total de las viviendas no suma a 100%. Antes de crear derramas, actualiza las contribución de cada vivienda.'
+        redirect_to apartments_path
+      end
+    else
+      permissions
+    end
   end
 
   private
@@ -117,7 +149,7 @@ class PendingPaymentsController < ApplicationController
   end
 
   def pending_payment_params
-    params.require(:pending_payment).permit(:concept, :date, :amount, :description)
+    params.require(:pending_payment).permit(:concept, :date, :amount, :description, :months)
   end
 
   def create_pending_payment
@@ -129,5 +161,9 @@ class PendingPaymentsController < ApplicationController
       flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
       render 'new'
     end
+  end
+
+  def pending_payment_fee_calculator(months, amount, apartment)
+    (amount / Apartment.all.count * apartment.apartment_contribution / months).round(2)
   end
 end

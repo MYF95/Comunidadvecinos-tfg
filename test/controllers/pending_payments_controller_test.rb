@@ -111,6 +111,6 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
   # test 'associate pending_payment to apartment' do
   # end
   #
-  # test 'create pending_payment with apartments' do
+  # test 'create_all pending payments' do
   # end
 end

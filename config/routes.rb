@@ -33,7 +33,8 @@ Rails.application.routes.draw do
   get '/pending_payments/:id/apartments/:apartment_id',       to: 'pending_payments#associate_apartment', as: 'associate_pending_payment_apartment'
 
   # Pending payment custom routes
-  get '/pending_payments/create_all',                         to: 'pending_payments#create_all', as: 'pending_payment_create_all'
+  get '/pending_payments/new_all',                            to: 'pending_payments#new_all', as: 'pending_payment_new_all'
+  post '/pending_payments/create_all',                        to: 'pending_payments#create_all', as: 'pending_payment_create_all'
 
   resources :apartments
   resources :statements

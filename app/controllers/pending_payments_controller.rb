@@ -37,6 +37,17 @@ class PendingPaymentsController < ApplicationController
     end
   end
 
+  # @apartments = Apartment.all
+  # if @apartments.empty?
+  #   flash[:danger] = 'La comunidad no tiene ninguna vivienda, por favor, crea las viviendas de la comunidad primero.'
+  #   redirect_to apartments_path
+  # else
+  #   binding.pry
+  #   @apartments.each do |apartment|
+  #     @pending_payment = PendingPayment.new(concept: "Cuota de la vivienda #{full_name_apartment(apartment)}", date: params[:pending_payment][:date], amount: apartment.fee, description: params[:pending_payment][:description])
+  #   end
+  # end
+
   def show
   end
 
@@ -102,6 +113,9 @@ class PendingPaymentsController < ApplicationController
     end
   end
 
+  def create_all
+  end
+
   private
 
   def pending_payment_getter
@@ -109,7 +123,7 @@ class PendingPaymentsController < ApplicationController
   end
 
   def pending_payment_params
-    params.require(:pending_payment).permit(:concept, :date, :amount, :description, :paid)
+    params.require(:pending_payment).permit(:concept, :date, :amount, :description)
   end
 
   def create_pending_payment

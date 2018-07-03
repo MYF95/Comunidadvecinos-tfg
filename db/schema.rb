@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_162830) do
+ActiveRecord::Schema.define(version: 2018_07_03_192643) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 2018_07_03_162830) do
   create_table "pending_payments", force: :cascade do |t|
     t.text "concept"
     t.date "date"
-    t.integer "amount"
+    t.float "amount"
     t.text "description"
     t.boolean "paid", default: false
     t.datetime "created_at", null: false

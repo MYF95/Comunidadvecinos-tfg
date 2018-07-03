@@ -31,9 +31,9 @@
             %span.glyphicon.glyphicon-pencil
           = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash
-.row
-  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
-    %p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
+  .row
+    .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
+      %p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
 
 %h2 Movimientos más recientes
 -if @apartment.pending_payments.where(paid: false).empty?
@@ -59,6 +59,6 @@
             %span.glyphicon.glyphicon-pencil
           = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el movimiento asociado?'}, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash
-.row
-  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
-    %p= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'
+  .row
+    .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
+      %p= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'

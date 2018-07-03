@@ -13,7 +13,13 @@
       - if user_signed_in?
         %li= link_to 'Viviendas', apartments_path
         %li= link_to 'Extractos bancarios', statements_path
-        %li= link_to 'Pagos pendientes', pending_payments_path
+        %li.dropdown
+          %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
+            Pagos pendientes
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to 'Pagos pendientes', pending_payments_path
+            %li= link_to 'Generar pagos pendientes de cuotas', new_pending_payment_path
         %li= link_to 'Movimientos bancarios', movements_path
         %li.dropdown
           %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}

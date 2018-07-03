@@ -13,20 +13,25 @@ class PendingPaymentsController < ApplicationController
 
   def create
     if current_user.admin?
-      apartments = params[:pending_payment][:apartment]
-      if apartments.nil?
-        create_pending_payment
+      @apartments = Apartment.all
+      if @apartments.empty?
+        flash[:danger] = 'La comunidad no tiene ninguna vivienda, por favor, crea las viviendas de la comunidad primero.'
+        redirect_to apartments_path
       else
-        apartments.each do |id|
-          @pending_payment = PendingPayment.create!(pending_payment_params)
-          @apartment = Apartment.find(id)
-          @apartmentpendingpayment = ApartmentPendingPayment.new(apartment: @apartment, pending_payment: @pending_payment)
-          if @apartmentpendingpayment.save
-            flash[:info] = '¡Nuevo pago pendiente creado!'
+        date = params[:pending_payment][:date]
+        month = l(date.to_date, format: "%B")
+        @apartments.each do |apartment|
+          @pending_payment = PendingPayment.new(concept: "Cuota de la vivienda #{full_name_apartment(apartment)} de #{month}", date: date, amount: apartment.fee, description: params[:pending_payment][:description])
+          if @pending_payment.save
+            if ApartmentPendingPayment.create!(apartment: apartment, pending_payment: @pending_payment)
+              flash[:info] = 'Se han generado los pagos pendientes de las cuotas de las viviendas.'
+            else
+              flash[:danger] = 'Ha ocurrido un error a la hora de vincular los pagos pendientes a las viviendas.'
+              break
+            end
           else
-            flash[:danger] = 'Ha ocurrido un error a la hora de crear un pago pendiente para las viviendas elegidas'
-            redirect_to pending_payments_path
-            return
+            flash[:danger] = 'Ha ocurrido un error a la hora de crear los pagos pendientes de las viviendas'
+            break
           end
         end
         redirect_to pending_payments_path
@@ -36,17 +41,6 @@ class PendingPaymentsController < ApplicationController
       redirect_to root_path
     end
   end
-
-  # @apartments = Apartment.all
-  # if @apartments.empty?
-  #   flash[:danger] = 'La comunidad no tiene ninguna vivienda, por favor, crea las viviendas de la comunidad primero.'
-  #   redirect_to apartments_path
-  # else
-  #   binding.pry
-  #   @apartments.each do |apartment|
-  #     @pending_payment = PendingPayment.new(concept: "Cuota de la vivienda #{full_name_apartment(apartment)}", date: params[:pending_payment][:date], amount: apartment.fee, description: params[:pending_payment][:description])
-  #   end
-  # end
 
   def show
   end

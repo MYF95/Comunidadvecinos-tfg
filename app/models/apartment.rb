@@ -4,6 +4,7 @@ class Apartment < ApplicationRecord
 
   before_destroy :destroy_apartment_movements
   before_destroy :destroy_apartment_pending_payments
+  before_save :uppercase_letter
 
   has_many :user_apartments
   has_many :users, through: :user_apartments
@@ -30,5 +31,9 @@ class Apartment < ApplicationRecord
       unless self.pending_payments.blank?
         self.apartment_pending_payments.destroy.all
       end
+    end
+
+    def uppercase_letter
+      self.letter.upcase!
     end
 end

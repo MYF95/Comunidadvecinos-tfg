@@ -33,13 +33,13 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get apartment_path(@apartment)
     assert_template 'apartments/show'
-    assert_select 'h1', "Estos son los datos de la vivienda #{full_name_apartment @apartment}"
+    assert_select 'h1', "Datos de la vivienda #{full_name_apartment @apartment}"
   end
 
   test 'create as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get new_apartment_path
-    post apartments_path, params: { apartment: { owner: "#{full_name(@user)}", floor: '1', letter: 'B', fee: '60'}}
+    post apartments_path, params: { apartment: { owner: "#{full_name(@user)}", floor: '1', letter: 'B', fee: '60', apartment_contribution: 0.15}}
     # binding.pry
     assert_permissions
   end
@@ -48,7 +48,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get edit_apartment_path(@apartment)
     assert_template 'apartments/edit'
-    post apartments_path, params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60 }}
+    post apartments_path, params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60, apartment_contribution: 0.15}}
     assert_permissions
   end
 
@@ -65,7 +65,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@admin)
     get new_apartment_path
     assert_difference 'Apartment.count', 1 do
-      post apartments_path, params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60 }}
+      post apartments_path, params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60, apartment_contribution: 0.15}}
     end
     follow_redirect!
     assert_template 'apartments/show'
@@ -75,7 +75,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   test 'update apartment should work properly as admin user with correct data' do
     log_in_as(@admin)
     get edit_apartment_path(@apartment)
-    patch apartment_path(@apartment), params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60}, admin: @admin}
+    patch apartment_path(@apartment), params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60, apartment_contribution: 0.15}, admin: @admin}
     assert_not flash.empty?
     assert_redirected_to @apartment
     @apartment.reload

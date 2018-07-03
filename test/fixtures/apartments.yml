@@ -6,10 +6,13 @@ primero:
   letter: A
   fee: 50
   balance: 0
+  apartment_contribution: 0.15
 
 segundo:
   owner: Tsukki
   floor: 2
   letter: B
   fee: 45
-  balance:
+  balance: 0
+  apartment_contribution: 0.15
+

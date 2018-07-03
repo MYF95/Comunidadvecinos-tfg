@@ -124,4 +124,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   #
   # test 'pay_pending_payments' do
   # end
+  #
+  # test 'total apartment contribution' do
+  # end
 end

@@ -29,7 +29,7 @@ class Apartment < ApplicationRecord
 
     def destroy_apartment_pending_payments
       unless self.pending_payments.blank?
-        self.apartment_pending_payments.destroy.all
+        self.apartment_pending_payments.destroy_all
       end
     end
 

@@ -14,12 +14,23 @@ class ApartmentsController < ApplicationController
   def create
     if current_user.admin?
       @apartment = Apartment.new(apartment_params)
-      if @apartment.save
-        flash[:info] = "¡Nueva vivienda #{@apartment.floor}º#{@apartment.letter} creada!"
-        redirect_to @apartment
+      if total_apartment_contribution(@apartment) > 1
+        @apartment.update_attribute(:apartment_contribution, 0)
+        if @apartment.save
+          flash[:info] ="La vivienda #{full_name_apartment(@apartment)} ha sido creada, pero la contribución de la cuota supera el máximo de la comunidad. Por favor, actualiza el valor de la contribución."
+          redirect_to edit_apartment_path(@apartment)
+        else
+          flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+          render 'new'
+        end
       else
-        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-        render 'new'
+        if @apartment.save
+          flash[:info] = "¡Nueva vivienda #{full_name_apartment(@apartment)} creada!"
+          redirect_to @apartment
+        else
+          flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+          render 'new'
+        end
       end
     else
       permissions
@@ -34,11 +45,17 @@ class ApartmentsController < ApplicationController
 
   def update
     if current_user.admin
-      if @apartment.update_attributes(apartment_params)
-        flash[:info] = 'Vivienda actualizada'
-        redirect_to @apartment
+      if total_apartment_contribution(@apartment) > 1
+        @apartment.update_attribute(:apartment_contribution, 0)
+        flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
+        redirect_to edit_apartment_path(@apartment)
       else
-        render 'edit'
+        if @apartment.update_attributes(apartment_params)
+          flash[:info] = 'Vivienda actualizada'
+          redirect_to @apartment
+        else
+          render 'edit'
+        end
       end
     else
       permissions

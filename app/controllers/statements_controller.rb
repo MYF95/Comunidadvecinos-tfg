@@ -79,12 +79,19 @@ class StatementsController < ApplicationController
     def import_csv
       CSV.parse(@statement.bank_statement.download.force_encoding('UTF-8'), headers: true) do |row|
         row = row.to_hash
-        Movement.create!(date: row['Fecha Movimiento'], date_value: row['Fecha Valor'], concept: row['Concepto'],
-                         amount: row['Importe'].sub(',', '.').to_f, currency_movement: row['Divisa'],
-                         post_balance: row['Saldo Posterior'].sub(',', '.').to_f, currency_balance: row['Divisa'],
-                         office: row['Oficina'], concept1: row['Concepto1'], concept2: row['Concepto2'],
-                         concept3: row['Concepto3'], concept4: row['Concepto4'], concept5: row['Concepto5'], concept6: row['Concepto6'])
-        StatementMovement.create!(statement: @statement, movement: Movement.last)
+        movement_digest = Digest::MD5.hexdigest(row.to_s)
+        movement = Movement.find_by(movement_digest: movement_digest)
+        if movement.nil?
+          Movement.create!(date: row['Fecha Movimiento'], date_value: row['Fecha Valor'], concept: row['Concepto'],
+                           amount: row['Importe'].sub(',', '.').to_f, currency_movement: row['Divisa'],
+                           post_balance: row['Saldo Posterior'].sub(',', '.').to_f, currency_balance: row['Divisa'],
+                           office: row['Oficina'], concept1: row['Concepto1'], concept2: row['Concepto2'],
+                           concept3: row['Concepto3'], concept4: row['Concepto4'], concept5: row['Concepto5'],
+                           concept6: row['Concepto6'], movement_digest: movement_digest)
+          StatementMovement.create!(statement: @statement, movement: Movement.last)
+        else
+          StatementMovement.create!(statement: @statement, movement: movement)
+        end
       end
     end
 end

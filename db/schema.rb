@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_02_163637) do
+ActiveRecord::Schema.define(version: 2018_07_02_235538) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2018_07_02_163637) do
     t.string "concept4"
     t.string "concept5"
     t.string "concept6"
+    t.string "movement_digest"
   end
 
   create_table "pending_payments", force: :cascade do |t|

@@ -23,4 +23,14 @@ class ApartmentTest < ActiveSupport::TestCase
     @apartment.floor = -1
     assert_not @apartment.valid?
   end
+
+  test 'fee should be present' do
+    @apartment.fee = "";
+    assert_not @apartment.valid?
+  end
+
+  test 'fee should not be negative' do
+    @apartment.fee = -1
+    assert_not @apartment.valid?
+  end
 end

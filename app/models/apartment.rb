@@ -17,6 +17,7 @@ class Apartment < ApplicationRecord
 
   validates :floor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}, uniqueness: {scope: :letter}
   validates :letter, presence: true
+  validates :fee, presence: true, numericality: { greater_than_or_equal_to: 0}
   validates_inclusion_of :apartment_contribution, :in => 0..1
 
   private

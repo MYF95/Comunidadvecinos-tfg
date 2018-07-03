@@ -61,11 +61,6 @@ class StatementsController < ApplicationController
     end
   end
 
-  #TODO import statement
-
-  def import
-  end
-
   private
 
     def statement_getter

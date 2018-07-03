@@ -1,13 +1,15 @@
-%h1 Aquí están todos los pagos pendientes de la comunidad
+%h1 Pagos pendientes de la comunidad
 
-%table.table.table-hover
+.row
+  .col-xs-12.col-sm-12.col-md-4.col-md-offset-8
+    %p= link_to 'Crear pago pendiente', new_pending_payment_path, class: 'btn btn-primary'
+%table.table-statement-movements.table.table-hover
   %tr
     %th Concepto
     %th Fecha
     %th Cantidad
     %th Descripción
     %th Vivienda asociada
-    %th ¿Pagado?
     %th Opciones
   -@pending_payments.each do |pending_payment|
     - unless pending_payment.paid?
@@ -21,5 +23,11 @@
             = link_to 'Asociar a vivienda', pending_payment_apartment_list_path(pending_payment)
           - else
             = link_to "#{full_name_apartment(pending_payment.apartment)}", apartment_path(pending_payment.apartment)
-        %td= pending_payment.paid? ? "Si" : "No"
-        %td= link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Estás seguro?'}
+        %td
+          = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-pencil
+          = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash
+.row
+  .col-xs-12.col-sm-12.col-md-4.col-md-offset-8
+    %p= link_to 'Crear pago pendiente', new_pending_payment_path, class: 'btn btn-primary'

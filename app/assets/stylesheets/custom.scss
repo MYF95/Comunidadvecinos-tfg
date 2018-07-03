@@ -62,11 +62,15 @@ h1, h2, h3, h4, h5, h6{
 
 #logo {
   float: left;
-  font-size: 1.7em;
+  font-size: 1.5em;
   text-transform: uppercase;
   font-weight: bold;
   color: #FFBF4B;
   text-decoration-line: none;
+}
+
+#logo-image img{
+  height: 100%;
 }
 
 .navbar{
@@ -119,16 +123,25 @@ table .glyphicon {
   padding-top: 5px;
 }
 
-.table-statement-movements th{
-  text-align: center;
+.table.table-hover.table-statement-movements{
+  th{
+    text-align: center;
+    vertical-align: middle;
+  }
+  td{
+    text-align: center;
+    vertical-align: middle;
+  }
+  a{
+    margin-right: 5px;
+  }
 }
 
-.table.table-hover.table-statement td{
-  text-align: left;
-  vertical-align: middle;
-}
-
-.table.table-hover.table-statement  {
+.table.table-hover.table-statement {
+  td {
+    text-align: left;
+    vertical-align: middle;
+  }
   th.options{
     text-align: center;
   }
@@ -136,7 +149,7 @@ table .glyphicon {
     text-align: center;
   }
   a{
-    margin-right: 10px;
+    margin-right: 5px;
   }
 }
 

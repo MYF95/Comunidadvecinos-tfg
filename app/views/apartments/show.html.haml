@@ -2,6 +2,7 @@
 %p= "Dueño: #{@apartment.owner}"
 %p= "Cuota: #{@apartment.fee}€"
 %p= "Saldo actual: #{@apartment.balance}€"
+%p= @apartment.apartment_contribution ? "Cuota de contribución de la vivienda: #{(@apartment.apartment_contribution)*100}%" : 'Cuota de contribución de la vivienda: Sin asignar'
 %p= link_to 'Editar usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
 %p= link_to 'Contabilidad de pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
 

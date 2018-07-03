@@ -19,7 +19,7 @@
       %th Opciones
     -@statement.movements.each do |movement|
       %tr
-        %td= "#{movement.concept}"
+        %td= link_to "#{movement.concept}", movement_path(movement)
         %td= "#{movement.date}"
         %td= "#{movement.amount}€"
         %td= "#{movement.concept1}"
@@ -31,4 +31,10 @@
             = link_to 'Asociar a vivienda', apartmentlist_path(movement)
           - else
             = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
-        %td= link_to 'Dividir cantidad', divide_path(@statement, movement)
+        %td
+          = link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
+            %span.glyphicon.glyphicon-scissors
+          = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-pencil
+          = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash

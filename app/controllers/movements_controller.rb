@@ -153,7 +153,7 @@ class MovementsController < ApplicationController
   end
 
   def movement_params
-    params.require(:movement).permit(:concept, :date, :amount, :description)
+    params.require(:movement).permit(:description)
   end
 
   def divide_getter

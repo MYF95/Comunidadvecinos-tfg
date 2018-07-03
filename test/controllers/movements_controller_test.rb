@@ -34,11 +34,11 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should get correct @movement' do
+  test 'should get correct movement' do
     log_in_as(@user)
     get movement_path(@movement)
     assert_template 'movements/show'
-    assert_select 'h1', "Datos del movimiento bancario #{@movement.concept}"
+    assert_select 'h1', 'Datos del movimiento bancario "'+@movement.concept+'"'
   end
 
   test 'create as non-admin user should redirect to homepage with message' do
@@ -65,35 +65,26 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_permissions
   end
 
-  test 'create movement should work properly as admin user' do
-    log_in_as(@admin)
-    get new_movement_path
-    assert_difference 'Movement.count', 1 do
-      post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-    end
-    follow_redirect!
-    assert_template 'movements/show'
-    assert_not flash.empty?
-  end
+  #TODO remove create movement
+  # test 'create movement should work properly as admin user' do
+  #   log_in_as(@admin)
+  #   get new_movement_path
+  #   assert_difference 'Movement.count', 1 do
+  #     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
+  #   end
+  #   follow_redirect!
+  #   assert_template 'movements/show'
+  #   assert_not flash.empty?
+  # end
 
   test 'update movement should work properly as admin user with correct data' do
     log_in_as(@admin)
     get edit_movement_path(@movement)
-    patch movement_path(@movement), params: { movement: { concept: 'New movement', date: '28-06-2018', amount: '60', description: 'New description'}}
+    patch movement_path(@movement), params: { movement: {description: 'New description'}}
     assert_not flash.empty?
     assert_redirected_to @movement
     @movement.reload
-    assert_equal 'New movement', @movement.concept
-    assert_equal '28-06-2018', @movement.date.strftime("%d-%m-%Y")
-    assert_equal 60, @movement.amount
     assert_equal 'New description', @movement.description
-  end
-
-  test 'update movement should not work as admin user with incorrect data' do
-    log_in_as(@admin)
-    get edit_movement_path(@movement)
-    patch movement_path(@movement), params: { movement: { concept: '', date: '', amount: '', description: ''}}
-    assert_select 'div.alert', 'El formulario contiene algunos errores.'
   end
 
   test 'destroy movement should work properly as admin user' do

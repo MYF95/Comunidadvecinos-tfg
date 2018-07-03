@@ -15,7 +15,7 @@
   .field
     = f.label 'Cantidad'
     %br/
-    = f.number_field :amount
+    = f.number_field :amount, min: 0
   .field
     = f.label 'Description'
     %br/

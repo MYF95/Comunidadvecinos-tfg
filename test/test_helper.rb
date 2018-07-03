@@ -16,7 +16,7 @@ class ActiveSupport::TestCase
   end
 
   def full_name_apartment(apartment)
-    "#{apartment.floor}º#{apartment.letter}"
+    "#{apartment.floor}º#{apartment.letter.capitalize}"
   end
 
 end

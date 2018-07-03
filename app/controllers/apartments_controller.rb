@@ -144,7 +144,7 @@ class ApartmentsController < ApplicationController
     end
 
     def apartment_params
-      params.require(:apartment).permit(:owner, :floor, :letter, :fee, :balance)
+      params.require(:apartment).permit(:owner, :floor, :letter, :fee, :balance, :apartment_contribution)
     end
 
     def permissions

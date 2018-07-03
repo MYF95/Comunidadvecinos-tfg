@@ -1,5 +1,28 @@
-%h1 Aquí están todas las viviendas
--@apartments.each do |apartment|
-  %p
-    =link_to "Vivienda #{full_name_apartment(apartment)} | ", apartment_path(apartment)
-    =link_to 'Borrar vivienda', apartment, method: :delete, data: { confirm: '¿Estás seguro?'}
+%h1 Viviendas de la comunidad
+
+.row
+  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
+    %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'
+%table.table.table-hover.table-statement
+  %tr
+    %th Vivienda
+    %th Propietario
+    %th Cuota
+    %th Saldo actual
+    %th Cuota de contribución
+    %th Opciones
+  - @apartments.each do |apartment|
+    %tr
+      %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+      %td= apartment.try(:owner) || 'Sin propietario'
+      %td= "#{apartment.fee}€"
+      %td= "#{apartment.balance}€"
+      %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
+      %td
+        = link_to edit_apartment_path(apartment), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-pencil
+        = link_to apartment, method: :delete, data: { confirm: '¿Quieres borrar la vivienda?'}, class: 'btn btn-xs btn-danger' do
+          %span.glyphicon.glyphicon-trash
+.row
+  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
+    %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'

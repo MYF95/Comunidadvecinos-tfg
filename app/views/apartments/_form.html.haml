@@ -1,14 +1,8 @@
 = render 'shared/error_message', object: f.object
-
-.field
-  = f.label 'Dueño'
-  %br/
-  = f.text_field :owner, autofocus: true
-
 .field
   = f.label 'Piso'
   %br/
-  = f.number_field :floor
+  = f.number_field :floor, min: 0
 
 .field
   = f.label 'Letra'
@@ -18,7 +12,12 @@
 .field
   = f.label 'Cuota'
   %br/
-  = f.number_field :fee
+  = f.number_field :fee, min: 0
+
+.field
+  = f.label 'Contribución de cuota a la comunidad (Valor entre 0 y 1)'
+  %br/
+  = f.number_field :apartment_contribution, step: :any, min: 0, max: 1
 
 .actions
   = f.submit yield(:button_text)

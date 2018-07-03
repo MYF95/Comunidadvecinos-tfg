@@ -1,11 +1,63 @@
-%h1= "Estos son los datos de la vivienda #{full_name_apartment(@apartment)}"
-%p= "Dueño de la vivienda: #{@apartment.owner}"
-%p= "Cuota de la vivienda: #{@apartment.fee}€"
-%p= "Saldo de la vivienda actual: #{@apartment.balance}€"
-%p= link_to 'Actualizar vivienda', edit_apartment_path(@apartment), class: 'btn btn-primary'
+%h1= "Datos de la vivienda #{full_name_apartment(@apartment)}"
+%p= "Dueño: #{@apartment.owner}"
+%p= "Cuota: #{@apartment.fee}€"
+%p= "Saldo actual: #{@apartment.balance}€"
 %p= link_to 'Editar usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
-%p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
-%p= link_to 'Historial pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
-%p= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'
+%p= link_to 'Contabilidad de pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
 
--# TODO cambiar saldo a float
+
+%h2 Pagos pendientes más antiguos
+-if @apartment.pending_payments.where(paid: false).empty?
+  %p Esta vivienda no tiene ningún pago pendiente
+- else
+  %table.table.table-hover.table-statement
+    %tr
+      %th Concepto
+      %th Fecha
+      %th Cantidad
+      %th Descripción
+      %th Opciones
+    - @apartment.pending_payments.where(paid: false).first(5).each do |pending_payment|
+      %tr
+        %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
+        %td= "#{pending_payment.date}"
+        %td= "#{pending_payment.amount}€"
+        %td= "#{pending_payment.description}"
+        %td
+          = link_to pay_pending_payment_path(@apartment, pending_payment), data: { confirm: "¿Quieres pagar el pago pendiente #{pending_payment.concept}?" }, class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-eur
+          = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-pencil
+          = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash
+.row
+  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
+    %p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
+
+%h2 Movimientos más recientes
+-if @apartment.pending_payments.where(paid: false).empty?
+  %p Esta vivienda no tiene ningún pago pendiente
+- else
+  %table.table.table-hover.table-statement
+    %tr
+      %th Concepto
+      %th Fecha
+      %th Cantidad
+      %th Descripción
+      %th Opciones
+    - @apartment.movements.first(5).each do |movement|
+      %tr
+        %td= link_to "#{movement.concept}", movement_path(movement)
+        %td= "#{movement.date}"
+        %td= "#{movement.amount}€"
+        %td= "#{movement.description}"
+        %td
+          = link_to apartmentlist_path(movement), class: 'btn btn-xs btn-success' do
+            %span.glyphicon.glyphicon-eject
+          = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-pencil
+          = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el movimiento asociado?'}, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash
+.row
+  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
+    %p= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'

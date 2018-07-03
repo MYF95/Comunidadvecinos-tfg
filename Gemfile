@@ -22,6 +22,7 @@ gem 'haml-rails', '~> 1.0'
 gem 'pry-rails'
 gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-rails'
+gem 'rails-i18n'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

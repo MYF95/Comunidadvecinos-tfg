@@ -1,38 +1,41 @@
 %h1 Movimientos bancarios de los extractos importados
 
-.full-width
-  %table.table.table-hover.table-statement-movements
-    %tr
-      %th Concepto
-      %th Fecha
-      %th Cantidad
-      %th Concepto1
-      %th Concepto3
-      %th Concepto5
-      %th Descripción
-      %th Vivienda asociada
-      %th Opciones
-    -@movements.each do |movement|
-      - unless movement.amount < 0
-        %tr
-          %td= link_to "#{movement.concept}", movement_path(movement)
-          %td= "#{movement.date}"
-          %td= "#{movement.amount}€"
-          %td= "#{movement.concept1}"
-          %td= "#{movement.concept3}"
-          %td= "#{movement.concept5}"
-          %td= "#{movement.description}"
-          %td
-            - if movement.apartment.blank?
-              = link_to 'Asociar a vivienda', apartmentlist_path(movement)
-            - else
-              = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
-          %td
-            -#= link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
-            -#  %span.glyphicon.glyphicon-scissors
-            = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
-              %span.glyphicon.glyphicon-pencil
-            = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
-              %span.glyphicon.glyphicon-trash
+-if @movements.empty?
+  %p No hay ningún movimiento procedente de los extractos bancarios con valor positivo ahora mismo.
+-else
+  .full-width
+    %table.table.table-hover.table-statement-movements
+      %tr
+        %th Concepto
+        %th Fecha
+        %th Cantidad
+        %th Concepto1
+        %th Concepto3
+        %th Concepto5
+        %th Descripción
+        %th Vivienda asociada
+        %th Opciones
+      -@movements.each do |movement|
+        - unless movement.amount < 0
+          %tr
+            %td= link_to "#{movement.concept}", movement_path(movement)
+            %td= "#{movement.date}"
+            %td= "#{movement.amount}€"
+            %td= "#{movement.concept1}"
+            %td= "#{movement.concept3}"
+            %td= "#{movement.concept5}"
+            %td= "#{movement.description}"
+            %td
+              - if movement.apartment.blank?
+                = link_to 'Asociar a vivienda', apartmentlist_path(movement)
+              - else
+                = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
+            %td
+              -#= link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
+              -#  %span.glyphicon.glyphicon-scissors
+              = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
+                %span.glyphicon.glyphicon-pencil
+              = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
+                %span.glyphicon.glyphicon-trash
 
 -#TODO ver que hacer con dividir movimientos, depende de un extracto

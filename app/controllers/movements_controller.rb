@@ -2,7 +2,7 @@ class MovementsController < ApplicationController
   before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create]
   before_action :divide_getter, only: [:divide, :divide_movement]
-  before_action :permissions, except: [:index, :show]
+  before_action :permissions, except: [:index, :show, :destroy_apartment]
   before_action :check_amount, only: [:associate_apartment]
 
   def index
@@ -40,11 +40,21 @@ class MovementsController < ApplicationController
   end
 
   def destroy
-    if @movement.destroy
-      flash[:info] = 'Movimiento borrado'
-      redirect_to movements_path
+    destroy_movement
+  end
+
+  def destroy_statement
+    @statement = Statement.find(params[:id])
+    @movement = Movement.find(params[:movement_id])
+    if @movement.statements.count > 1
+      if StatementMovement.find_by(statement: @statement, movement: @movement).destroy
+        flash[:info] = "Movimiento borrado del extracto #{@statement.name}"
+      else
+        flash[:danger] = 'Ha ocurrido un error intentando eliminar el movimiento del extracto'
+      end
+      redirect_to @statement
     else
-      redirect_to root_url
+      destroy_movement
     end
   end
 
@@ -52,16 +62,18 @@ class MovementsController < ApplicationController
   end
 
   def divide_movement
-    @new_movement = Movement.new(movement_params)
-    amount = @new_movement.amount
-    if @new_movement.amount >= @movement.amount
+    new_movement = @movement.dup
+    amount = params[:movement][:amount].to_f
+    if amount >= @movement.amount
       flash[:danger] = 'La cantidad que quieres separar es mayor o igual al original, prueba con otra cantidad.'
       redirect_to @statement
     else
       @movement.amount -= amount
       @movement.save
-      if @new_movement.save
-        @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @new_movement.id)
+      new_movement.concept += ' | div'
+      new_movement.amount = amount
+      if new_movement.save
+        @statementmovement = StatementMovement.new(statement: @statement, movement: new_movement)
         if @statementmovement.save
           flash[:info] = "Se ha dividido el movimiento #{@movement.concept}"
           redirect_to @statement
@@ -128,7 +140,7 @@ class MovementsController < ApplicationController
     end
 
     def movement_params
-      params.require(:movement).permit(:description)
+      params.require(:movement).permit(:description, :amount)
     end
 
     def divide_getter
@@ -147,6 +159,15 @@ class MovementsController < ApplicationController
       unless @movement.amount >= 0
         flash[:danger] = 'El movimiento seleccionado tiene un valor negativo, no se puede añadir a una vivienda.'
         redirect_to statement_path(@movement.statements.first)
+      end
+    end
+
+    def destroy_movement
+      if @movement.destroy
+        flash[:info] = 'Movimiento borrado'
+        redirect_to movements_path
+      else
+        redirect_to root_url
       end
     end
 end

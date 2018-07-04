@@ -33,5 +33,5 @@
             %span.glyphicon.glyphicon-scissors
           = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-pencil
-          = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
+          = link_to delete_movement_statement_path(@statement, movement), method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash

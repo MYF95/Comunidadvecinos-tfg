@@ -1,6 +1,15 @@
 - provide(:title, 'Dividir movimiento bancario')
-- provide(:button_text, 'Dividir movimiento bancario')
 
 %h2 Dividir movimiento bancario #{@movement.concept}
 = form_for(@movement, url: divide_movement_path(@statement, @movement)) do |f|
-  = render 'form', f: f
+  = render 'shared/error_message', object: f.object
+  .field
+    = f.label 'Cantidad a dividir'
+    %br/
+    = f.number_field :amount, min: 0
+  .field
+    = f.label 'Descripción de administrador'
+    %br/
+    = f.text_area :description
+  .actions
+    = f.submit 'Dividir movimiento'

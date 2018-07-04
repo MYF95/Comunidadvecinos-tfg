@@ -19,4 +19,12 @@ class Movement < ApplicationRecord
         self.apartment_movement.destroy
       end
     end
+
+    def destroy_statement_movements
+      unless self.statements.empty?
+        self.statements.each do |statement|
+          StatementMovement.find_by(statement: statement, movement: self).destroy
+        end
+      end
+    end
 end

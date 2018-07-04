@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # Statement with movement routes
   get '/statements/:id/:id_movement/divide',                  to: 'movements#divide', as: 'divide'
   patch '/statements/:id/:id_movement/divide',                to: 'movements#divide_movement', as: 'divide_movement'
+  delete '/statements/:id/movements/:movement_id',            to: 'movements#destroy_statement', as: 'delete_movement_statement'
 
   # Apartment with user routes
   get '/apartments/:id/users',                                to: 'apartments#users', as: 'apartment_users'

@@ -4,3 +4,8 @@
 %h2 Actualiza la descripción de "#{@movement.concept}"
 = form_for(@movement) do |f|
   = render 'form', f: f
+
+-unless @movement.apartment.nil?
+  %hr
+  =link_to 'Desasociar movimiento', remove_apartment_path(@movement), method: :delete,
+   data: { confirm: "¿Quieres desasociar el movimiento de la vivienda #{full_name_apartment(@movement.apartment)}?"}, class: 'btn btn-primary'

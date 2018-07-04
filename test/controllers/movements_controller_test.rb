@@ -104,6 +104,9 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   # test 'divide movement' do
   # end
   #
-  # test 'associate movement' do
+  # test 'associate apartment' do
+  # end
+  #
+  # test 'remove apartment' do
   # end
 end

@@ -110,6 +110,17 @@ class MovementsController < ApplicationController
     end
   end
 
+  def remove_apartment
+    @apartment = @movement.apartment
+    @apartmentmovement = ApartmentMovement.find_by(apartment: @movement.apartment, movement: @movement)
+    if @apartmentmovement.destroy
+      flash[:info] = "Movimiento desasociado de la vivienda #{full_name_apartment(@apartment)}"
+    else
+      flash[:danger] = 'Ha ocurrido un error al desasociar el movimiento de la vivienda'
+    end
+    redirect_to movements_path
+  end
+
   private
 
     def movement_getter

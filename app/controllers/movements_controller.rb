@@ -2,6 +2,7 @@ class MovementsController < ApplicationController
   before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create]
   before_action :divide_getter, only: [:divide, :divide_movement]
+  before_action :permissions, except: [:index, :show]
 
   def index
     @movements = Movement.all
@@ -9,21 +10,16 @@ class MovementsController < ApplicationController
 
   def new
     @movement = Movement.new
-    # @statement = Statement.find_by(id: params[:id])
   end
 
   def create
-    if current_user.admin?
-      @movement = Movement.new(movement_params)
-      if @movement.save
-        flash[:info] = "¡Nuevo movimiento #{@movement.concept} creado!"
-        redirect_to @movement
-      else
-        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-        render 'new'
-      end
+    @movement = Movement.new(movement_params)
+    if @movement.save
+      flash[:info] = "¡Nuevo movimiento #{@movement.concept} creado!"
+      redirect_to @movement
     else
-      permissions
+      flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+      render 'new'
     end
   end
 
@@ -34,49 +30,37 @@ class MovementsController < ApplicationController
   end
 
   def update
-    if current_user.admin
-      if @movement.update_attributes(movement_params)
-        flash[:info] = 'Movimiento actualizado'
-        redirect_to @movement
-      else
-        render 'edit'
-      end
+    if @movement.update_attributes(movement_params)
+      flash[:info] = 'Movimiento actualizado'
+      redirect_to @movement
     else
-      permissions
+      render 'edit'
     end
   end
 
   def destroy
-    if current_user.admin
-      if @movement.destroy
-        flash[:info] = 'Movimiento borrado'
-        redirect_to movements_path
-      else
-        redirect_to root_url
-      end
+    if @movement.destroy
+      flash[:info] = 'Movimiento borrado'
+      redirect_to movements_path
     else
-      permissions
+      redirect_to root_url
     end
   end
 
   def create_for_statement
-    if current_user.admin
-      @statement = Statement.find(params[:id])
-      @movement = Movement.new(movement_params)
-      if @movement.save
-        @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @movement.id)
-        if @statementmovement.save
-          flash[:info] = "Movimiendo creado para el extracto '#{@statement.name}'"
-          redirect_to @statement
-        else
-          flash[:danger] = 'Ha ocurrido un error a la hora de crear el movimiento para el extracto.'
-          redirect_to root_url
-        end
+    @statement = Statement.find(params[:id])
+    @movement = Movement.new(movement_params)
+    if @movement.save
+      @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @movement.id)
+      if @statementmovement.save
+        flash[:info] = "Movimiendo creado para el extracto '#{@statement.name}'"
+        redirect_to @statement
       else
-        flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
+        flash[:danger] = 'Ha ocurrido un error a la hora de crear el movimiento para el extracto.'
+        redirect_to root_url
       end
     else
-      permissions
+      flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
     end
   end
 
@@ -84,30 +68,26 @@ class MovementsController < ApplicationController
   end
 
   def divide_movement
-    if current_user.admin
-      @new_movement = Movement.new(movement_params)
-      amount = @new_movement.amount
-      if @new_movement.amount >= @movement.amount
-        flash[:danger] = 'La cantidad que quieres separar es mayor o igual al original, prueba con otra cantidad.'
-        redirect_to @statement
-      else
-        @movement.amount -= amount
-        @movement.save
-        if @new_movement.save
-          @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @new_movement.id)
-          if @statementmovement.save
-            flash[:info] = "Se ha dividido el movimiento #{@movement.concept}"
-            redirect_to @statement
-          else
-            flash[:danger] = 'Ha ocurrido un error a la hora de dividir el movimiento para el extracto bancarios.'
-            redirect_to root_url
-          end
-        else
-          flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
-        end
-      end
+    @new_movement = Movement.new(movement_params)
+    amount = @new_movement.amount
+    if @new_movement.amount >= @movement.amount
+      flash[:danger] = 'La cantidad que quieres separar es mayor o igual al original, prueba con otra cantidad.'
+      redirect_to @statement
     else
-      permissions
+      @movement.amount -= amount
+      @movement.save
+      if @new_movement.save
+        @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @new_movement.id)
+        if @statementmovement.save
+          flash[:info] = "Se ha dividido el movimiento #{@movement.concept}"
+          redirect_to @statement
+        else
+          flash[:danger] = 'Ha ocurrido un error a la hora de dividir el movimiento para el extracto bancarios.'
+          redirect_to root_url
+        end
+      else
+        flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
+      end
     end
   end
 
@@ -116,7 +96,9 @@ class MovementsController < ApplicationController
   end
 
   def associate_apartment
-    if current_user.admin?
+    if @movement.amount < 0
+      flash[:danger] = 'El movimiento seleccionado tiene un valor negativo, no se puede añadir a una vivienda.'
+    else
       @apartment = Apartment.find(params[:apartment_id])
       @apartmentmovement = ApartmentMovement.find_by(movement: @movement)
       if @apartmentmovement.nil?
@@ -147,8 +129,6 @@ class MovementsController < ApplicationController
           redirect_to old_apartment
         end
       end
-    else
-      permissions
     end
   end
 
@@ -168,7 +148,9 @@ class MovementsController < ApplicationController
   end
 
   def permissions
-    flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-    redirect_to root_path
+    unless current_user.admin?
+      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+      redirect_to root_path
+    end
   end
 end

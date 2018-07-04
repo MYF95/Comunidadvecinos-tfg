@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   get '/:id/users',                                           to: 'users#index', as: 'userlist'
 
   # Statement with movement routes
-  get '/statements/:id/new_movement',                         to: 'movements#new', as: 'new_statement_movement'
   post '/statements/:id/new_movement',                        to: 'movements#create_for_statement', as: 'create_statement_movement'
   get '/statements/:id/:id_movement/divide',                  to: 'movements#divide', as: 'divide'
   patch '/statements/:id/:id_movement/divide',                to: 'movements#divide_movement', as: 'divide_movement'

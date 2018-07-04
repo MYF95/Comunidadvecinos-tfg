@@ -23,7 +23,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
-    log_in_as(@user)
+    log_in_as(@admin)
     get new_movement_path
     assert_response :success
   end
@@ -51,7 +51,6 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   test 'edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_movement_path(@movement)
-    assert_template 'movements/edit'
     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
     assert_permissions
   end

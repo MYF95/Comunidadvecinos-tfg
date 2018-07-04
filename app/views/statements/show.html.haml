@@ -1,9 +1,6 @@
 %h1= "#{@statement.name}"
 %p= "Nombre del extracto: #{@statement.name}"
 %p= "Fecha del extracto: #{@statement.date}"
-
--#%p= link_to 'Crear movimiento', new_statement_movement_path(@statement), class: 'btn btn-primary'
-
 %h2= 'Movimientos del extracto'
 .full-width
   %table.table.table-hover.table-statement-movements

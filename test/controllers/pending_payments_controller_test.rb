@@ -22,7 +22,7 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
-    log_in_as(@user)
+    log_in_as(@admin)
     get new_pending_payment_path
     assert_response :success
   end
@@ -50,7 +50,6 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
   test 'edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_pending_payment_path(@pending_payment)
-    assert_template 'pending_payments/edit'
     post pending_payments_path, params: { pending_payment: { concept: @concept, date: @date, amount: '50', description: @description}}
     assert_permissions
   end

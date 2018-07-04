@@ -1,8 +1,8 @@
 class MovementsController < ApplicationController
   before_action :logged_in_user
-  before_action :movement_getter, except: [:index, :new, :create]
+  before_action :movement_getter, except: [:index, :new, :create, :destroy_statement]
   before_action :divide_getter, only: [:divide, :divide_movement]
-  before_action :permissions, except: [:index, :show, :destroy_apartment]
+  before_action :permissions, except: [:index, :show]
   before_action :check_amount, only: [:associate_apartment]
 
   def index

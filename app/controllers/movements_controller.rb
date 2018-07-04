@@ -3,6 +3,7 @@ class MovementsController < ApplicationController
   before_action :movement_getter, except: [:index, :new, :create]
   before_action :divide_getter, only: [:divide, :divide_movement]
   before_action :permissions, except: [:index, :show]
+  before_action :check_amount, only: [:associate_apartment]
 
   def index
     @movements = Movement.all
@@ -70,6 +71,7 @@ class MovementsController < ApplicationController
         end
       else
         flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
+        redirect_to @statement
       end
     end
   end
@@ -79,39 +81,32 @@ class MovementsController < ApplicationController
   end
 
   def associate_apartment
-    if @movement.amount < 0
-      flash[:danger] = 'El movimiento seleccionado tiene un valor negativo, no se puede añadir a una vivienda.'
-    else
-      @apartment = Apartment.find(params[:apartment_id])
-      @apartmentmovement = ApartmentMovement.find_by(movement: @movement)
-      if @apartmentmovement.nil?
-        @apartmentmovement = ApartmentMovement.new(apartment: @apartment, movement: @movement)
-        if @apartmentmovement.save
-          @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
-          flash[:info] = "Se ha asociado el movimiento a la vivienda #{full_name_apartment(@apartment)}"
-          redirect_to statement_path(@movement.statements.first)
-        else
-          flash[:danger] = 'Ha ocurrido un error al intentar crear la asociación del movimiento'
-          redirect_to statement_path(@movement.statements.first)
-        end
+    @apartment = Apartment.find(params[:apartment_id])
+    if ApartmentMovement.find_by(movement: @movement).nil?
+      @apartmentmovement = ApartmentMovement.new(apartment: @apartment, movement: @movement)
+      if @apartmentmovement.save
+        @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
+        flash[:info] = "Se ha asociado el movimiento a la vivienda #{full_name_apartment(@apartment)}"
       else
-        old_apartment = @apartmentmovement.apartment
-        if @apartmentmovement.update_attribute(:apartment, @apartment)
-          flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
-          while old_apartment.balance - @movement.amount < 0
-            newest_pending_payment = old_apartment.pending_payments.where(paid: true).order('date desc').first
-            break if newest_pending_payment.nil?
-            newest_pending_payment.update_attribute(:paid, false)
-            flash[:info] = "El cambio de asociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
-          end
-          old_apartment.update_attribute(:balance, old_apartment.balance - @movement.amount)
-          @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
-          redirect_to old_apartment
-        else
-          flash[:danger] = 'Ha ocurrido un error al intentar cambiar la asociación del movimiento'
-          redirect_to old_apartment
-        end
+        flash[:danger] = 'Ha ocurrido un error al intentar crear la asociación del movimiento'
       end
+      redirect_to statement_path(@movement.statements.first)
+    else
+      old_apartment = @apartmentmovement.apartment
+      if @apartmentmovement.update_attribute(:apartment, @apartment)
+        flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
+        while old_apartment.balance - @movement.amount < 0
+          newest_pending_payment = old_apartment.pending_payments.where(paid: true).order('date desc').first
+          break if newest_pending_payment.nil?
+          newest_pending_payment.update_attribute(:paid, false)
+          flash[:info] = "El cambio de asociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
+        end
+        old_apartment.update_attribute(:balance, old_apartment.balance - @movement.amount)
+        @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
+      else
+        flash[:danger] = 'Ha ocurrido un error al intentar cambiar la asociación del movimiento'
+      end
+      redirect_to old_apartment
     end
   end
 
@@ -134,6 +129,13 @@ class MovementsController < ApplicationController
       unless current_user.admin?
         flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
         redirect_to root_path
+      end
+    end
+
+    def check_amount
+      unless @movement.amount >= 0
+        flash[:danger] = 'El movimiento seleccionado tiene un valor negativo, no se puede añadir a una vivienda.'
+        redirect_to statement_path(@movement.statements.first)
       end
     end
 end

@@ -132,13 +132,13 @@ class MovementsController < ApplicationController
       else
         old_apartment = @apartmentmovement.apartment
         if @apartmentmovement.update_attribute(:apartment, @apartment)
+          flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
           while old_apartment.balance - @movement.amount < 0
             newest_pending_payment = old_apartment.pending_payments.where(paid: true).order('date desc').first
             break if newest_pending_payment.nil?
             newest_pending_payment.update_attribute(:paid, false)
-            flash[:danger] = "El cambio de asociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
+            flash[:info] = "El cambio de asociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
           end
-          flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
           old_apartment.update_attribute(:balance, old_apartment.balance - @movement.amount)
           @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
           redirect_to old_apartment

@@ -140,7 +140,7 @@ class ApartmentsController < ApplicationController
       if @apartment.balance >= @pendingpayment.amount
         if @pendingpayment.update_attribute(:paid, true)
           flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
-          redirect_to apartment_pending_payments_path(@apartment)
+          redirect_to apartment_path(@apartment)
         else
           flash[:danger] = 'Ha ocurrido un error a la hora de pagar el pago pendiente'
           redirect_to apartment_pending_payments_path(@apartment)

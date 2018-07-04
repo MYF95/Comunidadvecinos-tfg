@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_222308) do
+ActiveRecord::Schema.define(version: 2018_07_03_235459) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 2018_07_03_222308) do
     t.boolean "paid", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "months"
+    t.integer "months", default: 0
   end
 
   create_table "statement_movements", force: :cascade do |t|

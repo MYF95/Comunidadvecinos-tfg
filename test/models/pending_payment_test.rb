@@ -28,4 +28,14 @@ class PendingPaymentTest < ActiveSupport::TestCase
     @pending_payment.amount = -1
     assert_not @pending_payment.valid?
   end
+
+  test 'months should be present' do
+    @pending_payment.months = "";
+    assert_not @pending_payment.valid?
+  end
+
+  test 'months should not be negative' do
+    @pending_payment.months = -1
+    assert_not @pending_payment.valid?
+  end
 end

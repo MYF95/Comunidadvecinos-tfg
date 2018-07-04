@@ -112,7 +112,7 @@ class PendingPaymentsController < ApplicationController
 
   def create_all
     if current_user.admin?
-      if total_apartment_contribution(Apartment.first).equal?(1.0)
+      if check_apartments_contribution
         months = params[:pending_payment][:months].to_i
         amount = params[:pending_payment][:amount].to_f
         Apartment.all.each do |apartment|
@@ -134,7 +134,7 @@ class PendingPaymentsController < ApplicationController
         end
         redirect_to pending_payments_path
       else
-        flash[:danger] = 'La contribución total de las viviendas no suma a 100%. Antes de crear derramas, actualiza las contribución de cada vivienda.'
+        flash[:danger] = 'Hay viviendas con 0% de participación o el total de contribución no suma a 100%. Antes de crear derramas, actualiza las contribución de cada vivienda.'
         redirect_to apartments_path
       end
     else
@@ -165,5 +165,9 @@ class PendingPaymentsController < ApplicationController
 
   def pending_payment_fee_calculator(months, amount, apartment)
     (amount / Apartment.all.count * apartment.apartment_contribution / months).round(2)
+  end
+
+  def check_apartments_contribution
+    Apartment.where(apartment_contribution: 0.0).count < 1 && total_apartment_contribution(Apartment.first).equal?(1.0)
   end
 end

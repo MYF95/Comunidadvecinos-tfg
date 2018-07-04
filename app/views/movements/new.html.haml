@@ -2,9 +2,5 @@
 - provide(:button_text, 'Crear movimiento bancario')
 
 %h2 Crea un nuevo movimiento bancario
-- if @statement.nil?
-  = form_for(@movement) do |f|
-    = render 'form', f: f
-- else
-  = form_for(@movement, url: create_statement_movement_path(@statement)) do |f|
-    = render 'form', f: f
+= form_for(@movement) do |f|
+  = render 'form', f: f

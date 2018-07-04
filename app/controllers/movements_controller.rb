@@ -47,23 +47,6 @@ class MovementsController < ApplicationController
     end
   end
 
-  def create_for_statement
-    @statement = Statement.find(params[:id])
-    @movement = Movement.new(movement_params)
-    if @movement.save
-      @statementmovement = StatementMovement.new(statement_id: @statement.id, movement_id: @movement.id)
-      if @statementmovement.save
-        flash[:info] = "Movimiendo creado para el extracto '#{@statement.name}'"
-        redirect_to @statement
-      else
-        flash[:danger] = 'Ha ocurrido un error a la hora de crear el movimiento para el extracto.'
-        redirect_to root_url
-      end
-    else
-      flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
-    end
-  end
-
   def divide
   end
 
@@ -134,23 +117,23 @@ class MovementsController < ApplicationController
 
   private
 
-  def movement_getter
-    @movement = Movement.find(params[:id])
-  end
-
-  def movement_params
-    params.require(:movement).permit(:description)
-  end
-
-  def divide_getter
-    @movement = Movement.find(params[:id_movement])
-    @statement = Statement.find(params[:id])
-  end
-
-  def permissions
-    unless current_user.admin?
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+    def movement_getter
+      @movement = Movement.find(params[:id])
     end
-  end
+
+    def movement_params
+      params.require(:movement).permit(:description)
+    end
+
+    def divide_getter
+      @movement = Movement.find(params[:id_movement])
+      @statement = Statement.find(params[:id])
+    end
+
+    def permissions
+      unless current_user.admin?
+        flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+        redirect_to root_path
+      end
+    end
 end

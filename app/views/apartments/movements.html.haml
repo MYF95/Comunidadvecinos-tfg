@@ -1,22 +1,25 @@
 %h1= "Movimientos asociados de la vivienda #{full_name_apartment(@apartment)}"
 
-%table.table.table-hover.table-statement
-  %tr
-    %th Concepto
-    %th Fecha
-    %th Cantidad
-    %th Descripción
-    %th Opciones
-  -@apartment.movements.each do |movement|
+- if @apartment.movements.empty?
+  %p No hay ningún movimiento asociado a la vivienda.
+-else
+  %table.table.table-hover.table-statement
     %tr
-      %td= "#{movement.concept}"
-      %td= "#{movement.date}"
-      %td= "#{movement.amount}€"
-      %td= "#{movement.description}"
-      %td
-        = link_to apartmentlist_path(movement), class: 'btn btn-xs btn-success' do
-          %span.glyphicon.glyphicon-eject
-        = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
-          %span.glyphicon.glyphicon-pencil
-        = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el movimiento asociado?'}, class: 'btn btn-xs btn-danger' do
-          %span.glyphicon.glyphicon-trash
+      %th Concepto
+      %th Fecha
+      %th Cantidad
+      %th Descripción
+      %th Opciones
+    -@apartment.movements.each do |movement|
+      %tr
+        %td= "#{movement.concept}"
+        %td= "#{movement.date}"
+        %td= "#{movement.amount}€"
+        %td= "#{movement.description}"
+        %td
+          = link_to apartmentlist_path(movement), class: 'btn btn-xs btn-success' do
+            %span.glyphicon.glyphicon-eject
+          = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-pencil
+          = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el movimiento asociado?'}, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash

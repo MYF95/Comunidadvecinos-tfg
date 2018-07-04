@@ -1,22 +1,25 @@
 %h1= "Contabilidad de pagos de la vivienda #{full_name_apartment(@apartment)}"
 
-%table.table.table-hover.table-statement
-  %tr
-    %th Concepto
-    %th Fecha
-    %th Cantidad
-    %th Descripción
-    %th ¿Pagado?
-    %th Opciones
-  -@apartment.pending_payments.each do |pending_payment|
+- if @apartment.pending_payments.empty?
+  %p Esta vivienda no tiene ningún pago o pago pendiente asociado.
+- else
+  %table.table.table-hover.table-statement
     %tr
-      %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
-      %td= "#{pending_payment.date}"
-      %td= "#{pending_payment.amount}€"
-      %td= "#{pending_payment.description}"
-      %td= pending_payment.paid? ? "Si" : "No"
-      %td
-        = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
-          %span.glyphicon.glyphicon-pencil
-        = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
-          %span.glyphicon.glyphicon-trash
+      %th Concepto
+      %th Fecha
+      %th Cantidad
+      %th Descripción
+      %th ¿Pagado?
+      %th Opciones
+    -@apartment.pending_payments.each do |pending_payment|
+      %tr
+        %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
+        %td= "#{pending_payment.date}"
+        %td= "#{pending_payment.amount}€"
+        %td= "#{pending_payment.description}"
+        %td= pending_payment.paid? ? "Si" : "No"
+        %td
+          = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
+            %span.glyphicon.glyphicon-pencil
+          = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash

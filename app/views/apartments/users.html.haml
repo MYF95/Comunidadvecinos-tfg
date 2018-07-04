@@ -2,9 +2,11 @@
 
 %h1= "Usuarios de la vivienda #{full_name_apartment(@apartment)}"
 
--@apartment.users.each do |user|
-  %p
-    =link_to "#{full_name(user)} |", user_path(user)
-    =link_to 'Quitar usuario', remove_user_path(@apartment, user), method: :delete, data: { confirm: '¿Estás seguro?'}
-
-%p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'
+-if @apartment.users.empty?
+  %p No hay ningún usuario asignado a la vivienda.
+-else
+  -@apartment.users.each do |user|
+    %p
+      =link_to "#{full_name(user)} |", user_path(user)
+      =link_to 'Quitar usuario', remove_user_path(@apartment, user), method: :delete, data: { confirm: '¿Estás seguro?'}
+  %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'

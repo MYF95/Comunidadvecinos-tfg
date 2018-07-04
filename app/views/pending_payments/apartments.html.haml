@@ -1,11 +1,14 @@
 %h1 Asociar pago pendiente a vivienda
 
-%table.table.table-hover
-  %tr
-    %th Vivienda
-    %th Opciones
-  - @apartments.each do |apartment|
+- if @apartments.empty?
+  %p No hay viviendas en la aplicación. Por favor, crea una vivienda antes de asociar pagos pendientes a las viviendas.
+- else
+  %table.table.table-hover
     %tr
-      - if @pending_payment.apartment != apartment
-        %td= "#{full_name_apartment(apartment)}"
-        %td= link_to 'Asociar a vivienda', associate_pending_payment_apartment_path(@pending_payment, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
+      %th Vivienda
+      %th Opciones
+    - @apartments.each do |apartment|
+      %tr
+        - if @pending_payment.apartment != apartment
+          %td= "#{full_name_apartment(apartment)}"
+          %td= link_to 'Asociar a vivienda', associate_pending_payment_apartment_path(@pending_payment, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}

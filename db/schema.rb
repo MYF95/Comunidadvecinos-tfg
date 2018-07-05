@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_03_235459) do
+ActiveRecord::Schema.define(version: 2018_07_04_235604) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 2018_07_03_235459) do
     t.datetime "updated_at", null: false
     t.float "apartment_contribution"
     t.index ["floor", "letter"], name: "index_apartments_on_floor_and_letter", unique: true
+  end
+
+  create_table "movement_children", force: :cascade do |t|
+    t.integer "parent_id"
+    t.integer "child_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_movement_children_on_child_id", unique: true
   end
 
   create_table "movements", force: :cascade do |t|

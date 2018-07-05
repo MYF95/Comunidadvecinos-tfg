@@ -8,6 +8,9 @@ class Movement < ApplicationRecord
   has_one :apartment_movement
   has_one :apartment, through: :apartment_movement
 
+  has_one :parent, class_name: 'MovementChild', foreign_key: 'child_id'
+  has_many :children, class_name: 'MovementChild', foreign_key: 'parent_id'
+
   validates :concept, presence: true
   validates :date, presence: true
   validates :amount, presence: true

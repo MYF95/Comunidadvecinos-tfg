@@ -8,4 +8,7 @@ class User < ApplicationRecord
 
   has_many :user_apartments
   has_many :apartments, through: :user_apartments
+
+  has_many :apartment_owners
+  has_many :owned_apartments, through: :apartment_owners
 end

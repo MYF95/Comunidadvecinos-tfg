@@ -15,6 +15,9 @@ class Apartment < ApplicationRecord
   has_many :apartment_pending_payments
   has_many :pending_payments, through: :apartment_pending_payments, dependent: :destroy
 
+  has_one :apartment_owner
+  has_one :owner, through: :apartment_owner
+
   validates :floor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}, uniqueness: {scope: :letter}
   validates :letter, presence: true
   validates :fee, presence: true, numericality: { greater_than_or_equal_to: 0}

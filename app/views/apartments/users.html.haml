@@ -17,8 +17,8 @@
       %td= "#{@apartment.owner.email}"
       %td= "#{@apartment.owner.phone_number}"
       %td
-        -#= link_to remove_user_path(@apartment, user), data: { confirm: "¿Quieres quitar al usuario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger' do
-        -#  %span.glyphicon.glyphicon-trash
+        = link_to remove_owner_path(@apartment), data: { confirm: "¿Quieres quitar a #{full_name(@apartment.owner)} de la titularidad de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger' do
+          %span.glyphicon.glyphicon-trash
 
 %h2 Residentes de la vivienda
 -if @apartment.users.empty?

@@ -15,3 +15,5 @@
         %td
           = link_to add_user_path(@apartment, user), class: 'btn btn-xs btn-success' do
             %span.glyphicon.glyphicon-plus
+          = link_to add_owner_path(@apartment, user), data: {confirm: "¿Quieres añadir a #{full_name(user)} como propietario de la vivienda?"}, class: 'btn btn-xs btn-success' do
+            %span.glyphicon.glyphicon-home

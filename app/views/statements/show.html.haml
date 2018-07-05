@@ -24,14 +24,17 @@
         %td= "#{movement.concept5}"
         %td= "#{movement.description}"
         %td
-          - if movement.apartment.blank?
-            = link_to 'Asociar a vivienda', apartmentlist_path(movement)
+          - if movement.children.empty?
+            - if movement.apartment.blank?
+              = link_to 'Asociar a vivienda', apartmentlist_path(movement)
+            - else
+              = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
           - else
-            = link_to "#{full_name_apartment(movement.apartment)}", apartment_path(movement.apartment)
+            = link_to 'Movimiento dividido', movement_children_path(movement)
         %td
           = link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
             %span.glyphicon.glyphicon-scissors
           = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-pencil
-          = link_to delete_movement_statement_path(@statement, movement), method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
+          = link_to delete_movement_statement_path(@statement, movement), method: :delete, data: { confirm: '¿Quieres borrar el mo bancario?'}, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash

@@ -1,0 +1,27 @@
+%h2 Movimientos descendientes de "#{@movement.concept}"
+%table.table.table-hover.table-statement-movements
+  %tr
+    %th Concepto
+    %th Fecha
+    %th Cantidad
+    %th Descripción
+    %th Vivienda asociada
+    %th Opciones
+  -@movement.children.each do |movement|
+    %tr
+      %td= link_to "#{movement.child.concept}", movement_path(movement.child)
+      %td= "#{movement.child.date}"
+      %td= "#{movement.child.amount}€"
+      %td= "#{movement.child.description}"
+      %td
+        - if movement.child.apartment.blank?
+          = link_to 'Asociar a vivienda', apartmentlist_path(movement.child)
+        - else
+          = link_to "#{full_name_apartment(movement.child.apartment)}", apartment_path(movement.child.apartment)
+      %td
+        -#= link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
+            %span.glyphicon.glyphicon-scissors
+        = link_to edit_movement_path(movement.child), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-pencil
+        = link_to movement.child, method: :delete, data: { confirm: '¿Quieres borrar el movimiento bancario?'}, class: 'btn btn-xs btn-danger' do
+          %span.glyphicon.glyphicon-trash

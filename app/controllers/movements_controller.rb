@@ -133,6 +133,9 @@ class MovementsController < ApplicationController
     redirect_to movements_path
   end
 
+  def children
+  end
+
   private
 
     def movement_getter

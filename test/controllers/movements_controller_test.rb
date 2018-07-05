@@ -109,4 +109,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   #
   # test 'remove apartment' do
   # end
+  #
+  # test 'children' do
+  # end
 end

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get '/movements/:id/apartments/:apartment_id',              to: 'movements#associate_apartment', as: 'associate_apartment'
   delete '/movements/:id/apartments',                         to: 'movements#remove_apartment', as: 'remove_apartment'
 
+  # Movement custom routes
+  get '/movements/:id/children',                              to: 'movements#children', as: 'movement_children'
+
   # Apartment with pending payment routes
   get '/apartments/:id/pendingpayments',                      to: 'apartments#pending_payments', as: 'apartment_pending_payments'
   get '/apartments/:id/history',                              to: 'apartments#history', as: 'apartment_history'

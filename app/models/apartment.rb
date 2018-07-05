@@ -1,9 +1,11 @@
 class Apartment < ApplicationRecord
   #TODO en caso de que la planta sea 0, que se ponga como BajoºA
-  #TODO plantas no pueden estar repetidos
 
   before_destroy :destroy_apartment_movements
   before_destroy :destroy_apartment_pending_payments
+  before_destroy :destroy_apartment_owners
+  before_destroy :destroy_apartment_users
+
   before_save :uppercase_letter
 
   has_many :user_apartments
@@ -34,6 +36,18 @@ class Apartment < ApplicationRecord
     def destroy_apartment_pending_payments
       unless self.pending_payments.blank?
         self.apartment_pending_payments.destroy_all
+      end
+    end
+
+    def destroy_apartment_owners
+      unless self.owner.nil?
+        self.apartment_owner.destroy
+      end
+    end
+
+    def destroy_apartment_users
+      unless self.users.empty?
+        self.user_apartments.destroy_all
       end
     end
 

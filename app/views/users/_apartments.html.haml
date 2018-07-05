@@ -1,0 +1,13 @@
+%tr
+  %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+  %td
+    - if apartment.owner.nil?
+      Sin propietario
+    -else
+      =link_to "#{full_name(apartment.owner)}", user_path(apartment.owner)
+  %td= "#{apartment.fee}€"
+  %td= "#{apartment.balance}€"
+  %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
+  %td
+    = link_to edit_apartment_path(apartment), class: 'btn btn-xs btn-primary' do
+      %span.glyphicon.glyphicon-pencil

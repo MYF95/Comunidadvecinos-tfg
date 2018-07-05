@@ -16,13 +16,7 @@
     %th Saldo actual
     %th Cuota de contribución
     %th Opciones
+  - @user.owned_apartments.each do |apartment|
+    = render 'apartments', apartment: apartment
   - @user.apartments.each do |apartment|
-    %tr
-      %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
-      %td= apartment.try(:owner) || 'Sin propietario'
-      %td= "#{apartment.fee}€"
-      %td= "#{apartment.balance}€"
-      %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
-      %td
-        = link_to edit_apartment_path(apartment), class: 'btn btn-xs btn-primary' do
-          %span.glyphicon.glyphicon-pencil
+    = render 'apartments', apartment: apartment

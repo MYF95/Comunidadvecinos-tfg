@@ -6,7 +6,6 @@
 %p= link_to 'Editar usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
 %p= link_to 'Contabilidad de pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
 
-
 %h2 Pagos pendientes más antiguos
 -if @apartment.pending_payments.where(paid: false).empty?
   %p Esta vivienda no tiene ningún pago pendiente

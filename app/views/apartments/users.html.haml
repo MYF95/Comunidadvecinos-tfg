@@ -4,6 +4,23 @@
   .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
     %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'
 
+-unless @apartment.owner.nil?
+  %h2 Propietario de la vivienda
+  %table.table.table-hover.table-statement-movements
+    %tr
+      %th Propietario
+      %th Email
+      %th Teléfono
+      %th Opciones
+    %tr
+      %td= link_to "#{full_name(@apartment.owner)}", user_path(@apartment.owner)
+      %td= "#{@apartment.owner.email}"
+      %td= "#{@apartment.owner.phone_number}"
+      %td
+        -#= link_to remove_user_path(@apartment, user), data: { confirm: "¿Quieres quitar al usuario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger' do
+        -#  %span.glyphicon.glyphicon-trash
+
+%h2 Residentes de la vivienda
 -if @apartment.users.empty?
   %p No hay ningún usuario asignado a la vivienda.
 -else

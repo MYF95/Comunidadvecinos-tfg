@@ -110,6 +110,12 @@ class ApartmentsController < ApplicationController
     end
   end
 
+  def add_owner
+  end
+
+  def remove_owner
+  end
+
   # Movement related actions
 
   def movements

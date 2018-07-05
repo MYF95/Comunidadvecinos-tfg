@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get '/apartments/:id/users',                                to: 'apartments#users', as: 'apartment_users'
   get '/apartments/:id/users/:user_id',                       to: 'apartments#add_user', as: 'add_user'
   delete '/apartments/:id/users/:user_id',                    to: 'apartments#remove_user', as: 'remove_user'
-  get '/apartments/:id/users/:user_id',                       to: 'apartments#add_owner', as: 'add_owner'
+  get '/apartments/:id/owners/:user_id',                      to: 'apartments#add_owner', as: 'add_owner'
   delete '/apartments/:id/remove_owner',                      to: 'apartments#remove_owner', as: 'remove_owner'
 
   # Apartment with movement routes

@@ -77,20 +77,7 @@ class ApartmentsController < ApplicationController
 
   def add_user
     @user = User.find(params[:user_id])
-    @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
-    if @userapartment.blank?
-      @userapartment = UserApartment.new(user_id: @user.id, apartment_id: @apartment.id)
-      if @userapartment.save!
-        flash[:info] = "#{@user.first_name} añadido a la vivienda"
-        redirect_to apartment_users_path(@apartment)
-      else
-        flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
-        redirect_to @apartment
-      end
-    else
-      flash[:danger] = 'El usuario ya está en la vivienda'
-      redirect_to @apartment
-    end
+    find_user_apartment_and_create
   end
 
   def remove_user
@@ -102,15 +89,27 @@ class ApartmentsController < ApplicationController
     else
       if @userapartment.destroy
         flash[:info] = "#{@user.first_name} ha sido quitado de la vivienda"
-        redirect_to @apartment
       else
         flash[:danger] = 'Hubo un problema quitando el usuario de la vivienda'
-        redirect_to @apartment
       end
+      redirect_to @apartment
     end
   end
 
   def add_owner
+    @user = User.find(params[:user_id])
+    if @apartment.owner.nil?
+      @apartment_owner = ApartmentOwner.new(apartment_id: @apartment.id, user_id: @user.id)
+      if @apartment_owner.save
+        find_user_apartment_and_create
+      else
+        flash[:danger] = 'Hubo un problema asignando al usuario como propietario de la vivienda'
+        redirect_to apartment_users_path(@apartment)
+      end
+    else
+      flash[:danger] = 'La vivienda ya tiene un propietario. Si quieres cambiar de propietario a la vivienda, desasocia el propietario primero para asegurar que quieres realizar la acción.'
+      redirect_to apartment_users_path(@apartment)
+    end
   end
 
   def remove_owner
@@ -176,5 +175,23 @@ class ApartmentsController < ApplicationController
         balance -= pending_payment.amount if pending_payment.paid?
       end
       @apartment.update_attribute(:balance, balance)
+    end
+
+    def find_user_apartment_and_create
+      @user_apartment = UserApartment.find_by(user: @user, apartment: @apartment)
+      if @user_apartment.nil?
+        @user_apartment = UserApartment.new(user: @user, apartment: @apartment)
+        if @user_apartment.save!
+          flash[:info] = "#{@user.first_name} añadido a la vivienda"
+          redirect_to apartment_users_path(@apartment)
+        else
+          flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
+          redirect_to @apartment
+        end
+      else
+        flash[:danger] = 'El usuario ya está en la vivienda'
+        redirect_to @apartment
+      end
+
     end
 end

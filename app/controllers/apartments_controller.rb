@@ -118,6 +118,13 @@ class ApartmentsController < ApplicationController
   end
 
   def remove_owner
+    owner = @apartment.owner
+    if @apartment.apartment_owner.destroy
+      flash[:info] = "Se ha quitado a #{owner.first_name} como propietario de la vivienda."
+    else
+      flash[:danger] = 'Ha ocurrido un problema al intentar desasociar el propietario de la vivienda'
+    end
+    redirect_to @apartment
   end
 
   # Movement related actions

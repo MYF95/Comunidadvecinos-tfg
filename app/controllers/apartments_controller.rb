@@ -82,6 +82,11 @@ class ApartmentsController < ApplicationController
 
   def remove_user
     @user = User.find(params[:user_id])
+    if @apartment.owner == @user
+      flash[:danger] = 'El usuario que intentas quitar es el propietario. Desasígnalo como propietario antes de quitarlo de la vivienda,'
+      redirect_to apartment_users_path(@apartment)
+      return
+    end
     @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
     if @userapartment.blank?
       flash[:danger] = "#{@user.first_name} no está en la vivienda"
@@ -192,6 +197,5 @@ class ApartmentsController < ApplicationController
         flash[:danger] = 'El usuario ya está en la vivienda'
         redirect_to @apartment
       end
-
     end
 end

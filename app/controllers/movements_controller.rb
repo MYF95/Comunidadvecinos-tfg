@@ -161,7 +161,6 @@ class MovementsController < ApplicationController
       new_movement.amount = amount
       new_movement.concept += " | Nº #{@movement.children.count + 1}"
       if new_movement.save
-        StatementMovement.find_by(movement: new_movement).destroy
         movement_child = MovementChild.new(parent: @movement, child: new_movement)
         if movement_child.save
           flash[:info] = 'Se ha creado el movimiento duplicado'

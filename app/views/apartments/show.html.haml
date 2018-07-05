@@ -36,8 +36,8 @@
       %p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
 
 %h2 Movimientos más recientes
--if @apartment.pending_payments.where(paid: false).empty?
-  %p Esta vivienda no tiene ningún pago pendiente
+-if @apartment.movements.empty?
+  %p Esta vivienda no tiene ningún movimiento asociado
 - else
   %table.table.table-hover.table-statement
     %tr

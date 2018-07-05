@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   get '/:id/users',                                           to: 'users#index', as: 'userlist'
 
   # Statement with movement routes
-  get '/statements/:id/:id_movement/divide',                  to: 'movements#divide', as: 'divide'
-  patch '/statements/:id/:id_movement/divide',                to: 'movements#divide_movement', as: 'divide_movement'
   delete '/statements/:id/movements/:movement_id',            to: 'movements#destroy_statement', as: 'delete_movement_statement'
 
   # Apartment with user routes
@@ -26,6 +24,8 @@ Rails.application.routes.draw do
   delete '/movements/:id/apartments',                         to: 'movements#remove_apartment', as: 'remove_apartment'
 
   # Movement custom routes
+  get '/movements/:id/divide',                                to: 'movements#divide', as: 'divide'
+  post '/movements/:id/divide_movement',                      to: 'movements#divide_movement', as: 'divide_movement'
   get '/movements/:id/children',                              to: 'movements#children', as: 'movement_children'
 
   # Apartment with pending payment routes

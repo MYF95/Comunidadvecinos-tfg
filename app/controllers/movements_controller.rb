@@ -62,30 +62,6 @@ class MovementsController < ApplicationController
   end
 
   def divide_movement
-    new_movement = @movement.dup
-    amount = params[:movement][:amount].to_f
-    if amount >= @movement.amount
-      flash[:danger] = 'La cantidad que quieres separar es mayor o igual al original, prueba con otra cantidad.'
-      redirect_to @statement
-    else
-      @movement.amount -= amount
-      @movement.save
-      new_movement.concept += ' | div'
-      new_movement.amount = amount
-      if new_movement.save
-        @statementmovement = StatementMovement.new(statement: @statement, movement: new_movement)
-        if @statementmovement.save
-          flash[:info] = "Se ha dividido el movimiento #{@movement.concept}"
-          redirect_to @statement
-        else
-          flash[:danger] = 'Ha ocurrido un error a la hora de dividir el movimiento para el extracto bancarios.'
-          redirect_to root_url
-        end
-      else
-        flash[:danger] = 'Ha ocurrido un error en la creación del movimiento bancario.'
-        redirect_to @statement
-      end
-    end
   end
 
   def apartments
@@ -94,7 +70,8 @@ class MovementsController < ApplicationController
 
   def associate_apartment
     @apartment = Apartment.find(params[:apartment_id])
-    if ApartmentMovement.find_by(movement: @movement).nil?
+    @apartmentmovement = ApartmentMovement.find_by(movement: @movement)
+    if @apartmentmovement.nil?
       @apartmentmovement = ApartmentMovement.new(apartment: @apartment, movement: @movement)
       if @apartmentmovement.save
         @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
@@ -127,6 +104,13 @@ class MovementsController < ApplicationController
     @apartmentmovement = ApartmentMovement.find_by(apartment: @movement.apartment, movement: @movement)
     if @apartmentmovement.destroy
       flash[:info] = "Movimiento desasociado de la vivienda #{full_name_apartment(@apartment)}"
+      while @apartment.balance - @movement.amount < 0
+        newest_pending_payment = @apartment.pending_payments.where(paid: true).order('date desc').first
+        break if newest_pending_payment.nil?
+        newest_pending_payment.update_attribute(:paid, false)
+        flash[:info] = "La desasociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
+      end
+      @apartment.update_attribute(:balance, @apartment.balance - @movement.amount)
     else
       flash[:danger] = 'Ha ocurrido un error al desasociar el movimiento de la vivienda'
     end

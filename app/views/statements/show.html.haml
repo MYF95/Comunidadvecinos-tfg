@@ -32,8 +32,9 @@
           - else
             = link_to 'Movimiento dividido', movement_children_path(movement)
         %td
-          = link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
-            %span.glyphicon.glyphicon-scissors
+          - if movement.children.empty?
+            = link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
+              %span.glyphicon.glyphicon-scissors
           = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-pencil
           = link_to delete_movement_statement_path(@statement, movement), method: :delete, data: { confirm: '¿Quieres borrar el mo bancario?'}, class: 'btn btn-xs btn-danger' do

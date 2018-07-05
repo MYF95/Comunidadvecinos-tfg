@@ -117,22 +117,24 @@ class ApartmentsController < ApplicationController
   def pending_payments
   end
 
-  # TODO bloquear el pago si no es el último
-
   def pay_pending_payment
     @pendingpayment = PendingPayment.find(params[:pending_payment_id])
-    if @apartment.balance >= @pendingpayment.amount
-      if @pendingpayment.update_attribute(:paid, true)
-        flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
-        redirect_to apartment_path(@apartment)
+    oldest_pending_payment = @apartment.pending_payments.where(paid: false).order('date asc').first
+    if @pendingpayment.equal?(oldest_pending_payment)
+      if @apartment.balance >= @pendingpayment.amount
+        if @pendingpayment.update_attribute(:paid, true)
+          flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
+          redirect_to apartment_path(@apartment)
+        else
+          flash[:danger] = 'Ha ocurrido un error a la hora de pagar el pago pendiente'
+        end
       else
-        flash[:danger] = 'Ha ocurrido un error a la hora de pagar el pago pendiente'
-        redirect_to apartment_pending_payments_path(@apartment)
+        flash[:danger] = "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
       end
     else
-      flash[:danger] = "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
-      redirect_to apartment_pending_payments_path(@apartment)
+      flash[:danger] = "El pago pendiente que intentas pagar no es el más antiguo de la vivienda. Por favor, paga primero '#{oldest_pending_payment.concept}'"
     end
+    redirect_to apartment_pending_payments_path(@apartment)
   end
 
   private

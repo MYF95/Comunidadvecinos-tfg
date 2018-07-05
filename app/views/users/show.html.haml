@@ -6,6 +6,21 @@
 %p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
 
 %h2 Viviendas asociadas
-
--@user.apartments.each do |apartment|
-  %p= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+%table.table.table-hover.table-statement
+  %tr
+    %th Vivienda
+    %th Propietario
+    %th Cuota
+    %th Saldo actual
+    %th Cuota de contribución
+    %th Opciones
+  - @user.apartments.each do |apartment|
+    %tr
+      %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+      %td= apartment.try(:owner) || 'Sin propietario'
+      %td= "#{apartment.fee}€"
+      %td= "#{apartment.balance}€"
+      %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
+      %td
+        = link_to edit_apartment_path(apartment), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-pencil

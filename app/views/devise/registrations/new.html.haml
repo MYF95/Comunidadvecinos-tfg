@@ -20,6 +20,12 @@
     = f.label 'Correo electrónico'
     %br/
     = f.email_field :email, autofocus: true
+
+  .field
+    = f.label 'Nº de contacto (Móvil o teléfono fijo)'
+    %br/
+    = f.number_field :phone_number, autofocus: true
+
   .field
     = f.label 'Contraseña'
     - if @minimum_password_length

@@ -23,6 +23,12 @@
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
     %div
       Esperando confirmación de: #{resource.unconfirmed_email}
+
+  .field
+    = f.label 'Nº de contacto (Móvil o teléfono fijo)'
+    %br/
+    = f.number_field :phone_number, autofocus: true
+
   .field
     = f.label 'Contraseña'
     %i (déjalo en blanco si no lo quieres cambiar)

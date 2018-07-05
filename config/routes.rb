@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   # Movement custom routes
   get '/movements/:id/divide',                                to: 'movements#divide', as: 'divide'
-  post '/movements/:id/divide_movement',                      to: 'movements#divide_movement', as: 'divide_movement'
+  patch '/movements/:id/divide_movement',                     to: 'movements#divide_movement', as: 'divide_movement'
   get '/movements/:id/children',                              to: 'movements#children', as: 'movement_children'
 
   # Apartment with pending payment routes

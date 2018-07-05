@@ -1,7 +1,6 @@
 class MovementsController < ApplicationController
   before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create, :destroy_statement]
-  before_action :divide_getter, only: [:divide, :divide_movement]
   before_action :permissions, except: [:index, :show]
   before_action :check_amount, only: [:associate_apartment]
 
@@ -62,6 +61,10 @@ class MovementsController < ApplicationController
   end
 
   def divide_movement
+    amount = params[:movement][:amount].to_f
+    create_movement_duplicate(@movement.amount - amount)
+    create_movement_duplicate(amount)
+    redirect_to movement_children_path(@movement)
   end
 
   def apartments
@@ -130,11 +133,6 @@ class MovementsController < ApplicationController
       params.require(:movement).permit(:description, :amount)
     end
 
-    def divide_getter
-      @movement = Movement.find(params[:id_movement])
-      @statement = Statement.find(params[:id])
-    end
-
     def permissions
       unless current_user.admin?
         flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
@@ -155,6 +153,25 @@ class MovementsController < ApplicationController
         redirect_to movements_path
       else
         redirect_to root_url
+      end
+    end
+
+    def create_movement_duplicate(amount)
+      new_movement = @movement.dup
+      new_movement.amount = amount
+      new_movement.concept += " | Nº #{@movement.children.count + 1}"
+      if new_movement.save
+        StatementMovement.find_by(movement: new_movement).destroy
+        movement_child = MovementChild.new(parent: @movement, child: new_movement)
+        if movement_child.save
+          flash[:info] = 'Se ha creado el movimiento duplicado'
+        else
+          flash[:danger] = 'Error en la creación del movimiento duplicado'
+          redirect_to statements_path
+        end
+      else
+        flash[:danger] = 'Error en la creación del movimiento duplicado'
+        redirect_to statements_path
       end
     end
 end

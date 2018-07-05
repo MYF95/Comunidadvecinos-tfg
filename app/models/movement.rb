@@ -30,4 +30,14 @@ class Movement < ApplicationRecord
         end
       end
     end
+
+    def destroy_movement_children
+      unless self.children.empty?
+        self.children.destroy_all
+      end
+
+      unless self.parent.nil?
+        self.parent.destroy
+      end
+    end
 end

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   # User custom routes
   get '/profile/:id',                                         to: 'users#show', as: 'user'
-  get '/:id/users',                                           to: 'users#index', as: 'userlist'
+  get '/:id/users',                                           to: 'users#user_list', as: 'userlist'
 
   # Statement with movement routes
   delete '/statements/:id/movements/:movement_id',            to: 'movements#destroy_statement', as: 'delete_movement_statement'
@@ -53,4 +53,5 @@ Rails.application.routes.draw do
   resources :statements
   resources :movements
   resources :pending_payments
+  resources :users
 end

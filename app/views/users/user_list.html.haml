@@ -1,0 +1,17 @@
+%h1= "Elige el usuario a añadir a la vivienda #{full_name_apartment(@apartment)}"
+
+%table.table.table-hover.table-statement-movements
+  %tr
+    %th Vecino
+    %th Email
+    %th Teléfono
+    %th Opciones
+  -@users.each do |user|
+    -unless @apartment.users.exists?(user.id)
+      %tr
+        %td= link_to "#{full_name(user)}", user_path(user)
+        %td= "#{user.email}"
+        %td= "#{user.phone_number}"
+        %td
+          = link_to add_user_path(@apartment, user), class: 'btn btn-xs btn-success' do
+            %span.glyphicon.glyphicon-plus

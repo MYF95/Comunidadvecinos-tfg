@@ -1,5 +1,23 @@
-%h1= "Elige un usuario al que añadir a la vivienda #{full_name_apartment(@apartment)}"
+%h1 Vecinos de la comunidad
 
-- @users.each do |user|
-  %p= "#{full_name(user)}"
-  %p= link_to 'Añadir usuario', add_user_path(@apartment, user), class: 'btn btn-primary'
+%table.table.table-hover.table-statement-movements
+  %tr
+    %th Nombre
+    %th Apellidos
+    %th Email
+    %th Teléfono
+    %th Viviendas asociada
+    %th Opciones
+  -@users.each do |user|
+    -unless current_user == user
+      %tr
+        %td= link_to "#{user.first_name}", user_path(user)
+        %td= "#{user.last_name}"
+        %td= "#{user.email}"
+        %td= "#{user.phone_number}"
+        %td
+          - user.apartments.each do |apartment|
+            = link_to "#{full_name_apartment(apartment)} ", apartment_path(apartment)
+        %td
+          = link_to registration_path(user), data: { confirm: "¿Estás seguro?" }, method: :delete, class: 'btn btn-xs btn-danger' do
+            %span.glyphicon.glyphicon-trash

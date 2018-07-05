@@ -2,8 +2,10 @@
 
 %p= "Correo: #{@user.email}"
 %p= "Fecha de nacimiento: #{@user.birthday}"
+%p= "Teléfono: #{@user.phone_number}"
 
-%p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
+-if current_user == @user
+  %p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
 
 %h2 Viviendas asociadas
 %table.table.table-hover.table-statement

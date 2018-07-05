@@ -31,6 +31,7 @@ class Movement < ApplicationRecord
       end
     end
 
+    # TODO arreglar la lógica de borrar movimientos con hijos
     def destroy_movement_children
       unless self.children.empty?
         self.children.destroy_all

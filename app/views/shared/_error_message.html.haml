@@ -1,6 +1,6 @@
 - if object.errors.any?
   #error_explanation
-    .alert.alert-danger
+    .form-alert.alert-danger
       El formulario contiene algunos errores.
     %ul
       - object.errors.full_messages.each do |msg|

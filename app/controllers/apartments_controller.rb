@@ -46,10 +46,16 @@ class ApartmentsController < ApplicationController
       flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
       redirect_to edit_apartment_path(@apartment)
     else
-      if @apartment.update_attributes(apartment_params)
-        flash[:info] = 'Vivienda actualizada'
-        redirect_to @apartment
+      if Apartment.where(floor: params[:apartment][:floor].to_i, letter: params[:apartment][:letter].capitalize).empty?
+        binding.pry
+        if @apartment.update_attributes(apartment_params)
+          flash[:info] = 'Vivienda actualizada'
+          redirect_to @apartment
+        else
+          render 'edit'
+        end
       else
+        flash[:danger] = "Ya hay una vivienda con ese piso y letra, elige otro."
         render 'edit'
       end
     end

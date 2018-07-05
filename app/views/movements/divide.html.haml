@@ -1,10 +1,11 @@
 - provide(:title, 'Dividir movimiento bancario')
 
 %h2 Dividir movimiento bancario #{@movement.concept}
+%p Cantidad del movimiento actual #{@movement.amount}€
 = form_for(@movement, url: divide_movement_path(@movement)) do |f|
   = render 'shared/error_message', object: f.object
   .field
-    = f.label 'Cantidad a dividir'
+    = f.label 'Cantidad del nuevo movimiento dividido'
     %br/
     = f.number_field :amount, min: 0
   .field

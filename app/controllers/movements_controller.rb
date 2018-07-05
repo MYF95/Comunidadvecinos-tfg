@@ -92,7 +92,7 @@ class MovementsController < ApplicationController
       else
         flash[:danger] = 'Ha ocurrido un error al intentar crear la asociación del movimiento'
       end
-      redirect_to statement_path(@movement.statements.first)
+      redirect_to apartment_path(@apartment)
     else
       old_apartment = @apartmentmovement.apartment
       if @apartmentmovement.update_attribute(:apartment, @apartment)

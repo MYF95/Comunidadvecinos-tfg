@@ -18,7 +18,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # TESTS
 
   test 'should get new' do
-    log_in_as(@user)
+    log_in_as(@admin)
     get new_apartment_path
     assert_response :success
   end
@@ -40,14 +40,12 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get new_apartment_path
     post apartments_path, params: { apartment: { owner: "#{full_name(@user)}", floor: '1', letter: 'B', fee: '60', apartment_contribution: 0.15}}
-    # binding.pry
     assert_permissions
   end
 
   test 'edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_apartment_path(@apartment)
-    assert_template 'apartments/edit'
     post apartments_path, params: { apartment: { owner: full_name(@admin), floor: 1, letter: 'B', fee: 60, apartment_contribution: 0.15}}
     assert_permissions
   end

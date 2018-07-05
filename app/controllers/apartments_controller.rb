@@ -1,6 +1,7 @@
 class ApartmentsController < ApplicationController
   before_action :logged_in_user
   before_action :apartment_getter, except: [:index, :new, :create]
+  before_action :permissions, except: [:index, :show]
   before_action :balance_checker, except: [:index, :new, :create]
 
   def index
@@ -12,28 +13,24 @@ class ApartmentsController < ApplicationController
   end
 
   def create
-    if current_user.admin?
-      @apartment = Apartment.new(apartment_params)
-      if total_apartment_contribution(@apartment) > 1
-        @apartment.update_attribute(:apartment_contribution, 0)
-        if @apartment.save
-          flash[:info] ="La vivienda #{full_name_apartment(@apartment)} ha sido creada, pero la contribución de la cuota supera el máximo de la comunidad. Por favor, actualiza el valor de la contribución."
-          redirect_to edit_apartment_path(@apartment)
-        else
-          flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-          render 'new'
-        end
+    @apartment = Apartment.new(apartment_params)
+    if total_apartment_contribution(@apartment) > 1
+      @apartment.update_attribute(:apartment_contribution, 0)
+      if @apartment.save
+        flash[:info] ="La vivienda #{full_name_apartment(@apartment)} ha sido creada, pero la contribución de la cuota supera el máximo de la comunidad. Por favor, actualiza el valor de la contribución."
+        redirect_to edit_apartment_path(@apartment)
       else
-        if @apartment.save
-          flash[:info] = "¡Nueva vivienda #{full_name_apartment(@apartment)} creada!"
-          redirect_to @apartment
-        else
-          flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-          render 'new'
-        end
+        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+        render 'new'
       end
     else
-      permissions
+      if @apartment.save
+        flash[:info] = "¡Nueva vivienda #{full_name_apartment(@apartment)} creada!"
+        redirect_to @apartment
+      else
+        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+        render 'new'
+      end
     end
   end
 
@@ -44,34 +41,26 @@ class ApartmentsController < ApplicationController
   end
 
   def update
-    if current_user.admin
-      if total_apartment_contribution(@apartment) > 1
-        @apartment.update_attribute(:apartment_contribution, 0)
-        flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
-        redirect_to edit_apartment_path(@apartment)
-      else
-        if @apartment.update_attributes(apartment_params)
-          flash[:info] = 'Vivienda actualizada'
-          redirect_to @apartment
-        else
-          render 'edit'
-        end
-      end
+    if total_apartment_contribution(@apartment) > 1
+      @apartment.update_attribute(:apartment_contribution, 0)
+      flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
+      redirect_to edit_apartment_path(@apartment)
     else
-      permissions
+      if @apartment.update_attributes(apartment_params)
+        flash[:info] = 'Vivienda actualizada'
+        redirect_to @apartment
+      else
+        render 'edit'
+      end
     end
   end
 
   def destroy
-    if current_user.admin
-      if @apartment.destroy
-        flash[:info] = 'Vivienda borrada'
-        redirect_to apartments_path
-      else
-        redirect_to root_url
-      end
+    if @apartment.destroy
+      flash[:info] = 'Vivienda borrada'
+      redirect_to apartments_path
     else
-      permissions
+      redirect_to root_url
     end
   end
 
@@ -81,42 +70,36 @@ class ApartmentsController < ApplicationController
   end
 
   def add_user
-    if current_user.admin
-      @user = User.find(params[:user_id])
-      @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
-      if @userapartment.blank?
-        @userapartment = UserApartment.new(user_id: @user.id, apartment_id: @apartment.id)
-        if @userapartment.save!
-          flash[:info] = "#{@user.first_name} añadido a la vivienda"
-          redirect_to apartment_users_path(@apartment)
-        else
-          flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
-          redirect_to @apartment
-        end
+    @user = User.find(params[:user_id])
+    @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
+    if @userapartment.blank?
+      @userapartment = UserApartment.new(user_id: @user.id, apartment_id: @apartment.id)
+      if @userapartment.save!
+        flash[:info] = "#{@user.first_name} añadido a la vivienda"
+        redirect_to apartment_users_path(@apartment)
       else
-        flash[:danger] = 'El usuario ya está en la vivienda'
+        flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
         redirect_to @apartment
       end
     else
-      permissions
+      flash[:danger] = 'El usuario ya está en la vivienda'
+      redirect_to @apartment
     end
   end
 
   def remove_user
-    if current_user.admin
-      @user = User.find(params[:user_id])
-      @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
-      if @userapartment.blank?
-        flash[:danger] = "#{@user.first_name} no está en la vivienda"
+    @user = User.find(params[:user_id])
+    @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
+    if @userapartment.blank?
+      flash[:danger] = "#{@user.first_name} no está en la vivienda"
+      redirect_to @apartment
+    else
+      if @userapartment.destroy
+        flash[:info] = "#{@user.first_name} ha sido quitado de la vivienda"
         redirect_to @apartment
       else
-        if @userapartment.destroy
-          flash[:info] = "#{@user.first_name} ha sido quitado de la vivienda"
-          redirect_to @apartment
-        else
-          flash[:danger] = 'Hubo un problema quitando el usuario de la vivienda'
-          redirect_to @apartment
-        end
+        flash[:danger] = 'Hubo un problema quitando el usuario de la vivienda'
+        redirect_to @apartment
       end
     end
   end
@@ -134,23 +117,21 @@ class ApartmentsController < ApplicationController
   def pending_payments
   end
 
+  # TODO bloquear el pago si no es el último
+
   def pay_pending_payment
-    if current_user.admin
-      @pendingpayment = PendingPayment.find(params[:pending_payment_id])
-      if @apartment.balance >= @pendingpayment.amount
-        if @pendingpayment.update_attribute(:paid, true)
-          flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
-          redirect_to apartment_path(@apartment)
-        else
-          flash[:danger] = 'Ha ocurrido un error a la hora de pagar el pago pendiente'
-          redirect_to apartment_pending_payments_path(@apartment)
-        end
+    @pendingpayment = PendingPayment.find(params[:pending_payment_id])
+    if @apartment.balance >= @pendingpayment.amount
+      if @pendingpayment.update_attribute(:paid, true)
+        flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
+        redirect_to apartment_path(@apartment)
       else
-        flash[:danger] = "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
+        flash[:danger] = 'Ha ocurrido un error a la hora de pagar el pago pendiente'
         redirect_to apartment_pending_payments_path(@apartment)
       end
     else
-      permissions
+      flash[:danger] = "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
+      redirect_to apartment_pending_payments_path(@apartment)
     end
   end
 
@@ -165,8 +146,10 @@ class ApartmentsController < ApplicationController
     end
 
     def permissions
-      flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
-      redirect_to root_path
+      unless current_user.admin?
+        flash[:danger] = 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
+        redirect_to root_path
+      end
     end
 
     def balance_checker

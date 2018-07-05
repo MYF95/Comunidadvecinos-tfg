@@ -62,9 +62,19 @@ class MovementsController < ApplicationController
 
   def divide_movement
     amount = params[:movement][:amount].to_f
-    create_movement_duplicate(@movement.amount - amount)
-    create_movement_duplicate(amount)
-    redirect_to movement_children_path(@movement)
+    if @movement.amount < amount || amount <= 0
+      flash[:danger] = 'La cantidad que quiere dividir es mayor que la del movimiento o tiene un valor negativo. Vuelva a intentarlo.'
+      redirect_to divide_path(@movement)
+      return
+    end
+    if @movement.apartment.nil?
+      create_movement_duplicate(@movement.amount - amount)
+      create_movement_duplicate(amount)
+      redirect_to movement_children_path(@movement)
+    else
+      flash[:danger] = 'Por favor, desasigna el movimiento de la vivienda antes de dividir el movimiento.'
+      redirect_to edit_movement_path(@movement)
+    end
   end
 
   def apartments

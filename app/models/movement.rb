@@ -1,6 +1,8 @@
 class Movement < ApplicationRecord
   #TODO seed with correct params movement
   before_destroy :destroy_apartment_movements
+  before_destroy :destroy_movement_children
+  before_destroy :destroy_statement_movements
 
   has_many :statement_movements
   has_many :statements, through: :statement_movements
@@ -31,9 +33,11 @@ class Movement < ApplicationRecord
       end
     end
 
-    # TODO arreglar la lógica de borrar movimientos con hijos
     def destroy_movement_children
       unless self.children.empty?
+        self.children.each do |child|
+          Movement.find(child.child_id).destroy
+        end
         self.children.destroy_all
       end
 

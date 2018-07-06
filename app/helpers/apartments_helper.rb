@@ -21,13 +21,6 @@ module ApartmentsHelper
     link_to title, request.parameters.merge({:sort => column, :direction => direction, page: nil}), { :class => css_class }
   end
 
-  def m_sortable(column, title = nil)
-    title ||= column.titleize
-    css_class = column == sort_movement_column ? "current #{sort_direction}" : nil
-    direction = column == sort_movement_column && sort_direction == "asc" ? "desc" : "asc"
-    link_to title, request.parameters.merge({:sort => column, :direction => direction, page: nil}), { :class => css_class }
-  end
-
   def u_sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_user_column ? "current #{sort_direction}" : nil

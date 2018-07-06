@@ -1,9 +1,10 @@
 class StatementsController < ApplicationController
+  helper_method :sort_column, :sort_direction, :sort_movement_column
   before_action :logged_in_user
   before_action :statement_getter, except: [:index, :new, :create, :import]
 
   def index
-    @statements = Statement.all
+    @statements = Statement.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def new
@@ -28,6 +29,7 @@ class StatementsController < ApplicationController
   end
 
   def show
+    @movements = @statement.movements.order(sort_movement_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def edit
@@ -62,6 +64,18 @@ class StatementsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Apartment.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def sort_movement_column
+      Movement.column_names.include?(params[:sort]) ? params[:sort] : "concept"
+    end
 
     def statement_getter
       @statement = Statement.find(params[:id])

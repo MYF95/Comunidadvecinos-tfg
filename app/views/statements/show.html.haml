@@ -3,18 +3,19 @@
 %p= "Fecha del extracto: #{@statement.date}"
 %h2= 'Movimientos del extracto'
 .full-width
+  = will_paginate @movements, class: 'flickr_pagination'
   %table.table.table-hover.table-statement-movements
     %tr
-      %th Concepto
-      %th Fecha
-      %th Cantidad
-      %th Concepto1
-      %th Concepto3
-      %th Concepto5
-      %th Descripción
+      %th= m_sortable 'concept', 'Concepto'
+      %th= m_sortable 'date', 'Fecha'
+      %th= m_sortable 'amount', 'Cantidad'
+      %th= m_sortable 'concept1', 'Concepto 1'
+      %th= m_sortable 'concept3', 'Concepto 3'
+      %th= m_sortable 'concept5', 'Concepto 5'
+      %th= m_sortable 'description', 'Descripción'
       %th Vivienda asociada
       %th Opciones
-    -@statement.movements.each do |movement|
+    -@movements.each do |movement|
       %tr
         %td= link_to "#{movement.concept}", movement_path(movement)
         %td= "#{movement.date}"
@@ -39,3 +40,4 @@
             %span.glyphicon.glyphicon-pencil
           = link_to delete_movement_statement_path(@statement, movement), method: :delete, data: { confirm: '¿Quieres borrar el movimiento bancario?'}, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash
+  = will_paginate @movements, class: 'flickr_pagination'

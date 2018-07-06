@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApartmentsHelper
+  include UsersHelper
   protect_from_forgery with: :exception
   before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?

@@ -29,7 +29,7 @@
         %td= "#{pending_payment.amount}€"
         %td= "#{pending_payment.description}"
         %td
-          = link_to pay_pending_payment_path(@apartment, pending_payment), data: { confirm: "¿Quieres pagar el pago pendiente #{pending_payment.concept}?" }, class: 'btn btn-xs btn-primary' do
+          = link_to pending_payment_users_path(@apartment, pending_payment), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-eur
           = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-pencil

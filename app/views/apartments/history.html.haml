@@ -10,6 +10,7 @@
       %th Cantidad
       %th Descripción
       %th ¿Pagado?
+      %th Pagador
       %th Opciones
     -@apartment.pending_payments.each do |pending_payment|
       %tr
@@ -18,6 +19,9 @@
         %td= "#{pending_payment.amount}€"
         %td= "#{pending_payment.description}"
         %td= pending_payment.paid? ? "Si" : "No"
+        %td
+          -unless pending_payment.paid_by.nil?
+            = pending_payment.paid_by
         %td
           = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-pencil

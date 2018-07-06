@@ -151,12 +151,17 @@ class ApartmentsController < ApplicationController
   def pending_payments
   end
 
+  def pending_payments_users
+    @pending_payment = PendingPayment.find(params[:pending_payment_id])
+  end
+
   def pay_pending_payment
+    @user = User.find(params[:user_id])
     @pendingpayment = PendingPayment.find(params[:pending_payment_id])
     oldest_pending_payment = @apartment.pending_payments.where(paid: false).order('date asc').first
-    if @pendingpayment.equal?(oldest_pending_payment)
+    if @pendingpayment == oldest_pending_payment
       if @apartment.balance >= @pendingpayment.amount
-        if @pendingpayment.update_attribute(:paid, true)
+        if @pendingpayment.update_attributes(paid: true, paid_by: full_name(@user))
           flash[:info] = "Se ha pagado el pago pendiente '#{@pendingpayment.concept}'"
           redirect_to apartment_path(@apartment)
         else
@@ -164,11 +169,12 @@ class ApartmentsController < ApplicationController
         end
       else
         flash[:danger] = "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
+        redirect_to apartment_pending_payments_path(@apartment)
       end
     else
       flash[:danger] = "El pago pendiente que intentas pagar no es el más antiguo de la vivienda. Por favor, paga primero '#{oldest_pending_payment.concept}'"
+      redirect_to apartment_pending_payments_path(@apartment)
     end
-    redirect_to apartment_pending_payments_path(@apartment)
   end
 
   private

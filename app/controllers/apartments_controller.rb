@@ -47,7 +47,6 @@ class ApartmentsController < ApplicationController
       redirect_to edit_apartment_path(@apartment)
     else
       if Apartment.where(floor: params[:apartment][:floor].to_i, letter: params[:apartment][:letter].capitalize).empty?
-        binding.pry
         if @apartment.update_attributes(apartment_params)
           flash[:info] = 'Vivienda actualizada'
           redirect_to @apartment

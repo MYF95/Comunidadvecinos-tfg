@@ -7,5 +7,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   #   get user_url
   #   assert_response :success
   # end
-
+  #
+  # test 'user list' do
+  # end
+  #
+  # test 'destroy user' do
+  # end
+  #
+  # test 'index' do
+  # end
 end

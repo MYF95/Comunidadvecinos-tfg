@@ -91,7 +91,7 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@admin)
     get edit_statement_path(@statement)
     patch statement_path(@statement), params: { statement: { name: '', date: ''}}
-    assert_select 'div.alert', 'El formulario contiene algunos errores.'
+    assert_select 'div.form-alert', 'El formulario contiene algunos errores.'
   end
 
   test 'destroy statement should work properly as admin user' do

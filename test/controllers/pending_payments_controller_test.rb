@@ -92,7 +92,7 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@admin)
     get edit_pending_payment_path(@pending_payment)
     patch pending_payment_path(@pending_payment), params: { pending_payment: { concept: '', date: '', amount: '', description: ''}}
-    assert_select 'div.alert', 'El formulario contiene algunos errores.'
+    assert_select 'div.form-alert', 'El formulario contiene algunos errores.'
   end
 
   test 'destroy pending payment should work properly as admin user' do

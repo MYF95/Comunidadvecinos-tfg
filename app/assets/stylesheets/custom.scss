@@ -177,6 +177,15 @@ h1, h2, h3, h4, h5, h6{
 
 /* Tables */
 
+tbody{
+  overflow-x: auto;
+}
+
+th, td{
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
 table .glyphicon {
   font-size: 25px;
   padding-top: 5px;

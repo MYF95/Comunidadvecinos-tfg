@@ -1,11 +1,12 @@
 %h1 Vecinos de la comunidad
 
+= will_paginate @users, class: 'flickr_pagination'
 %table.table.table-hover.table-statement-movements
   %tr
-    %th Nombre
-    %th Apellidos
-    %th Email
-    %th Teléfono
+    %th= sortable 'first_name', 'Nombre'
+    %th= sortable 'last_name', 'Apellidos'
+    %th= sortable 'email', 'Email'
+    %th= sortable 'phone_number', 'Teléfono'
     %th Viviendas asociada
     %th Opciones
   -@users.each do |user|
@@ -21,3 +22,4 @@
         %td
           = link_to user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash
+= will_paginate @users, class: 'flickr_pagination'

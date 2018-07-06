@@ -8,15 +8,15 @@
   %p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
 
 %h2 Viviendas asociadas
+= will_paginate @apartments, class: 'flickr_pagination'
 %table.table.table-hover.table-statement
   %tr
-    %th Vivienda
+    %th= a_sortable 'floor', 'Vivienda'
     %th Propietario
-    %th Cuota
-    %th Saldo actual
-    %th Cuota de contribución
+    %th= a_sortable 'fee', 'Cuota'
+    %th= a_sortable 'balance', 'Saldo actual'
+    %th= a_sortable 'apartment_contribution', 'Cuota de contribución'
     %th Opciones
-  - @user.owned_apartments.each do |apartment|
-    = render 'apartments', apartment: apartment
   - @user.apartments.each do |apartment|
     = render 'apartments', apartment: apartment
+= will_paginate @apartments, class: 'flickr_pagination'

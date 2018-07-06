@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :user_getter, except: [:user_list, :index]
 
   def show
+    @apartments = @user.apartments.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def user_list

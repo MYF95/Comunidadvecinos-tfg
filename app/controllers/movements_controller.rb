@@ -6,7 +6,7 @@ class MovementsController < ApplicationController
   before_action :check_amount, only: [:associate_apartment]
 
   def index
-    @movements = Movement.order(sort_column + " " + sort_direction)
+    @movements = Movement.where("amount > ?", 0).order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def new

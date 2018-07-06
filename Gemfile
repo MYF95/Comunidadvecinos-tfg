@@ -23,6 +23,7 @@ gem 'pry-rails'
 gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-rails'
 gem 'rails-i18n'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

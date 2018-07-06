@@ -4,6 +4,7 @@
   %p No hay ningún movimiento procedente de los extractos bancarios con valor positivo ahora mismo.
 -else
   .full-width
+    = will_paginate @movements, class: 'flickr_pagination'
     %table.table.table-hover.table-statement-movements
       %tr
         %th= sortable 'concept', 'Concepto'
@@ -41,5 +42,4 @@
                 %span.glyphicon.glyphicon-pencil
               = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
                 %span.glyphicon.glyphicon-trash
-
--#TODO ver que hacer con dividir movimientos, depende de un extracto
+    = will_paginate @movements, class: 'flickr_pagination'

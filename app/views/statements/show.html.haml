@@ -11,7 +11,6 @@
       %th= m_sortable 'amount', 'Cantidad'
       %th= m_sortable 'concept1', 'Concepto 1'
       %th= m_sortable 'concept3', 'Concepto 3'
-      %th= m_sortable 'concept5', 'Concepto 5'
       %th= m_sortable 'description', 'Descripción'
       %th Vivienda asociada
       %th Opciones
@@ -22,7 +21,6 @@
         %td= "#{movement.amount}€"
         %td= "#{movement.concept1}"
         %td= "#{movement.concept3}"
-        %td= "#{movement.concept5}"
         %td= "#{movement.description}"
         %td
           - if movement.children.empty?

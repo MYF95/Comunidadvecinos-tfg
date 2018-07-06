@@ -21,16 +21,17 @@
           %span.glyphicon.glyphicon-trash
 
 %h2 Residentes de la vivienda
--if @apartment.users.empty?
+-if @users.empty?
   %p No hay ningún usuario asignado a la vivienda.
 -else
+  = will_paginate @users, class: 'flickr_pagination'
   %table.table.table-hover.table-statement-movements
     %tr
-      %th Vecino
-      %th Email
-      %th Teléfono
+      %th= u_sortable 'first_name', 'Vecino'
+      %th= u_sortable 'email', 'Email'
+      %th= u_sortable 'phone_number', 'Teléfono'
       %th Opciones
-    -@apartment.users.each do |user|
+    -@users.each do |user|
       %tr
         %td= link_to "#{full_name(user)}", user_profile_path(user)
         %td= "#{user.email}"
@@ -38,7 +39,7 @@
         %td
           = link_to remove_user_path(@apartment, user), data: { confirm: "¿Quieres quitar al usuario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash
-
+  = will_paginate @users, class: 'flickr_pagination'
 .row
   .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
     %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     authenticated :user do
-      root 'static_pages#home', as: :authenticated_root
+      root 'pending_payments#index'
     end
 
     unauthenticated do

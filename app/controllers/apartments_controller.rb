@@ -1,11 +1,12 @@
 class ApartmentsController < ApplicationController
+  helper_method :sort_column, :sort_direction, :sort_pending_payment_column, :sort_movement_column, :sort_user_column
   before_action :logged_in_user
   before_action :apartment_getter, except: [:index, :new, :create]
   before_action :permissions, except: [:index, :show]
   before_action :balance_checker, except: [:index, :new, :create]
 
   def index
-    @apartments = Apartment.all
+    @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 3, page: params[:page])
   end
 
   def new
@@ -72,6 +73,7 @@ class ApartmentsController < ApplicationController
   # User related actions
 
   def users
+    @users = @apartment.users.order(sort_user_column + " " + sort_direction).paginate(per_page: 5, page: params[:page])
   end
 
   def add_user
@@ -141,14 +143,17 @@ class ApartmentsController < ApplicationController
   # Movement related actions
 
   def movements
+    @movements = @apartment.movements.order(sort_movement_column + " " + sort_direction).paginate(per_page: 5, page: params[:page])
   end
 
   # Pending Payments related actions
 
   def history
+    @pending_payments = @apartment.pending_payments.order(sort_pending_payment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def pending_payments
+    @pending_payments = @apartment.pending_payments.order(sort_pending_payment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def pending_payments_users
@@ -178,6 +183,26 @@ class ApartmentsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Apartment.column_names.include?(params[:sort]) ? params[:sort] : "floor"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def sort_pending_payment_column
+      PendingPayment.column_names.include?(params[:sort]) ? params[:sort] : "date"
+    end
+
+    def sort_movement_column
+      Movement.column_names.include?(params[:sort]) ? params[:sort] : "concept"
+    end
+
+    def sort_user_column
+      User.column_names.include?(params[:sort]) ? params[:sort] : "first_name"
+    end
 
     def apartment_getter
       @apartment = Apartment.find(params[:id])

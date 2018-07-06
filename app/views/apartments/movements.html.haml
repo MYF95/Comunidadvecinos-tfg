@@ -1,18 +1,19 @@
 %h1= "Movimientos asociados de la vivienda #{full_name_apartment(@apartment)}"
 
-- if @apartment.movements.empty?
+- if @movements.empty?
   %p No hay ningún movimiento asociado a la vivienda.
 -else
+  = will_paginate @movements, class: 'flickr_pagination'
   %table.table.table-hover.table-statement
     %tr
-      %th Concepto
-      %th Fecha
-      %th Cantidad
-      %th Descripción
+      %th= m_sortable 'concept', 'Concepto'
+      %th= m_sortable 'date', 'Fecha'
+      %th= m_sortable 'amount', 'Cantidad'
+      %th= m_sortable 'description', 'Descripción'
       %th Opciones
-    -@apartment.movements.each do |movement|
+    -@movements.each do |movement|
       %tr
-        %td= "#{movement.concept}"
+        %td= link_to "#{movement.concept}", movement_path(movement)
         %td= "#{movement.date}"
         %td= "#{movement.amount}€"
         %td= "#{movement.description}"
@@ -21,3 +22,4 @@
             %span.glyphicon.glyphicon-eject
           = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
             %span.glyphicon.glyphicon-pencil
+  = will_paginate @movements, class: 'flickr_pagination'

@@ -1,0 +1,20 @@
+%table.table.table-hover.table-statement
+  %tr
+    %th= 'Concepto'
+    %th= 'Fecha'
+    %th= 'Cantidad'
+    %th= 'Descripción'
+    %th Opciones
+  - @apartment.pending_payments.order('date ASC').where(paid: false).first(5).each do |pending_payment|
+    %tr
+      %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
+      %td= "#{pending_payment.date}"
+      %td= "#{pending_payment.amount}€"
+      %td= "#{pending_payment.description}"
+      %td
+        = link_to pending_payment_users_path(@apartment, pending_payment), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-eur
+        = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-pencil
+        = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
+          %span.glyphicon.glyphicon-trash

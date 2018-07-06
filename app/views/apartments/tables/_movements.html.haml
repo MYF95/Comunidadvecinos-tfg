@@ -1,0 +1,18 @@
+%table.table.table-hover.table-statement
+  %tr
+    %th= 'Concepto'
+    %th= 'Fecha'
+    %th= 'Cantidad'
+    %th= 'Descripción'
+    %th= 'Opciones'
+  - @apartment.movements.last(5).each do |movement|
+    %tr
+      %td= link_to "#{movement.concept}", movement_path(movement)
+      %td= "#{movement.date}"
+      %td= "#{movement.amount}€"
+      %td= "#{movement.description}"
+      %td
+        = link_to apartmentlist_path(movement), class: 'btn btn-xs btn-success' do
+          %span.glyphicon.glyphicon-eject
+        = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
+          %span.glyphicon.glyphicon-pencil

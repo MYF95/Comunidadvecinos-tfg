@@ -1,17 +1,18 @@
 %h1= "Pagos pendientes de la vivienda #{full_name_apartment(@apartment)}"
 %h2= "Saldo disponible: #{@apartment.balance}€"
 
--if @apartment.pending_payments.empty?
+-if @pending_payments.empty?
   %p La vivienda no tiene ningún pago pendiente.
 -else
+  =will_paginate @pending_payments, class: 'flickr_pagination'
   %table.table.table-hover.table-statement
     %tr
-      %th Concepto
-      %th Fecha
-      %th Cantidad
-      %th Descripción
+      %th= pp_sortable 'concept', 'Concepto'
+      %th= pp_sortable 'date', 'Fecha'
+      %th= pp_sortable 'amount', 'Cantidad'
+      %th= pp_sortable 'description', 'Descripción'
       %th Opciones
-    -@apartment.pending_payments.each do |pending_payment|
+    -@pending_payments.each do |pending_payment|
       - unless pending_payment.paid?
         %tr
           %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
@@ -25,3 +26,4 @@
               %span.glyphicon.glyphicon-pencil
             = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
               %span.glyphicon.glyphicon-trash
+  =will_paginate @pending_payments, class: 'flickr_pagination'

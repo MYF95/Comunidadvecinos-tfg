@@ -3,11 +3,12 @@
 - if @apartments.empty?
   %p No hay viviendas en la aplicación. Por favor, crea una vivienda antes de asociar pagos pendientes a las viviendas.
 - else
-  %table.table.table-hover
+  = will_paginate @apartments, class: 'flickr_pagination'
+  %table.table.table-hover.table-statement-movements
     %tr
-      %th Vivienda
-      %th= 'Cuota'
-      %th= 'Saldo'
+      %th= a_sortable 'floor', 'Vivienda'
+      %th= a_sortable 'fee', 'Cuota'
+      %th= a_sortable 'balance', 'Saldo'
       %th Opciones
     - @apartments.each do |apartment|
       %tr
@@ -16,3 +17,4 @@
           %td= "#{apartment.fee}"
           %td= "#{apartment.balance}"
           %td= link_to 'Asociar a vivienda', associate_pending_payment_apartment_path(@pending_payment, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
+  = will_paginate @apartments, class: 'flickr_pagination'

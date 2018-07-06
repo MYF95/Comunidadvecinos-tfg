@@ -17,7 +17,7 @@
         %td= "#{user.phone_number}"
         %td
           - user.apartments.each do |apartment|
-            = link_to "#{full_name_apartment(apartment)} ", apartment_path(apartment)
+            = link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
         %td
           = link_to user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash

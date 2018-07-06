@@ -64,7 +64,7 @@ class PendingPaymentsController < ApplicationController
   end
 
   def apartments
-    @apartments = Apartment.all
+    @apartments = Apartment.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def associate_apartment

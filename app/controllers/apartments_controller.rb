@@ -77,7 +77,13 @@ class ApartmentsController < ApplicationController
 
   def add_user
     @user = User.find(params[:user_id])
-    find_user_apartment_and_create
+    @user_apartment = UserApartment.find_by(user: @user, apartment: @apartment)
+    if @user_apartment.nil?
+      create_user_apartment
+    else
+      flash[:danger] = 'El usuario ya está en la vivienda'
+      redirect_to @apartment
+    end
   end
 
   def remove_user
@@ -106,7 +112,13 @@ class ApartmentsController < ApplicationController
     if @apartment.owner.nil?
       @apartment_owner = ApartmentOwner.new(apartment_id: @apartment.id, user_id: @user.id)
       if @apartment_owner.save
-        find_user_apartment_and_create
+        @user_apartment = UserApartment.find_by(user: @user, apartment: @apartment)
+        if @user_apartment.nil?
+          create_user_apartment
+        else
+          flash[:info] = 'El usuario ya estaba en la vivienda y se ha añadido como propietario.'
+          redirect_to @apartment
+        end
       else
         flash[:danger] = 'Hubo un problema asignando al usuario como propietario de la vivienda'
         redirect_to apartment_users_path(@apartment)
@@ -189,19 +201,13 @@ class ApartmentsController < ApplicationController
       @apartment.update_attribute(:balance, balance)
     end
 
-    def find_user_apartment_and_create
-      @user_apartment = UserApartment.find_by(user: @user, apartment: @apartment)
-      if @user_apartment.nil?
-        @user_apartment = UserApartment.new(user: @user, apartment: @apartment)
-        if @user_apartment.save!
-          flash[:info] = "#{@user.first_name} añadido a la vivienda"
-          redirect_to apartment_users_path(@apartment)
-        else
-          flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
-          redirect_to @apartment
-        end
+    def create_user_apartment
+      @user_apartment = UserApartment.new(user: @user, apartment: @apartment)
+      if @user_apartment.save!
+        flash[:info] = "#{@user.first_name} añadido a la vivienda"
+        redirect_to apartment_users_path(@apartment)
       else
-        flash[:danger] = 'El usuario ya está en la vivienda'
+        flash[:danger] = 'Hubo un error al añadir el usuario a la vivienda'
         redirect_to @apartment
       end
     end

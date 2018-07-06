@@ -7,13 +7,14 @@
     %th Teléfono
     %th Opciones
   -@users.each do |user|
-    -unless @apartment.users.exists?(user.id)
+    -unless @apartment.owner == user
       %tr
         %td= link_to "#{full_name(user)}", user_path(user)
         %td= "#{user.email}"
         %td= "#{user.phone_number}"
         %td
-          = link_to add_user_path(@apartment, user), class: 'btn btn-xs btn-success' do
-            %span.glyphicon.glyphicon-plus
+          -unless @apartment.users.exists?(user.id)
+            = link_to add_user_path(@apartment, user), class: 'btn btn-xs btn-success' do
+              %span.glyphicon.glyphicon-plus
           = link_to add_owner_path(@apartment, user), data: {confirm: "¿Quieres añadir a #{full_name(user)} como propietario de la vivienda?"}, class: 'btn btn-xs btn-success' do
             %span.glyphicon.glyphicon-home

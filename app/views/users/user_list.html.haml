@@ -9,7 +9,7 @@
   -@users.each do |user|
     -unless @apartment.owner == user
       %tr
-        %td= link_to "#{full_name(user)}", user_path(user)
+        %td= link_to "#{full_name(user)}", user_profile_path(user)
         %td= "#{user.email}"
         %td= "#{user.phone_number}"
         %td

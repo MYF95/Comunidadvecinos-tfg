@@ -4,7 +4,7 @@
     - if apartment.owner.nil?
       Sin propietario
     -else
-      =link_to "#{full_name(apartment.owner)}", user_path(apartment.owner)
+      =link_to "#{full_name(apartment.owner)}", user_profile_path(apartment.owner)
   %td= "#{apartment.fee}€"
   %td= "#{apartment.balance}€"
   %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get '/about',                                               to: 'static_pages#about'
 
   # User custom routes
-  get '/profile/:id',                                         to: 'users#show', as: 'user'
+  get '/profile/:id',                                         to: 'users#show', as: 'user_profile'
   get '/:id/users',                                           to: 'users#user_list', as: 'userlist'
 
   # Statement with movement routes

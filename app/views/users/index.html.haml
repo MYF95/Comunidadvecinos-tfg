@@ -11,7 +11,7 @@
   -@users.each do |user|
     -unless current_user == user
       %tr
-        %td= link_to "#{user.first_name}", user_path(user)
+        %td= link_to "#{user.first_name}", user_profile_path(user)
         %td= "#{user.last_name}"
         %td= "#{user.email}"
         %td= "#{user.phone_number}"
@@ -19,5 +19,5 @@
           - user.apartments.each do |apartment|
             = link_to "#{full_name_apartment(apartment)} ", apartment_path(apartment)
         %td
-          = link_to registration_path(user), data: { confirm: "¿Estás seguro?" }, method: :delete, class: 'btn btn-xs btn-danger' do
+          = link_to user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash

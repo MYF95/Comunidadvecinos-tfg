@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   before_action :logged_in_user
   before_action :permissions, except: [:show, :index]
+  before_action :user_getter, except: [:user_list, :index]
 
   def show
-    @user = User.find(params[:id])
   end
 
   def user_list
@@ -15,7 +15,20 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def destroy
+    if @user.destroy
+      flash[:info] = 'Usuario eliminado.'
+    else
+      flash[:danger] = 'Ha ocurrido un error intentando eliminar al usuario'
+    end
+    redirect_to users_path
+  end
+
   private
+
+    def user_getter
+      @user = User.find(params[:id])
+    end
 
     def permissions
       unless current_user.admin?

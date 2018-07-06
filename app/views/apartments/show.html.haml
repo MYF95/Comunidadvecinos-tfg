@@ -4,7 +4,7 @@
   - if @apartment.owner.nil?
     Dueño: Sin propietario
   -else
-    =link_to "#{full_name(@apartment.owner)}", user_path(@apartment.owner)
+    =link_to "#{full_name(@apartment.owner)}", user_profile_path(@apartment.owner)
 %p= "Cuota: #{@apartment.fee}€"
 %p= "Saldo actual: #{@apartment.balance}€"
 %p= @apartment.apartment_contribution ? "Cuota de contribución de la vivienda: #{(@apartment.apartment_contribution)*100}%" : 'Cuota de contribución de la vivienda: Sin asignar'

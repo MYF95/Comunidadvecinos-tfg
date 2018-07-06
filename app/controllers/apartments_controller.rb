@@ -6,7 +6,7 @@ class ApartmentsController < ApplicationController
   before_action :balance_checker, except: [:index, :new, :create]
 
   def index
-    @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 3, page: params[:page])
+    @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 10, page: params[:page])
   end
 
   def new
@@ -158,6 +158,7 @@ class ApartmentsController < ApplicationController
 
   def pending_payments_users
     @pending_payment = PendingPayment.find(params[:pending_payment_id])
+    @users = @apartment.users.order(sort_user_column + " " + sort_direction).paginate(per_page: 5, page: params[:page])
   end
 
   def pay_pending_payment

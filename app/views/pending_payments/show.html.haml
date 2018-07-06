@@ -8,3 +8,5 @@
 - else
   %p= "Vivienda: #{full_name_apartment(@pending_payment.apartment)}"
 %p= link_to 'Actualizar pago pendiente', edit_pending_payment_path(@pending_payment), class: 'btn btn-primary'
+- unless @pending_payment.apartment.nil?
+  %p= link_to 'Asociar a otra vivienda', pending_payment_apartment_list_path(@pending_payment), class: 'btn btn-primary'

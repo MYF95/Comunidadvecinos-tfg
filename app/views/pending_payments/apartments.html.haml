@@ -6,9 +6,13 @@
   %table.table.table-hover
     %tr
       %th Vivienda
+      %th= 'Cuota'
+      %th= 'Saldo'
       %th Opciones
     - @apartments.each do |apartment|
       %tr
         - if @pending_payment.apartment != apartment
           %td= "#{full_name_apartment(apartment)}"
+          %td= "#{apartment.fee}"
+          %td= "#{apartment.balance}"
           %td= link_to 'Asociar a vivienda', associate_pending_payment_apartment_path(@pending_payment, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}

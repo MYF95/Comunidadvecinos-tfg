@@ -1,11 +1,12 @@
 class MovementsController < ApplicationController
+  helper_method :sort_column, :sort_direction
   before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create, :destroy_statement]
   before_action :permissions, except: [:index, :show]
   before_action :check_amount, only: [:associate_apartment]
 
   def index
-    @movements = Movement.all
+    @movements = Movement.order(sort_column + " " + sort_direction)
   end
 
   def new
@@ -134,6 +135,14 @@ class MovementsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Movement.column_names.include?(params[:sort]) ? params[:sort] : "date"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def movement_getter
       @movement = Movement.find(params[:id])

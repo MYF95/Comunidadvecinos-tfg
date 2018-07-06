@@ -212,6 +212,18 @@ table .glyphicon {
   }
 }
 
+.table th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  &.asc {
+    background-image: asset-url("up_arrow.gif");
+  }
+  &.desc {
+    background-image: asset-url("down_arrow.gif");
+  }
+}
+
 .full-width {
   width: 100vw;
   position: relative;

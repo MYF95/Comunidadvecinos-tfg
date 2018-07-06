@@ -6,7 +6,6 @@ class Statement < ApplicationRecord
   has_one_attached :bank_statement
 
   validates :name, presence: true
-  validates :date, presence: true
 
   private
     def destroy_movements

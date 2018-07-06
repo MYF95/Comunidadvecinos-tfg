@@ -1,5 +1,5 @@
 class MovementsController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :sort_apartment_column
   before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create, :destroy_statement]
   before_action :permissions, except: [:index, :show]
@@ -79,7 +79,7 @@ class MovementsController < ApplicationController
   end
 
   def apartments
-    @apartments = Apartment.all
+    @apartments = Apartment.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def associate_apartment
@@ -142,6 +142,10 @@ class MovementsController < ApplicationController
 
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def sort_apartment_column
+      Apartment.column_names.include?(params[:sort]) ? params[:sort] : "floor"
     end
 
     def movement_getter

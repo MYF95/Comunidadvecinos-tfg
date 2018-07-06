@@ -5,7 +5,7 @@
     %th= 'Cantidad'
     %th= 'Descripción'
     %th= 'Opciones'
-  - @apartment.movements.last(5).each do |movement|
+  - @apartment.movements.order('date DESC').first(5).each do |movement|
     %tr
       %td= link_to "#{movement.concept}", movement_path(movement)
       %td= "#{movement.date}"

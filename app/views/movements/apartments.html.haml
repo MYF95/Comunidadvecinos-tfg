@@ -1,13 +1,14 @@
-%h1 Añadir movimiento a otra vivienda
+%h1 Añadir movimiento a una vivienda
 
 -if @apartments.empty?
   %p No hay ninguna vivienda en la aplicación. Por favor, crea una vivienda antes de empezar a asociar movimientos a las viviendas.
 -else
+  = will_paginate @apartments, class: 'flickr_pagination'
   %table.table.table-hover.table-statement-movements
     %tr
-      %th Vivienda
-      %th Cuota
-      %th Saldo
+      %th= a_sortable 'floor', 'Vivienda'
+      %th= a_sortable 'fee', 'Cuota'
+      %th= a_sortable 'balance', 'Saldo actual'
       %th Opciones
     - @apartments.each do |apartment|
       %tr
@@ -16,3 +17,4 @@
           %td= "#{apartment.fee}€"
           %td= "#{apartment.balance}€"
           %td= link_to 'Asociar a vivienda', associate_apartment_path(@movement, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
+  = will_paginate @apartments, class: 'flickr_pagination'

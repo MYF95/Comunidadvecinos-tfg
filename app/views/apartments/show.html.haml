@@ -1,30 +1,64 @@
-%h1= "Datos de la vivienda #{full_name_apartment(@apartment)}"
-%p
-  Dueño:
-  - if @apartment.owner.nil?
-    Dueño: Sin propietario
-  -else
-    =link_to "#{full_name(@apartment.owner)}", user_profile_path(@apartment.owner)
-%p= "Cuota: #{@apartment.fee}€"
-%p= "Saldo actual: #{@apartment.balance}€"
-%p= @apartment.apartment_contribution ? "Cuota de contribución de la vivienda: #{(@apartment.apartment_contribution)*100}%" : 'Cuota de contribución de la vivienda: Sin asignar'
-%p= link_to 'Editar usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
-%p= link_to 'Contabilidad de pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
-
-%h2 Pagos pendientes más antiguos
--if @apartment.pending_payments.where(paid: false).empty?
-  %p Esta vivienda no tiene ningún pago pendiente
-- else
-  = render 'apartments/tables/pending_payments'
+.row
+  .col-xs-12
+    .page-header
+      %h1= "Datos de la vivienda #{full_name_apartment(@apartment)}"
+.inner-wrapper
   .row
-    .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
-      %p= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
-
-%h2 Movimientos más recientes
--if @apartment.movements.empty?
-  %p Esta vivienda no tiene ningún movimiento asociado
-- else
-  = render 'apartments/tables/movements'
+    .col-xs-12
+      .row
+        .col-xs-6.text-right
+          %p Dueño
+        .col-xs-6.text-left
+          - if @apartment.owner.nil?
+            %p= 'Sin propietario'
+          -else
+            %p= link_to "#{full_name(@apartment.owner)}", user_profile_path(@apartment.owner)
+      .row
+        .col-xs-6.text-right
+          %p= 'Cuota'
+        .col-xs-6.text-left
+          %p= "#{@apartment.fee}€"
+      .row
+        .col-xs-6.text-right
+          %p= 'Saldo actual'
+        .col-xs-6.text-left
+          %p= "#{@apartment.balance}€"
+      .row
+        .col-xs-6.text-right
+          %p= 'Cuota de contribución de la vivienda'
+        .col-xs-6.text-left
+          %p= @apartment.apartment_contribution ?  "#{(@apartment.apartment_contribution)*100}%" : 'Sin asignar'
+      .row
+        %hr/
+        .col-xs-6.text-right
+          %p.button= link_to 'Editar usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
+        .col-xs-6.text-left
+          %p.button= link_to 'Contabilidad de pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
+  %hr/
   .row
-    .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
-      %p= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'
+    .col-xs-12
+      .page-subheader
+        %h2 Pagos pendientes más antiguos
+      .row
+        .col-xs-12
+          -if @apartment.pending_payments.where(paid: false).empty?
+            %p Esta vivienda no tiene ningún pago pendiente
+          - else
+            = render 'apartments/tables/pending_payments'
+          .row
+            .col-xs-12
+              %p.button= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
+  %hr/
+  .row
+    .col-xs-12
+      .page-subheader
+        %h2 Movimientos más recientes
+      .row
+        .col-xs-12
+          -if @apartment.movements.empty?
+            %p Esta vivienda no tiene ningún movimiento asociado
+          - else
+            = render 'apartments/tables/movements'
+            .row
+              .col-xs-12
+                %p.button= link_to 'Movimientos asociados', apartment_movements_path, class: 'btn btn-primary'

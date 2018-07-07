@@ -32,10 +32,10 @@
   flex-wrap: wrap;
 }
 
-.row > [class*='col-']{
-  display: flex;
-  flex-direction: column;
-}
+//.row > [class*='col-']{
+//  display: flex;
+//  flex-direction: column;
+//}
 
 /* Universal */
 
@@ -46,14 +46,30 @@ html{
 
 body{
   padding-top: 4%;
+  background-image: asset-url("background.jpg")
 }
 
 .wrapper {
   position: relative;
 }
 
-.page-subheader{
+.inner-wrapper{
+  box-sizing: border-box;
+  margin: 30px auto;
+  background: #f0f1f5;
+  border: 1px solid rgba(161, 167, 178, 0.5);
+  border-radius: 3px;
+  padding: 20px;
+}
 
+.page-header{
+  border-bottom: 2px solid lightgray;
+
+}
+
+.page-subheader h2{
+  padding-bottom: 9px;
+  margin: 30px 0 10px;
 }
 
 h3 {
@@ -64,6 +80,24 @@ h1, h2, h3, h4, h5, h6{
   //font-family: "Fluid Lighter";
   margin: 10px 0 10px 0;
   font-weight: normal;
+}
+
+p {
+  font-size: 20px;
+
+  &.button{
+    padding-top: 10px;
+  }
+}
+
+.text-right p {
+  font-weight: bold;
+}
+
+hr{
+  width: 96%;
+  height: 1px;
+  border-top: 2px solid lightgray;
 }
 
 .glyphicon{

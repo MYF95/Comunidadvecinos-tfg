@@ -1,21 +1,37 @@
-%h1 Elige un usuario para pagar el pago pendiente
+- provide(:title, 'Pagar pago pendiente')
 
-%h2 Usuarios en la vivienda
--if @users.empty?
-  %p No hay ningún usuario asignado a la vivienda.
--else
-  = will_paginate @users, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
-    %tr
-      %th= u_sortable 'first_name', 'Vecino'
-      %th= u_sortable 'email', 'Email'
-      %th= u_sortable 'phone_number', 'Teléfono'
-      %th Opciones
-    -@users.each do |user|
-      %tr
-        %td= link_to "#{full_name(user)}", user_profile_path(user)
-        %td= "#{user.email}"
-        %td= "#{user.phone_number}"
-        %td
-          = link_to 'Pagar', pay_pending_payment_path(@apartment, @pending_payment, user), data: { confirm: "¿Quieres pagar el pago pendiente #{@pending_payment.concept} con #{full_name(user)}?" }, class: 'btn btn-primary'
-  = will_paginate @users, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1 Elige un usuario para pagar el pago pendiente
+
+.inner-wrapper
+  .row
+    .col-xs-12
+      .page-header
+        %h2 Usuarios en la vivienda
+  -if @users.empty?
+    %p No hay ningún usuario asignado a la vivienda.
+  -else
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @users, class: 'flickr_pagination'
+    .table-responsive
+      %table.table.table-hover.table-statement
+        %tr
+          %th= u_sortable 'first_name', 'Vecino'
+          %th= u_sortable 'email', 'Email'
+          %th= u_sortable 'phone_number', 'Teléfono'
+          %th Opciones
+        -@users.each do |user|
+          %tr
+            %td= link_to "#{full_name(user)}", user_profile_path(user)
+            %td= "#{user.email}"
+            %td= "#{user.phone_number}"
+            %td
+              = link_to 'Pagar', pay_pending_payment_path(@apartment, @pending_payment, user), data: { confirm: "¿Quieres pagar el pago pendiente #{@pending_payment.concept} con #{full_name(user)}?" }, class: 'btn btn-primary'
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @users, class: 'flickr_pagination'

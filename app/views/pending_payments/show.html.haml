@@ -1,12 +1,55 @@
-%h1= "Estos son los datos del pago pendiente"
-%p= "Concepto: #{@pending_payment.concept}"
-%p= "Fecha: #{@pending_payment.date}"
-%p= "Cantidad: #{@pending_payment.amount}€"
-%p= "Descripción: #{@pending_payment.description}"
-- if @pending_payment.apartment.nil?
-  %p= 'Vivienda: Este pago pendiente no está asociado a ninguna vivienda'
-- else
-  %p= "Vivienda: #{full_name_apartment(@pending_payment.apartment)}"
-%p= link_to 'Actualizar pago pendiente', edit_pending_payment_path(@pending_payment), class: 'btn btn-primary'
-- unless @pending_payment.apartment.nil?
-  %p= link_to 'Asociar a otra vivienda', pending_payment_apartment_list_path(@pending_payment), class: 'btn btn-primary'
+- provide(:title, 'Pago pendiente')
+
+.row
+  .col-xs-12
+    .page-header
+      %h1= 'Datos del pago pendiente'
+.inner-wrapper
+  .row
+    .col-xs-12
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto'
+        .col-xs-6.text-left
+          %p= "#{@pending_payment.concept}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Fecha'
+        .col-xs-6.text-left
+          %p= "#{@pending_payment.date}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Descripción'
+        .col-xs-6.text-left
+          %p= "#{@pending_payment.description}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Cantidad'
+        .col-xs-6.text-left
+          %p= "#{@pending_payment.amount}"
+      .row
+        .col-xs-6.text-right
+          %p Vivienda
+        .col-xs-6.text-left
+          - if @pending_payment.apartment.nil?
+            %p= 'Este pago está asociado a ninguna vivienda'
+          -else
+            %p= link_to "#{full_name_apartment(@pending_payment.apartment)}", apartment_path(@pending_payment.apartment)
+      .row
+        .col-xs-6.text-right
+          %p ¿Pagado?
+        .col-xs-6.text-left
+          %p= @pending_payment.paid? ? "Si" : "No"
+      - if @pending_payment.paid?
+        .row
+          .col-xs-6.text-right
+            %p Pagador
+          .col-xs-6.text-left
+            %p= "#{@pending_payment.paid_by}"
+      .row
+        %hr/
+        .col-xs-6.text-right
+          %p.button= link_to 'Actualizar pago pendiente', edit_pending_payment_path(@pending_payment), class: 'btn btn-primary'
+        .col-xs-6.text-left
+          - unless @pending_payment.apartment.nil?
+            %p.button= link_to 'Asociar a otra vivienda', pending_payment_apartment_list_path(@pending_payment), class: 'btn btn-primary'

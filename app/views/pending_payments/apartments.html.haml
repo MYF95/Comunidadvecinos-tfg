@@ -1,20 +1,37 @@
-%h1 Asociar pago pendiente a vivienda
+- provide(:title, 'Elegir vivienda')
 
-- if @apartments.empty?
-  %p No hay viviendas en la aplicación. Por favor, crea una vivienda antes de asociar pagos pendientes a las viviendas.
-- else
-  = will_paginate @apartments, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
-    %tr
-      %th= a_sortable 'floor', 'Vivienda'
-      %th= a_sortable 'fee', 'Cuota'
-      %th= a_sortable 'balance', 'Saldo'
-      %th Opciones
-    - @apartments.each do |apartment|
-      %tr
-        - if @pending_payment.apartment != apartment
-          %td= "#{full_name_apartment(apartment)}"
-          %td= "#{apartment.fee}"
-          %td= "#{apartment.balance}"
-          %td= link_to 'Asociar a vivienda', associate_pending_payment_apartment_path(@pending_payment, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
-  = will_paginate @apartments, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1 Asociar pago pendiente a vivienda
+.row
+  .col-xs-12
+    %p Elige una vivienda a la que asociar el pago pendiente seleccionado
+.inner-wrapper
+  .row
+    .col-xs-12
+      - if @apartments.empty?
+        %p No hay viviendas en la aplicación. Por favor, crea una vivienda antes de asociar pagos pendientes a las viviendas.
+      - else
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @apartments, class: 'flickr_pagination'
+        .table-responsive
+          %table.table.table-hover.table-statement
+            %tr
+              %th= a_sortable 'floor', 'Vivienda'
+              %th= a_sortable 'fee', 'Cuota'
+              %th= a_sortable 'balance', 'Saldo'
+              %th Opciones
+            - @apartments.each do |apartment|
+              %tr
+                - if @pending_payment.apartment != apartment
+                  %td= "#{full_name_apartment(apartment)}"
+                  %td= "#{apartment.fee}"
+                  %td= "#{apartment.balance}"
+                  %td= link_to 'Asociar a vivienda', associate_pending_payment_apartment_path(@pending_payment, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @apartments, class: 'flickr_pagination'

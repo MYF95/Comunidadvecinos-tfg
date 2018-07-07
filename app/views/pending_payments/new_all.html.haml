@@ -1,25 +1,43 @@
-%h2 Crea un nuevo pago pendiente para todas las viviendas
-= form_for(PendingPayment.new, url: pending_payment_create_all_path) do |f|
-  = render 'shared/error_message', object: f.object
-  .field
-    = f.label 'Concepto'
-    %br/
-    = f.text_field :concept, autofocus: true
-  .field
-    = f.label 'Fecha de inicio'
-    %br/
-    = f.date_field :date
-  .field
-    = f.label 'Cantidad'
-    %br/
-    = f.number_field :amount, min: 0
-  .field
-    = f.label 'Description'
-    %br/
-    = f.text_field :description
-  .field
-    = f.label 'Meses'
-    %br/
-    = f.number_field :months, min: 1
-  .actions
-    = f.submit 'Crear pago pendiente'
+- provide(:title, 'Crear pago pendiente')
+
+.row
+  .col-xs-12
+    .page-header
+      %h1 Crear pago pendiente de la comunidad
+.row
+  .col-xs-12
+    %p
+      Rellena el formulario para crear un pago pendiente con el concepto deseado para todas las viviendas. La cantidad que tendrá
+      que pagar cada vivienda será en función de su cuota de contribución a la comunidad.
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(PendingPayment.new, url: pending_payment_create_all_path) do |f|
+          = render 'shared/error_message', object: f.object
+          .form-title
+            %span= 'Crear pago pendiente'
+            %hr
+          .form-group
+            .row
+              = f.label 'Concepto', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_area :concept, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Fecha de inicio', class: 'col-xs-12 col-sm-4 control-label'
+              = f.date_field :date, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Cantidad', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :amount, min: 0, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Descripción', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_area :description, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Meses', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :months, min: 1, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.submit 'Crear pago pendiente', class: 'col-xs-12 col-sm-4 col-sm-offset-4'

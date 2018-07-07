@@ -1,16 +1,29 @@
 - provide(:title, 'Generar pagos pendientes')
-- provide(:button_text, 'Generar pagos pendientes')
 
-%h2 Genera los pagos pendientes de las cuotas de las viviendas
-= form_for(@pending_payment) do |f|
-  = render 'shared/error_message', object: f.object
-  .field
-    = f.label 'Fecha'
-    %br/
-    = f.date_field :date
-  .field
-    = f.label 'Description'
-    %br/
-    = f.text_field :description
-  .actions
-    = f.submit 'Generar pagos pendientes'
+.row
+  .col-xs-12
+    .page-header
+      %h1 Generar pagos pendientes de las viviendas
+.row
+  .col-xs-12
+    %p Rellena el formulario para generar los pagos pendientes de la cuota de las viviendas del mes seleccionado
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(@pending_payment) do |f|
+          = render 'shared/error_message', object: f.object
+          .form-title
+            %span= 'Generar pagos pendientes'
+            %hr
+          .form-group
+            .row
+              = f.label 'Fecha', class: 'col-xs-12 col-sm-4 control-label'
+              = f.date_field :date, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Description', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_area :description, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.submit 'Generar pagos pendientes', class: 'col-xs-12 col-sm-4 col-sm-offset-4'

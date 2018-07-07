@@ -1,6 +1,34 @@
 - provide(:title, 'Actualizar pago pendiente')
-- provide(:button_text, 'Actualizar pago pendiente')
 
-%h2 Actualiza un pago pendiente
-= form_for(@pending_payment) do |f|
-  = render 'form', f: f
+.row
+  .col-xs-12
+    .page-header
+      %h1 Actualizar pago pendiente
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(@pending_payment) do |f|
+          = render 'shared/error_message', object: f.object
+          .form-title
+            %span= 'Actualizar pago pendiente'
+            %hr
+          .form-group
+            .row
+              = f.label 'Concepto', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_area :concept, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Fecha de inicio', class: 'col-xs-12 col-sm-4 control-label'
+              = f.date_field :date, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Cantidad', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :amount, min: 0, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Descripción', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_area :description, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.submit 'Actualizar pago pendiente', class: 'col-xs-12 col-sm-4 col-sm-offset-4'

@@ -1,42 +1,61 @@
-%h2 Solicitar una cuenta
+- provide(:title, 'Solicitar cuenta')
+
+.row
+  .col-xs-12
+    .page-header
+      %h1 Solicitar una cuenta
+.row
+  .col-xs-12
+    %p
+      Bienvenido, la aplicación de Comunidad Vecinos es una aplicación para el uso de una comunidad privada.
+      Con el formulario que se muestra, podrá solicitar una cuenta que revisará un administrador para confirmar la solicitud.
 -#TODO hacer que la creación de cuenta sea una solicitud que necesite confirmación del administrador
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          = devise_error_messages!
+          .form-title
+            %span= 'Solicitar cuenta'
+            %hr
+          .form-group
+            .row
+              = f.label 'Nombre', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_field :first_name, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Apellidos', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_field :last_name, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Fecha de nacimiento', class: 'col-xs-12 col-sm-4 control-label'
+              = f.date_field :birthday, autofocus: true, class: 'col-xs-12 col-sm-4'
 
-  .field
-    = f.label 'Nombre'
-    %br/
-    = f.text_field :first_name, autofocus: true
-  .field
-    = f.label 'Apellidos'
-    %br/
-    = f.text_field :last_name, autofocus: true
-  .field
-    = f.label 'Fecha de nacimiento'
-    %br/
-    = f.date_field :birthday, autofocus: true
+          .form-group
+            .row
+              = f.label 'Correo electrónico', class: 'col-xs-12 col-sm-4 control-label'
+              = f.email_field :email, autofocus: true, class: 'col-xs-12 col-sm-4'
 
-  .field
-    = f.label 'Correo electrónico'
-    %br/
-    = f.email_field :email, autofocus: true
+          .form-group
+            .row
+              = f.label 'Nº de teléfono', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :phone_number, autofocus: true, class: 'col-xs-12 col-sm-4'
 
-  .field
-    = f.label 'Nº de contacto (Móvil o teléfono fijo)'
-    %br/
-    = f.number_field :phone_number, autofocus: true
-
-  .field
-    = f.label 'Contraseña'
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} caracteres mínimo)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label 'Confirmación de contraseña'
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit 'Solicitar cuenta'
-= render "devise/shared/links"
+          .form-group
+            .row
+              = f.label 'Contraseña', class: 'col-xs-12 control-label'
+              = f.password_field :password, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+            .row
+              .col-xs-12
+                - if @minimum_password_length
+                  %em
+                    (#{@minimum_password_length} caracteres mínimo)
+          .form-group
+            .row
+              = f.label 'Confirmación de contraseña', class: 'col-xs-12 control-label'
+              = f.password_field :password_confirmation, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+          .form-group
+            .row
+              = f.submit 'Solicitar cuenta', class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+        = render "devise/shared/links"

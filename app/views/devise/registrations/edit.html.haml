@@ -1,55 +1,68 @@
-%h2
-  Editando usuario
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-  = devise_error_messages!
+- provide(:title, 'Editar usuario')
 
-  .field
-    = f.label 'Nombre'
-    %br/
-    = f.text_field :first_name, autofocus: true
-  .field
-    = f.label 'Apellidos'
-    %br/
-    = f.text_field :last_name, autofocus: true
-  .field
-    = f.label 'Fecha de nacimiento'
-    %br/
-    = f.date_field :birthday, autofocus: true
-
-  .field
-    = f.label 'Correo electrónico'
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div
-      Esperando confirmación de: #{resource.unconfirmed_email}
-
-  .field
-    = f.label 'Nº de contacto (Móvil o teléfono fijo)'
-    %br/
-    = f.number_field :phone_number, autofocus: true
-
-  .field
-    = f.label 'Contraseña'
-    %i (déjalo en blanco si no lo quieres cambiar)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-    - if @minimum_password_length
-      %br/
-      %em
-        = @minimum_password_length
-        characters minimum
-  .field
-    = f.label 'Confirmación de contraseña'
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .field
-    = f.label 'Contraseña actual'
-    %i (necesitamos tu contraseña actual para realizar los cambios)
-    %br/
-    = f.password_field :current_password, autocomplete: "off"
-  .actions
-    = f.submit 'Actualizar'
-%hr
-%p= button_to "Borrar cuenta", registration_path(resource_name), data: { confirm: "¿Estás seguro?" }, method: :delete
-= link_to "Atrás", :back
+.row
+  .col-xs-12
+    .page-header
+      %h1 Editando usuario
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+          = devise_error_messages!
+          .form-title
+            %span= 'Editar usuario'
+            %hr
+          .form-group
+            .row
+              = f.label 'Nombre', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_field :first_name, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Apellidos', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_field :last_name, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Fecha de nacimiento', class: 'col-xs-12 col-sm-4 control-label'
+              = f.date_field :birthday, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Correo electrónico', class: 'col-xs-12 col-sm-4 control-label'
+              = f.email_field :email, autofocus: true, autocomplete: "email", class: 'col-xs-12 col-sm-4'
+            - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+              %div
+                Esperando confirmación de: #{resource.unconfirmed_email}
+          .form-group
+            .row
+              = f.label 'Nº de teléfono', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :phone_number, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Contraseña', class: 'col-xs-12 control-label'
+            .row
+              .col-xs-12
+                %i (déjalo en blanco si no lo quieres cambiar)
+              = f.password_field :password, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+            .row
+              .col-xs-12
+                - if @minimum_password_length
+                  %em
+                    = @minimum_password_length
+                    caracteres mínimo
+          .form-group
+            .row
+              = f.label 'Confirmación de contraseña', class: 'col-xs-12 control-label'
+              = f.password_field :password_confirmation, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+          .form-group
+            .row
+              = f.label 'Contraseña actual', class: 'col-xs-12 control-label'
+            .row
+              .col-xs-12
+                %i (necesitamos tu contraseña actual para realizar los cambios)
+              = f.password_field :current_password, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+          .form-group
+            .row
+              = f.submit 'Actualizar', class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+  %hr
+  %p= button_to "Borrar cuenta", registration_path(resource_name), data: { confirm: "¿Estás seguro?" }, method: :delete
+  = link_to "Atrás", :back

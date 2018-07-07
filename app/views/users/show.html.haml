@@ -1,22 +1,52 @@
-%h1= "Usuario #{full_name(@user)}"
+- provide(:title, 'Usuario')
 
-%p= "Correo: #{@user.email}"
-%p= "Fecha de nacimiento: #{@user.birthday}"
-%p= "Teléfono: #{@user.phone_number}"
-
--if current_user == @user
-  %p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
-
-%h2 Viviendas asociadas
-= will_paginate @apartments, class: 'flickr_pagination'
-%table.table.table-hover.table-statement
-  %tr
-    %th= a_sortable 'floor', 'Vivienda'
-    %th Propietario
-    %th= a_sortable 'fee', 'Cuota'
-    %th= a_sortable 'balance', 'Saldo actual'
-    %th= a_sortable 'apartment_contribution', 'Cuota de contribución'
-    %th Opciones
-  - @user.apartments.each do |apartment|
-    = render 'apartments', apartment: apartment
-= will_paginate @apartments, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1= "Usuario #{full_name(@user)}"
+.inner-wrapper
+  .row
+    .col-xs-12
+      .row
+        .col-xs-6.text-right
+          %p= 'Correo'
+        .col-xs-6.text-left
+          %p= "#{@user.email}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Fecha de nacimiento'
+        .col-xs-6.text-left
+          %p= "#{@user.birthday}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Teléfono'
+        .col-xs-6.text-left
+          %p= "#{@user.phone_number}"
+      .row
+        .col-xs-12
+          -if current_user == @user
+            %hr/
+            %p= link_to 'Editar perfil', edit_user_registration_path, class: 'btn btn-primary'
+  .row
+    .col-xs-12
+      .page-header
+        %h2 Viviendas asociadas
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @apartments, class: 'flickr_pagination'
+  .table-responsive
+    %table.table.table-hover.table-statement
+      %tr
+        %th= a_sortable 'floor', 'Vivienda'
+        %th Propietario
+        %th= a_sortable 'fee', 'Cuota'
+        %th= a_sortable 'balance', 'Saldo actual'
+        %th= a_sortable 'apartment_contribution', 'Cuota de contribución'
+        %th Opciones
+      - @user.apartments.each do |apartment|
+        = render 'apartments', apartment: apartment
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @apartments, class: 'flickr_pagination'

@@ -9,5 +9,5 @@
   %td= "#{apartment.balance}€"
   %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
   %td
-    = link_to edit_apartment_path(apartment), class: 'btn btn-xs btn-primary' do
-      %span.glyphicon.glyphicon-pencil
+    = link_to 'Ver', apartment_path(apartment), class: 'btn btn-xs btn-primary'
+    = link_to 'Editar',edit_apartment_path(apartment), class: 'btn btn-xs btn-primary'

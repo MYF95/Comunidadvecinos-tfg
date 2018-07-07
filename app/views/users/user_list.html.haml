@@ -1,22 +1,32 @@
-%h1= "Elige el usuario a añadir a la vivienda #{full_name_apartment(@apartment)}"
-
-= will_paginate @users, class: 'flickr_pagination'
-%table.table.table-hover.table-statement
-  %tr
-    %th= sortable 'first_name', 'Vecino'
-    %th= sortable 'email', 'Email'
-    %th= sortable 'phone_number', 'Teléfono'
-    %th Opciones
-  -@users.each do |user|
-    -unless @apartment.owner == user
-      %tr
-        %td= link_to "#{full_name(user)}", user_profile_path(user)
-        %td= "#{user.email}"
-        %td= "#{user.phone_number}"
-        %td
-          -unless @apartment.users.exists?(user.id)
-            = link_to add_user_path(@apartment, user), class: 'btn btn-xs btn-success' do
-              %span.glyphicon.glyphicon-plus
-          = link_to add_owner_path(@apartment, user), data: {confirm: "¿Quieres añadir a #{full_name(user)} como propietario de la vivienda?"}, class: 'btn btn-xs btn-success' do
-            %span.glyphicon.glyphicon-home
-= will_paginate @users, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1= "Elige el usuario a añadir a la vivienda #{full_name_apartment(@apartment)}"
+.inner-wrapper
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @users, class: 'flickr_pagination'
+.table-responsive
+  %table.table.table-hover.table-statement
+    %tr
+      %th= sortable 'first_name', 'Vecino'
+      %th= sortable 'email', 'Email'
+      %th= sortable 'phone_number', 'Teléfono'
+      %th Opciones
+    -@users.each do |user|
+      -unless @apartment.owner == user
+        %tr
+          %td= link_to "#{full_name(user)}", user_profile_path(user)
+          %td= "#{user.email}"
+          %td= "#{user.phone_number}"
+          %td
+            -unless @apartment.users.exists?(user.id)
+              = link_to add_user_path(@apartment, user), class: 'btn btn-xs btn-success' do
+                %span.glyphicon.glyphicon-plus
+            = link_to add_owner_path(@apartment, user), data: {confirm: "¿Quieres añadir a #{full_name(user)} como propietario de la vivienda?"}, class: 'btn btn-xs btn-success' do
+              %span.glyphicon.glyphicon-home
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @users, class: 'flickr_pagination'

@@ -1,17 +1,32 @@
-%h2 Iniciar sesión en la comunidad de vecinos
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "devise/shared/links"
+- provide(:title, 'Iniciar sesión')
+
+.row
+  .col-xs-12
+    .page-header
+      %h1 Iniciar sesión en la comunidad de vecinos
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          .form-title
+            %span= 'Iniciar sesión'
+            %hr
+          .form-group
+            .row
+              = f.label :email, class: 'col-xs-12 col-sm-4 control-label'
+              = f.email_field :email, autofocus: true, autocomplete: "email", class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label :password, class: 'col-xs-12 col-sm-4 control-label'
+              = f.password_field :password, autocomplete: "off", class: 'col-xs-12 col-sm-4'
+          - if devise_mapping.rememberable?
+            .form-group
+              .row
+                .col-xs-12.col-sm-4-col-sm-offset-4
+                  = f.check_box :remember_me
+                  = f.label :remember_me
+          .form-group
+            .row
+              = f.submit "Iniciar sesión", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+        = render "devise/shared/links"

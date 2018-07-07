@@ -51,15 +51,18 @@ body{
 
 .wrapper {
   position: relative;
+
 }
 
 .inner-wrapper{
+  position: relative;
   box-sizing: border-box;
   margin: 30px auto;
   background: #f0f1f5;
   border: 1px solid rgba(161, 167, 178, 0.5);
   border-radius: 3px;
   padding: 20px;
+  height: 100%;
 }
 
 .page-header{
@@ -292,4 +295,19 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance:textfield;
+}
+
+.form-box{
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 42px 55px 45px 55px;
+  border: 1px solid black;
+}
+
+.form-title{
+  display: block;
+  font-size: 26px;
+  color: #333333;
+  line-height: 1.2;
 }

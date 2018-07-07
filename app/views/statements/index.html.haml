@@ -12,7 +12,7 @@
   .col-xs-12
     .pagination
       = will_paginate @statements, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement-movements
+  %table.table.table-hover.table-statement
     %tr
       %th= sortable 'name', 'Nombre'
       %th= sortable 'date', 'Fecha'

@@ -9,37 +9,38 @@
   - if @apartments.empty?
     %p No hay ninguna vivienda en la comunidad.
   -else
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @apartments, class: 'flickr_pagination'
-    %table.table.table-hover.table-statement-movements
-      %tr
-        %th= sortable 'floor', 'Vivienda'
-        %th Propietario
-        %th= sortable 'fee', 'Cuota'
-        %th= sortable 'balance', 'Saldo actual'
-        %th= sortable 'apartment_contribution', 'Cuota de contribución'
-        %th Opciones
-      - @apartments.each do |apartment|
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @apartments, class: 'flickr_pagination'
+    .table-responsive
+      %table.table.table-hover.table-statement
         %tr
-          %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
-          %td
-            - if apartment.owner.nil?
-              Sin propietario
-            -else
-              =link_to "#{full_name(apartment.owner)}", user_profile_path(apartment.owner)
-          %td= "#{apartment.fee}€"
-          %td= "#{apartment.balance}€"
-          %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
-          %td
-            = link_to 'Ver', apartment_path(apartment), class: 'btn btn-xs btn-primary'
-            = link_to 'Editar', edit_apartment_path(apartment), class: 'btn btn-xs btn-primary'
-            = link_to 'Borrar', apartment, method: :delete, data: { confirm: '¿Quieres borrar la vivienda?'}, class: 'btn btn-xs btn-danger'
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @apartments, class: 'flickr_pagination'
+          %th= sortable 'floor', 'Vivienda'
+          %th Propietario
+          %th= sortable 'fee', 'Cuota'
+          %th= sortable 'balance', 'Saldo actual'
+          %th= sortable 'apartment_contribution', 'Cuota de contribución'
+          %th Opciones
+        - @apartments.each do |apartment|
+          %tr
+            %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+            %td
+              - if apartment.owner.nil?
+                Sin propietario
+              -else
+                =link_to "#{full_name(apartment.owner)}", user_profile_path(apartment.owner)
+            %td= "#{apartment.fee}€"
+            %td= "#{apartment.balance}€"
+            %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
+            %td
+              = link_to 'Ver', apartment_path(apartment), class: 'btn btn-xs btn-primary'
+              = link_to 'Editar', edit_apartment_path(apartment), class: 'btn btn-xs btn-primary'
+              = link_to 'Borrar', apartment, method: :delete, data: { confirm: '¿Quieres borrar la vivienda?'}, class: 'btn btn-xs btn-danger'
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @apartments, class: 'flickr_pagination'
   .row
     .col-xs-12
       %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'

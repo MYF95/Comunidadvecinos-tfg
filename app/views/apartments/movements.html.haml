@@ -1,27 +1,38 @@
-%h1= "Movimientos asociados de la vivienda #{full_name_apartment(@apartment)}"
-
-- if @movements.empty?
-  %p No hay ningún movimiento asociado a la vivienda.
--else
-  = will_paginate @movements, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
-    %tr
-      %th= m_sortable 'concept', 'Concepto'
-      %th= m_sortable 'date', 'Fecha'
-      %th= m_sortable 'amount', 'Cantidad'
-      %th= m_sortable 'concept1', 'Concepto 1'
-      %th= m_sortable 'description', 'Descripción'
-      %th Opciones
-    -@movements.each do |movement|
-      %tr
-        %td= link_to "#{movement.concept}", movement_path(movement)
-        %td= "#{movement.date}"
-        %td= "#{movement.amount}€"
-        %td= "#{movement.concept1}"
-        %td= "#{movement.description}"
-        %td
-          = link_to apartmentlist_path(movement), class: 'btn btn-xs btn-success' do
-            %span.glyphicon.glyphicon-eject
-          = link_to edit_movement_path(movement), class: 'btn btn-xs btn-primary' do
-            %span.glyphicon.glyphicon-pencil
-  = will_paginate @movements, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1= "Movimientos asociados de la vivienda #{full_name_apartment(@apartment)}"
+.inner-wrapper
+  .row
+    .col-xs-12
+      - if @movements.empty?
+        %p No hay ningún movimiento asociado a la vivienda.
+      -else
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @movements, class: 'flickr_pagination'
+        .table-responsive
+          %table.table.table-hover.table-statement
+            %tr
+              %th= m_sortable 'concept', 'Concepto'
+              %th= m_sortable 'date', 'Fecha'
+              %th= m_sortable 'amount', 'Cantidad'
+              %th= m_sortable 'concept1', 'Concepto 1'
+              %th= m_sortable 'description', 'Descripción'
+              %th Opciones
+            -@movements.each do |movement|
+              %tr
+                %td= link_to "#{movement.concept}", movement_path(movement)
+                %td= "#{movement.date}"
+                %td= "#{movement.amount}€"
+                %td= "#{movement.concept1}"
+                %td= "#{movement.description}"
+                %td
+                  = link_to 'Ver', movement_path(movement), class: 'btn btn-xs btn-primary'
+                  = link_to 'Cambiar', apartmentlist_path(movement), class: 'btn btn-xs btn-success'
+                  = link_to 'Editar', edit_movement_path(movement), class: 'btn btn-xs btn-primary'
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @movements, class: 'flickr_pagination'

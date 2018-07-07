@@ -12,7 +12,7 @@
   .col-xs-12
     .pagination
       = will_paginate @pending_payments, class: 'flickr_pagination'
-  %table.table-statement-movements.table.table-hover
+  %table.table-statement.table.table-hover
     %tr
       %th= sortable 'concept', 'Concepto'
       %th= sortable 'date', 'Fecha'

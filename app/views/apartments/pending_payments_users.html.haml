@@ -5,7 +5,7 @@
   %p No hay ningún usuario asignado a la vivienda.
 -else
   = will_paginate @users, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement-movements
+  %table.table.table-hover.table-statement
     %tr
       %th= u_sortable 'first_name', 'Vecino'
       %th= u_sortable 'email', 'Email'

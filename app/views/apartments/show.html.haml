@@ -45,9 +45,9 @@
             %p Esta vivienda no tiene ningún pago pendiente
           - else
             = render 'apartments/tables/pending_payments'
-          .row
-            .col-xs-12
-              %p.button= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
+            .row
+              .col-xs-12
+                %p.button= link_to 'Ver pagos pendientes', apartment_pending_payments_path(@apartment), class: 'btn btn-primary'
   %hr/
   .row
     .col-xs-12

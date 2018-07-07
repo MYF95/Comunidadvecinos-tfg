@@ -1,31 +1,42 @@
-%h1= "Contabilidad de pagos de la vivienda #{full_name_apartment(@apartment)}"
-
-- if @pending_payments.empty?
-  %p Esta vivienda no tiene ningún pago o pago pendiente asociado.
-- else
-  = will_paginate @pending_payments, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
-    %tr
-      %th= pp_sortable 'concept', 'Concepto'
-      %th= pp_sortable 'date', 'Fecha'
-      %th= pp_sortable 'amount', 'Cantidad'
-      %th= pp_sortable 'description', 'Descripción'
-      %th= pp_sortable 'paid', '¿Pagado?'
-      %th= pp_sortable 'paid_by', 'Pagador'
-      %th Opciones
-    -@pending_payments.each do |pending_payment|
-      %tr
-        %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
-        %td= "#{pending_payment.date}"
-        %td= "#{pending_payment.amount}€"
-        %td= "#{pending_payment.description}"
-        %td= pending_payment.paid? ? "Si" : "No"
-        %td
-          -unless pending_payment.paid_by.nil?
-            = pending_payment.paid_by
-        %td
-          = link_to edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary' do
-            %span.glyphicon.glyphicon-pencil
-          = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
-            %span.glyphicon.glyphicon-trash
-    = will_paginate @pending_payments, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1= "Contabilidad de pagos de la vivienda #{full_name_apartment(@apartment)}"
+.inner-wrapper
+  .row
+    .col-xs-12
+      - if @pending_payments.empty?
+        %p Esta vivienda no tiene ningún pago o pago pendiente asociado.
+      - else
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @pending_payments, class: 'flickr_pagination'
+        .table-responsive
+          %table.table.table-hover.table-statement
+            %tr
+              %th= pp_sortable 'concept', 'Concepto'
+              %th= pp_sortable 'date', 'Fecha'
+              %th= pp_sortable 'amount', 'Cantidad'
+              %th= pp_sortable 'description', 'Descripción'
+              %th= pp_sortable 'paid', '¿Pagado?'
+              %th= pp_sortable 'paid_by', 'Pagador'
+              %th Opciones
+            -@pending_payments.each do |pending_payment|
+              %tr
+                %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
+                %td= "#{pending_payment.date}"
+                %td= "#{pending_payment.amount}€"
+                %td= "#{pending_payment.description}"
+                %td= pending_payment.paid? ? "Si" : "No"
+                %td
+                  -unless pending_payment.paid_by.nil?
+                    = pending_payment.paid_by
+                %td
+                  = link_to 'Ver', pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
+                  = link_to 'Editar', edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
+                  = link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger'
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @pending_payments, class: 'flickr_pagination'

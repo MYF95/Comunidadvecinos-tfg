@@ -143,7 +143,7 @@ class ApartmentsController < ApplicationController
   # Movement related actions
 
   def movements
-    @movements = @apartment.movements.order(sort_movement_column + " " + sort_direction).paginate(per_page: 5, page: params[:page])
+    @movements = @apartment.movements.order(sort_movement_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   # Pending Payments related actions

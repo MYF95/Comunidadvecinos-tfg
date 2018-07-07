@@ -1,45 +1,64 @@
-%h1= "Usuarios de la vivienda #{full_name_apartment(@apartment)}"
-
 .row
-  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
-    %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'
+  .col-xs-12
+    .page-header
+      %h1= "Usuarios de la vivienda #{full_name_apartment(@apartment)}"
 
--unless @apartment.owner.nil?
-  %h2 Propietario de la vivienda
-  %table.table.table-hover.table-statement-movements
-    %tr
-      %th Propietario
-      %th Email
-      %th Teléfono
-      %th Opciones
-    %tr
-      %td= link_to "#{full_name(@apartment.owner)}", user_profile_path(@apartment.owner)
-      %td= "#{@apartment.owner.email}"
-      %td= "#{@apartment.owner.phone_number}"
-      %td
-        = link_to remove_owner_path(@apartment), data: { confirm: "¿Quieres quitar a #{full_name(@apartment.owner)} como propietario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger' do
-          %span.glyphicon.glyphicon-trash
-
-%h2 Residentes de la vivienda
--if @users.empty?
-  %p No hay ningún usuario asignado a la vivienda.
--else
-  = will_paginate @users, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement-movements
-    %tr
-      %th= u_sortable 'first_name', 'Vecino'
-      %th= u_sortable 'email', 'Email'
-      %th= u_sortable 'phone_number', 'Teléfono'
-      %th Opciones
-    -@users.each do |user|
-      %tr
-        %td= link_to "#{full_name(user)}", user_profile_path(user)
-        %td= "#{user.email}"
-        %td= "#{user.phone_number}"
-        %td
-          = link_to remove_user_path(@apartment, user), data: { confirm: "¿Quieres quitar al usuario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger' do
-            %span.glyphicon.glyphicon-trash
-  = will_paginate @users, class: 'flickr_pagination'
-.row
-  .col-xs-12.col-sm-12.col-md-4.col-md-offset-9
-    %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'
+.inner-wrapper
+  .row
+    .col-xs-12
+      %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'
+  .row
+    .col-xs-12
+      -unless @apartment.owner.nil?
+        .page-subheader
+          %h2 Propietario de la vivienda
+        .table-responsive
+          %table.table.table-hover.table-statement
+            %tr
+              %th Propietario
+              %th Email
+              %th Teléfono
+              %th Opciones
+            %tr
+              %td= link_to "#{full_name(@apartment.owner)}", user_profile_path(@apartment.owner)
+              %td= "#{@apartment.owner.email}"
+              %td= "#{@apartment.owner.phone_number}"
+              %td
+                = link_to 'Ver', user_profile_path(@apartment.owner), class: 'btn btn-xs btn-primary'
+                = link_to 'Quitar propietario', remove_owner_path(@apartment), data: { confirm: "¿Quieres quitar a #{full_name(@apartment.owner)} como propietario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger'
+          %hr
+  .row
+    .col-xs-12
+      .page-subheader
+        %h2 Residentes de la vivienda
+  .row
+    .col-xs-12
+      -if @users.empty?
+        %p No hay ningún usuario asignado a la vivienda.
+      -else
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @users, class: 'flickr_pagination'
+        .table-responsive
+          %table.table.table-hover.table-statement
+            %tr
+              %th= u_sortable 'first_name', 'Vecino'
+              %th= u_sortable 'email', 'Email'
+              %th= u_sortable 'phone_number', 'Teléfono'
+              %th Opciones
+            -@users.each do |user|
+              %tr
+                %td= link_to "#{full_name(user)}", user_profile_path(user)
+                %td= "#{user.email}"
+                %td= "#{user.phone_number}"
+                %td
+                  = link_to 'Ver', user_profile_path(user), class: 'btn btn-xs btn-primary'
+                  = link_to 'Quitar usuario', remove_user_path(@apartment, user), data: { confirm: "¿Quieres quitar al usuario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger'
+        .row
+          .col-xs-12
+            .pagination
+              = will_paginate @users, class: 'flickr_pagination'
+  .row
+    .col-xs-12
+      %p.button= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary '

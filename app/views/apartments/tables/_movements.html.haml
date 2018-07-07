@@ -13,5 +13,6 @@
         %td= "#{movement.amount}€"
         %td= "#{movement.description}"
         %td
+          = link_to 'Ver', movement_path(movement), class: 'btn btn-xs btn-primary'
           = link_to 'Cambiar', apartmentlist_path(movement), class: 'btn btn-xs btn-success'
           = link_to 'Editar', edit_movement_path(movement), class: 'btn btn-xs btn-primary'

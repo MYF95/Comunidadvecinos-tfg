@@ -4,7 +4,7 @@
   %p No hay viviendas en la aplicación. Por favor, crea una vivienda antes de asociar pagos pendientes a las viviendas.
 - else
   = will_paginate @apartments, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement-movements
+  %table.table.table-hover.table-statement
     %tr
       %th= a_sortable 'floor', 'Vivienda'
       %th= a_sortable 'fee', 'Cuota'

@@ -1,7 +1,7 @@
 %h1= "Elige el usuario a añadir a la vivienda #{full_name_apartment(@apartment)}"
 
 = will_paginate @users, class: 'flickr_pagination'
-%table.table.table-hover.table-statement-movements
+%table.table.table-hover.table-statement
   %tr
     %th= sortable 'first_name', 'Vecino'
     %th= sortable 'email', 'Email'

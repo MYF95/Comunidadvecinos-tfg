@@ -6,7 +6,7 @@
       %h1= "Actualizar extracto bancario #{@statement.name}"
 .inner-wrapper
   .row
-    .col-xs-12.col-md-6.col-md-offset-3
+    .col-xs-12.col-md-8.col-md-offset-2
       .form-box
         = form_for(@statement) do |f|
           = render 'shared/error_message', object: f.object
@@ -16,14 +16,11 @@
           .form-group
             .row
               = f.label 'Nombre', class: 'col-xs-12 col-sm-4 control-label'
-              .col-xs-12.col-sm-4
-                = f.text_field :name, class: 'form-control'
+              = f.text_field :name, class: 'col-xs-12 col-sm-4'
           .form-group
             .row
               = f.label 'Fecha', class: 'col-xs-12 col-sm-4 control-label'
-              .col-xs-12.col-sm-4
-                = f.date_field :date, class: 'form-control'
+              = f.date_field :date, class: 'col-xs-12 col-sm-4'
           .form-group
             .row
-              .col-xs-12
-                = f.submit 'Actualizar extracto'
+              = f.submit 'Actualizar extracto', class: 'col-xs-12 col-sm-6 col-sm-offset-3'

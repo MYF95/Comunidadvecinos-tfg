@@ -14,14 +14,16 @@ class MovementsController < ApplicationController
   end
 
   def create
-    @movement = Movement.new(movement_params)
-    if @movement.save
-      flash[:info] = "¡Nuevo movimiento #{@movement.concept} creado!"
-      redirect_to @movement
-    else
-      flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-      render 'new'
-    end
+    flash[:danger] = 'Esta operación no está permitida actualmente'
+    redirect_to root_path
+    # @movement = Movement.new(movement_params)
+    # if @movement.save
+    #   flash[:info] = "¡Nuevo movimiento #{@movement.concept} creado!"
+    #   redirect_to @movement
+    # else
+    #   flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+    #   render 'new'
+    # end
   end
 
   def show
@@ -74,7 +76,7 @@ class MovementsController < ApplicationController
       redirect_to movement_children_path(@movement)
     else
       flash[:danger] = 'Por favor, desasigna el movimiento de la vivienda antes de dividir el movimiento.'
-      redirect_to edit_movement_path(@movement)
+      redirect_to movement_path(@movement)
     end
   end
 
@@ -181,7 +183,7 @@ class MovementsController < ApplicationController
 
     def create_movement_duplicate(amount)
       new_movement = @movement.dup
-      new_movement.amount = amount
+      new_movement.amount = amount.round(2)
       new_movement.concept += " | Nº #{@movement.children.count + 1}"
       if new_movement.save
         movement_child = MovementChild.new(parent: @movement, child: new_movement)

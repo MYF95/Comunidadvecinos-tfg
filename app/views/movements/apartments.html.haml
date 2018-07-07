@@ -1,20 +1,32 @@
-%h1 Añadir movimiento a una vivienda
+- provide(:title, 'Añadir a vivienda')
 
--if @apartments.empty?
-  %p No hay ninguna vivienda en la aplicación. Por favor, crea una vivienda antes de empezar a asociar movimientos a las viviendas.
--else
-  = will_paginate @apartments, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
-    %tr
-      %th= a_sortable 'floor', 'Vivienda'
-      %th= a_sortable 'fee', 'Cuota'
-      %th= a_sortable 'balance', 'Saldo actual'
-      %th Opciones
-    - @apartments.each do |apartment|
-      %tr
-        - if @movement.apartment != apartment
-          %td= "#{full_name_apartment(apartment)}"
-          %td= "#{apartment.fee}€"
-          %td= "#{apartment.balance}€"
-          %td= link_to 'Asociar a vivienda', associate_apartment_path(@movement, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
-  = will_paginate @apartments, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .page-header
+      %h1 Añadir movimiento a vivienda
+.inner-wrapper
+  -if @apartments.empty?
+    %p No hay ninguna vivienda en la aplicación. Por favor, crea una vivienda antes de empezar a asociar movimientos a las viviendas.
+  -else
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @apartments, class: 'flickr_pagination'
+    .table-responsive
+      %table.table.table-hover.table-statement
+        %tr
+          %th= a_sortable 'floor', 'Vivienda'
+          %th= a_sortable 'fee', 'Cuota'
+          %th= a_sortable 'balance', 'Saldo actual'
+          %th Opciones
+        - @apartments.each do |apartment|
+          %tr
+            - if @movement.apartment != apartment
+              %td= "#{full_name_apartment(apartment)}"
+              %td= "#{apartment.fee}€"
+              %td= "#{apartment.balance}€"
+              %td= link_to 'Asociar a vivienda', associate_apartment_path(@movement, apartment), class: 'btn btn-primary', data: {confirm: "¿Añadir a vivienda #{full_name_apartment(apartment)}?"}
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @apartments, class: 'flickr_pagination'

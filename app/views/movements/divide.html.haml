@@ -1,16 +1,32 @@
 - provide(:title, 'Dividir movimiento bancario')
 
-%h2 Dividir movimiento bancario #{@movement.concept}
-%p Cantidad del movimiento actual #{@movement.amount}€
-= form_for(@movement, url: divide_movement_path(@movement)) do |f|
-  = render 'shared/error_message', object: f.object
-  .field
-    = f.label 'Cantidad del nuevo movimiento dividido'
-    %br/
-    = f.number_field :amount, min: 0
-  .field
-    = f.label 'Descripción de administrador'
-    %br/
-    = f.text_area :description
-  .actions
-    = f.submit 'Dividir movimiento'
+.row
+  .col-xs-12
+    .page-header
+      %h1 Dividir movimiento bancario
+      %h1 "#{@movement.concept}"
+.row
+  .col-xs-12
+    %p Crea dos nuevos movimientos a partir de la cantidad seleccionada.
+    %p El primer movimiento se creará con el resto de la cantidad elegida.
+    %p Cantidad del movimiento actual: "#{@movement.amount}€"
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(@movement, url: divide_movement_path(@movement)) do |f|
+          = render 'shared/error_message', object: f.object
+          .form-title
+            %span= 'Dividir movimiento'
+            %hr
+          .form-group
+            .row
+              = f.label 'Cantidad', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :amount, min: 0, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Descripción de administrador', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_area :description, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.submit 'Dividir movimiento', class: 'col-xs-12 col-sm-4 col-sm-offset-4'

@@ -1,7 +1,11 @@
 = render 'shared/error_message', object: f.object
-.field
-  = f.label 'Descripción de administrador'
-  %br/
-  = f.text_area :description
-.actions
-  = f.submit yield(:button_text)
+.form-title
+  %span= yield(:form_title)
+  %hr
+.form-group
+  .row
+    = f.label 'Descripción del administrador', class: 'col-xs-12 col-sm-4 control-label'
+    = f.text_area :description, class: 'col-xs-12 col-sm-4'
+.form-group
+  .row
+    = f.submit yield(:button_text), class: 'col-xs-12 col-sm-6 col-sm-offset-3'

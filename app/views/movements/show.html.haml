@@ -1,45 +1,120 @@
-%h1 Datos del movimiento bancario "#{@movement.concept}"
-%p= "Fecha movimiento: #{@movement.date}"
-%p= "Fecha valor: #{@movement.date_value}"
-%p= "Cantidad: #{@movement.amount}"
-%p= "Divisa: #{@movement.currency_movement}"
-%p= "Saldo posterior: #{@movement.post_balance}"
-%p= "Divisa: #{@movement.currency_balance}"
-%p= "Oficina: #{@movement.office}"
-%p= "Concepto 1: #{@movement.concept1}"
-%p= "Concepto 2: #{@movement.concept2}"
-%p= "Concepto 3: #{@movement.concept3}"
-%p= "Concepto 4: #{@movement.concept4}"
-%p= "Concepto 5: #{@movement.concept5}"
-%p= "Concepto 6: #{@movement.concept6}"
-%p= "Descripción del administrador: #{@movement.description}"
-%p= link_to 'Actualizar movimiento', edit_movement_path(@movement), class: 'btn btn-primary'
+- provide(:title, 'Movimiento bancario')
 
-- unless @movement.children.empty?
-  %hr
-  %h2 Movimientos descendientes
-  %table.table.table-hover.table-statement
-    %tr
-      %th Concepto
-      %th Fecha
-      %th Cantidad
-      %th Vivienda asociada
-      %th Opciones
-    -@movement.children.each do |movement|
-      %tr
-        %td= link_to "#{movement.child.concept}", movement_path(movement.child)
-        %td= "#{movement.child.date}"
-        %td= "#{movement.child.amount}€"
-        %td= "#{movement.child.description}"
-        %td
-          - if movement.child.apartment.blank?
-            = link_to 'Asociar a vivienda', apartmentlist_path(movement.child)
-          - else
-            = link_to "#{full_name_apartment(movement.child.apartment)}", apartment_path(movement.child.apartment)
-        %td
-          -#= link_to divide_path(@statement, movement), class: 'btn btn-xs btn-success' do
-          -#  %span.glyphicon.glyphicon-scissors
-          = link_to edit_movement_path(movement.child), class: 'btn btn-xs btn-primary' do
-            %span.glyphicon.glyphicon-pencil
-          = link_to movement.child, method: :delete, data: { confirm: '¿Quieres borrar el movimiento bancario?'}, class: 'btn btn-xs btn-danger' do
-            %span.glyphicon.glyphicon-trash
+.row
+  .col-xs-12
+    .page-header
+      %h1= 'Datos del movimiento bancario'
+.inner-wrapper
+  .row
+    .col-xs-12
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Fecha movimiento'
+        .col-xs-6.text-left
+          %p= "#{@movement.date}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Fecha valor'
+        .col-xs-6.text-left
+          %p= "#{@movement.date_value}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Cantidad'
+        .col-xs-6.text-left
+          %p= "#{@movement.amount}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Divisa'
+        .col-xs-6.text-left
+          %p= "#{@movement.currency_movement}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Saldo posterior'
+        .col-xs-6.text-left
+          %p= "#{@movement.post_balance}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Divisa del saldo posterior'
+        .col-xs-6.text-left
+          %p= "#{@movement.currency_balance}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Oficina'
+        .col-xs-6.text-left
+          %p= "#{@movement.office}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto 1'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept1}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto 2'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept2}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto 3'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept3}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto 4'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept4}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto 5'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept5}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Concepto 6'
+        .col-xs-6.text-left
+          %p= "#{@movement.concept6}"
+      .row
+        .col-xs-6.text-right
+          %p= 'Descripción del administrador'
+        .col-xs-6.text-left
+          %p= "#{@movement.description}"
+      .row
+        %hr/
+        .col-xs-6.text-right
+          %p.button= link_to 'Actualizar movimiento', edit_movement_path(@movement), class: 'btn btn-primary'
+        .col-xs-6.text-left
+          -unless @movement.apartment.nil?
+            %p.button= link_to 'Desasociar movimiento', remove_apartment_path(@movement), method: :delete, data: { confirm: "¿Quieres desasociar el movimiento de la vivienda #{full_name_apartment(@movement.apartment)}?"}, class: 'btn btn-primary'
+  - unless @movement.children.empty?
+    %hr/
+    .row
+      .col-xs-12
+        .page-header
+          %h2 Movimientos descendientes
+    .table-responsive
+      %table.table.table-hover.table-statement
+        %tr
+          %th Concepto
+          %th Fecha
+          %th Cantidad
+          %th Vivienda asociada
+          %th Opciones
+        -@movement.children.each do |movement|
+          %tr
+            %td= link_to "#{movement.child.concept}", movement_path(movement.child)
+            %td= "#{movement.child.date}"
+            %td= "#{movement.child.amount}"
+            %td
+              - if movement.child.apartment.blank?
+                = link_to 'Asociar a vivienda', apartmentlist_path(movement.child)
+              - else
+                = link_to "#{full_name_apartment(movement.child.apartment)}", apartment_path(movement.child.apartment)
+            %td
+              = link_to 'Ver', movement_path(movement.child), class: 'btn btn-xs btn-primary'
+              = link_to 'Dividir', divide_path(movement.child), class: 'btn btn-xs btn-success'
+              = link_to 'Editar', edit_movement_path(movement.child), class: 'btn btn-xs btn-primary'
+              = link_to 'Borrar', movement.child, method: :delete, data: { confirm: '¿Quieres borrar el movimiento bancario?'}, class: 'btn btn-xs btn-danger'

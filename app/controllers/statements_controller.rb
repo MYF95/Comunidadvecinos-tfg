@@ -14,6 +14,9 @@ class StatementsController < ApplicationController
   def create
     if current_user.admin?
       @statement = Statement.new(statement_params)
+      if @statement.date.nil?
+        @statement.date = Date.today.to_s
+      end
       import_csv
       if @statement.save
         flash[:info] = "¡Nuevo extracto #{@statement.name} creado!"
@@ -91,14 +94,17 @@ class StatementsController < ApplicationController
         movement_digest = Digest::MD5.hexdigest(row.to_s)
         movement = Movement.find_by(movement_digest: movement_digest)
         if movement.nil?
-          Movement.create!(date: row['Fecha Movimiento'], date_value: row['Fecha Valor'], concept: row['Concepto'],
-                           amount: row['Importe'].sub(',', '.').to_f, currency_movement: row['Divisa'],
-                           post_balance: row['Saldo Posterior'].sub(',', '.').to_f, currency_balance: row['Divisa'],
-                           office: row['Oficina'], concept1: row['Concepto1'], concept2: row['Concepto2'],
-                           concept3: row['Concepto3'], concept4: row['Concepto4'], concept5: row['Concepto5'],
-                           concept6: row['Concepto6'], movement_digest: movement_digest)
+          movement = Movement.new(date: row['Fecha Movimiento'], date_value: row['Fecha Valor'], concept: row['Concepto'],
+                                  amount: row['Importe'].sub(',', '.').to_f, currency_movement: row['Divisa'],
+                                  post_balance: row['Saldo Posterior'].sub(',', '.').to_f, currency_balance: row['Divisa'],
+                                  office: row['Oficina'], concept1: row['Concepto1'], concept2: row['Concepto2'],
+                                  concept3: row['Concepto3'], concept4: row['Concepto4'], concept5: row['Concepto5'],
+                                  concept6: row['Concepto6'], movement_digest: movement_digest)
+          movement.lock!
+          movement.save!
           StatementMovement.create!(statement: @statement, movement: Movement.last)
         else
+          statement_movement = StatementMovement.new(statement: @statement, movement: movement)
           StatementMovement.create!(statement: @statement, movement: movement)
         end
       end

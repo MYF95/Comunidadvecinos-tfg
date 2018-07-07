@@ -1,13 +1,17 @@
-%h1 Pagos pendientes de la comunidad
-
 .row
-  .col-xs-12.col-sm-12.col-md-4.col-md-offset-8
+  .col-xs-12
+    .page-header
+      %h1 Pagos pendientes de la comunidad
+.row
+  .col-xs-12
     %p= link_to 'Crear pago pendiente', pending_payment_new_all_path, class: 'btn btn-primary'
-
 - if @pending_payments.where(paid: false).empty?
   %p No hay pagos pendientes de ninguna vivienda ahora mismo.
 - else
-  = will_paginate @pending_payments, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .pagination
+      = will_paginate @pending_payments, class: 'flickr_pagination'
   %table.table-statement-movements.table.table-hover
     %tr
       %th= sortable 'concept', 'Concepto'
@@ -33,7 +37,10 @@
               %span.glyphicon.glyphicon-pencil
             = link_to pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger' do
               %span.glyphicon.glyphicon-trash
-  = will_paginate @pending_payments, class: 'flickr_pagination'
 .row
-  .col-xs-12.col-sm-12.col-md-4.col-md-offset-8
+  .col-xs-12
+    .pagination
+      = will_paginate @pending_payments, class: 'flickr_pagination'
+.row
+  .col-xs-12
     %p= link_to 'Crear pago pendiente', pending_payment_new_all_path, class: 'btn btn-primary'

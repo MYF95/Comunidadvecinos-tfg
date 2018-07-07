@@ -56,4 +56,5 @@ Rails.application.configure do
 
   # config.active_storage.service = :local
   config.active_storage.service = :amazon
+  config.active_job.queue_adapter = :inline
 end

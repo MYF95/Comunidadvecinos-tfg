@@ -13,9 +13,4 @@ class StatementTest < ActiveSupport::TestCase
     @statement.name = "";
     assert_not @statement.valid?
   end
-
-  test 'date should be present' do
-    @statement.date = "";
-    assert_not @statement.valid?
-  end
 end

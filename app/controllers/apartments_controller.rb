@@ -6,7 +6,7 @@ class ApartmentsController < ApplicationController
   before_action :balance_checker, except: [:index, :new, :create]
 
   def index
-    @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 10, page: params[:page])
+    @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def new

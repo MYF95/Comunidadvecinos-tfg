@@ -1,12 +1,18 @@
-%h1 Extractos bancarios de la comunidad
 .row
-  .col-xs-12.col-sm-6.col-md-4.col-md-offset-8
+  .col-xs-12
+    .page-header
+      %h1 Extractos bancarios de la comunidad
+.row
+  .col-xs-12
     %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
 - if @statements.empty?
   %p No hay ningún extracto bancario en la aplicación.
 - else
-  = will_paginate @statements, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
+.row
+  .col-xs-12
+    .pagination
+      = will_paginate @statements, class: 'flickr_pagination'
+  %table.table.table-hover.table-statement-movements
     %tr
       %th= sortable 'name', 'Nombre'
       %th= sortable 'date', 'Fecha'
@@ -20,7 +26,10 @@
             %span.glyphicon.glyphicon-pencil
           = link_to statement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
             %span.glyphicon.glyphicon-trash
-  = will_paginate @statements, class: 'flickr_pagination'
 .row
-  .col-xs-12.col-sm-6.col-md-4.col-md-offset-8
+  .col-xs-12
+    .pagination
+      = will_paginate @statements, class: 'flickr_pagination'
+.row
+  .col-xs-12
     %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'

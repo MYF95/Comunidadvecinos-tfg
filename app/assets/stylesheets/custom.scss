@@ -109,6 +109,12 @@ h1, h2, h3, h4, h5, h6{
   }
 }
 
+@media (max-width: 400px) {
+  #logo{
+    display: none;
+  }
+}
+
 #logo {
   float: left;
   font-size: 1.5em;

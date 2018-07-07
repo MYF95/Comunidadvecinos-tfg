@@ -104,7 +104,6 @@ class StatementsController < ApplicationController
           movement.save!
           StatementMovement.create!(statement: @statement, movement: Movement.last)
         else
-          statement_movement = StatementMovement.new(statement: @statement, movement: movement)
           StatementMovement.create!(statement: @statement, movement: movement)
         end
       end

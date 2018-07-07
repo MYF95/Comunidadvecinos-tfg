@@ -1,9 +1,14 @@
-%h1 Movimientos bancarios de los extractos importados
-
+.row
+  .col-xs-12
+    .page-header
+      %h1 Movimientos bancarios de los extractos importados
 -if @movements.empty?
   %p No hay ningún movimiento procedente de los extractos bancarios con valor positivo ahora mismo.
 -else
-  = will_paginate @movements, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .pagination
+      = will_paginate @movements, class: 'flickr_pagination'
   .table-responsive
     %table.table.table-hover.table-statement-movements
       %tr
@@ -42,4 +47,7 @@
                 %span.glyphicon.glyphicon-pencil
               = link_to movement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
                 %span.glyphicon.glyphicon-trash
-  = will_paginate @movements, class: 'flickr_pagination'
+.row
+  .col-xs-12
+    .pagination
+      = will_paginate @movements, class: 'flickr_pagination'

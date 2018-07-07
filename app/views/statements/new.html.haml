@@ -1,24 +1,36 @@
-%h2 Importar extracto bancario
-%p Para importar un extracto bancario, se necesita el extracto bancario en formato CSV.
-%p Por el momento el programa acepta ficheros de Bankia.
-
-= form_for(@statement, method: :post, multipart: true) do |f|
-  = render 'shared/error_message', object: f.object
-
-  .form-group
-    = f.label 'Nombre'
-    %br/
-    = f.text_field :name, autofocus: true
-
-  .form-group
-    = f.label 'Fecha'
-    %br/
-    = f.date_field :date
-
-  .form-group.center-block
-    = f.label 'Selecciona un fichero para importar'
-    %br/
-    = f.file_field :bank_statement, multiple: false, direct_upload: true
-
-  .actions
-    = f.submit 'Importar extracto bancario'
+.row
+  .col-xs-12
+    .page-header
+      %h2 Importar extracto bancario
+.row
+  .col-xs-12
+    %p Para importar un extracto bancario, se necesita el extracto bancario en formato CSV.
+    %p Por el momento el programa acepta ficheros de Bankia.
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-6.col-md-offset-3
+      .form-box
+        = form_for(@statement, method: :post, multipart: true) do |f|
+          = render 'shared/error_message', object: f.object
+          .form-title
+            %span= 'Importar extracto'
+            %hr
+          .form-group
+            .row
+              = f.label 'Nombre', class: 'col-xs-12 col-sm-4 control-label'
+              .col-xs-12.col-sm-4
+                = f.text_field :name, autofocus: true
+          .form-group
+            .row
+              = f.label 'Fecha', class: 'col-xs-12 col-sm-4 control-label'
+              .col-xs-12.col-sm-4
+                = f.date_field :date
+          .form-group
+            .row
+              = f.label 'Selecciona un fichero para importar', class: 'col-xs-12 control-label'
+              .col-xs-12.col-sm-4.col-sm-offset-2
+                = f.file_field :bank_statement, multiple: false, direct_upload: true
+          .form-group
+            .row
+              .col-xs-12
+                = f.submit 'Importar extracto bancario'

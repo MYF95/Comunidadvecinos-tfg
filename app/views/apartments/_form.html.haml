@@ -1,33 +1,29 @@
 = render 'shared/error_message', object: f.object
 
 .form-title
-  %span Crear vivienda
+  %span= yield(:form_title)
   %hr
-
 .form-group
   .row
-    = f.label 'Piso', class: 'col-xs-4 control-label'
-    .col-xs-4
+    = f.label 'Piso', class: 'col-xs-12 col-sm-4 control-label'
+    .col-xs-12.col-sm-4
       = f.number_field :floor, min: 0, class: 'form-control'
-
 .form-group
   .row
-    = f.label 'Letra', class: 'col-xs-4 control-label'
-    .col-xs-4
+    = f.label 'Letra', class: 'col-xs-12 col-sm-4 control-label'
+    .col-xs-12.col-sm-4
       = f.text_field :letter, class: 'form-control', maxlength: 1
-
 .form-group
   .row
-    = f.label 'Cuota', class: 'col-xs-4 control-label'
-    .col-xs-4
+    = f.label 'Cuota', class: 'col-xs-12 col-sm-4 control-label'
+    .col-xs-12.col-sm-4
       = f.number_field :fee, min: 0, class: 'form-control'
-
+.form-group
+  .row
+    = f.label 'Contribución de cuota a la comunidad (Valor entre 0 y 1)', class: 'col-xs-12 control-label'
+    .col-xs-12.col-sm-4.col-sm-offset-4
+      = f.number_field :apartment_contribution, step: :any, min: 0, max: 1, class: 'form-control'
 .form-group
   .row
     .col-xs-12
-      = f.label 'Contribución de cuota a la comunidad (Valor entre 0 y 1)', class: 'control-label'
-    .col-xs-4.col-xs-offset-4
-      = f.number_field :apartment_contribution, step: :any, min: 0, max: 1, class: 'form-control'
-
-.actions
-  = f.submit yield(:button_text)
+      = f.submit yield(:button_text)

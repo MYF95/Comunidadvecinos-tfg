@@ -2,34 +2,35 @@
   .col-xs-12
     .page-header
       %h1 Extractos bancarios de la comunidad
-.row
-  .col-xs-12
-    %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
-- if @statements.empty?
-  %p No hay ningún extracto bancario en la aplicación.
-- else
-.row
-  .col-xs-12
-    .pagination
-      = will_paginate @statements, class: 'flickr_pagination'
-  %table.table.table-hover.table-statement
-    %tr
-      %th= sortable 'name', 'Nombre'
-      %th= sortable 'date', 'Fecha'
-      %th.options Opciones
-    -@statements.each do |statement|
+.inner-wrapper
+  .row
+    .col-xs-12
+      %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+  - if @statements.empty?
+    %p No hay ningún extracto bancario en la aplicación.
+  - else
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @statements, class: 'flickr_pagination'
+  .table-responsive
+    %table.table.table-hover.table-statement
       %tr
-        %td= link_to "#{statement.name}", statement_path(statement)
-        %td #{statement.date}
-        %td.options
-          = link_to edit_statement_path(statement), class: 'btn btn-xs btn-primary' do
-            %span.glyphicon.glyphicon-pencil
-          = link_to statement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger' do
-            %span.glyphicon.glyphicon-trash
-.row
-  .col-xs-12
-    .pagination
-      = will_paginate @statements, class: 'flickr_pagination'
-.row
-  .col-xs-12
-    %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+        %th= sortable 'name', 'Nombre'
+        %th= sortable 'date', 'Fecha'
+        %th= 'Opciones'
+      -@statements.each do |statement|
+        %tr
+          %td= link_to "#{statement.name}", statement_path(statement)
+          %td= "#{statement.date}"
+          %td
+            = link_to 'Ver', statement_path(statement), class: 'btn btn-xs btn-primary'
+            = link_to 'Editar', edit_statement_path(statement), class: 'btn btn-xs btn-primary'
+            = link_to 'Borrar', statement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger'
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @statements, class: 'flickr_pagination'
+  .row
+    .col-xs-12
+      %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'

@@ -1,0 +1,24 @@
+.table-responsive
+  %table.table.table-hover.table-statement
+    %tr
+      %th= a_sortable 'floor', 'Vivienda'
+      %th Propietario
+      %th= a_sortable 'fee', 'Cuota'
+      %th= a_sortable 'balance', 'Saldo actual'
+      %th= a_sortable 'apartment_contribution', 'Cuota de contribución'
+      %th Opciones
+    - @user.apartments.each do |apartment|
+      %tr
+        %td= link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+        %td
+          - if apartment.owner.nil?
+            Sin propietario
+          -else
+            =link_to "#{full_name(apartment.owner)}", user_profile_path(apartment.owner)
+        %td= "#{apartment.fee}€"
+        %td= "#{apartment.balance}€"
+        %td= apartment.apartment_contribution ? "#{(apartment.apartment_contribution)*100}%" : 'Sin asignar'
+        %td
+          = link_to 'Ver', apartment_path(apartment), class: 'btn btn-xs btn-primary'
+          - if current_user.admin?
+            = link_to 'Editar',edit_apartment_path(apartment), class: 'btn btn-xs btn-primary'

@@ -35,17 +35,7 @@
     .col-xs-12
       .pagination
         = will_paginate @apartments, class: 'flickr_pagination'
-  .table-responsive
-    %table.table.table-hover.table-statement
-      %tr
-        %th= a_sortable 'floor', 'Vivienda'
-        %th Propietario
-        %th= a_sortable 'fee', 'Cuota'
-        %th= a_sortable 'balance', 'Saldo actual'
-        %th= a_sortable 'apartment_contribution', 'Cuota de contribución'
-        %th Opciones
-      - @user.apartments.each do |apartment|
-        = render 'apartments', apartment: apartment
+  = render 'users/tables/apartments'
   .row
     .col-xs-12
       .pagination

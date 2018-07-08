@@ -30,7 +30,8 @@
                 = link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
             %td
               = link_to 'Ver', user_profile_path(user), class: 'btn btn-xs btn-primary'
-              = link_to 'Borrar', user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger'
+              - if current_user.admin?
+                = link_to 'Borrar', user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger'
   .row
     .col-xs-12
       .pagination

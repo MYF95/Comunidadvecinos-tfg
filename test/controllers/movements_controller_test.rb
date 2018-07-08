@@ -5,7 +5,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @admin = users(:admin)
     @user = users(:user)
-    @movement = movements(:ingreso1)
+    @movement = movements(:movement1)
     @statement = statements(:junio)
 
     @concept = 'Ingreso de ponsan'
@@ -55,7 +55,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get edit_movement_path(@movement)
     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-    assert_permissions
+    assert_equal flash[:danger], 'Esta operación no está permitida actualmente'
   end
 
   # test 'Movements - divide as non-admin user should redirect to homepage with message' do
@@ -100,7 +100,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get new_movement_path
     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-    assert_permissions
+    assert_equal flash[:danger], 'Esta operación no está permitida actualmente'
   end
 
   test 'Movements - update movement should work properly as admin' do

@@ -5,7 +5,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @admin = users(:admin)
     @user = users(:user)
-    @apartment = apartments(:primero)
+    @apartment = apartments(:apartment1)
   end
 
   #################

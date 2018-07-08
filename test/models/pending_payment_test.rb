@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PendingPaymentTest < ActiveSupport::TestCase
   def setup
-    @pending_payment = pending_payments(:cuota1a)
+    @pending_payment = pending_payments(:pending_payment1)
   end
 
   test 'Pending Payments - pending payment should be valid' do

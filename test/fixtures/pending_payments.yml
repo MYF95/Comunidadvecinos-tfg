@@ -1,13 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-cuota1a:
+pending_payment1:
   concept: Cuota de la vivienda 1ºA
   date: 2018-06-22
   amount: 50
   description: Cuota correspondiente de la vivienda 1ºA
   paid: false
 
-cuota2a:
+pending_payment2:
   concept: Cuota de la vivienda 2ºA
   date: 2018-06-22
   amount: 60

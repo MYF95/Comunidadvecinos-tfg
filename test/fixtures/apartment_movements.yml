@@ -1,1 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+apartment_movement1:
+  id: 1
+  apartment_id: 1
+  movement_id: 1
+
+apartment_movement2:
+  id: 2
+  apartment_id: 1
+  movement_id: 2

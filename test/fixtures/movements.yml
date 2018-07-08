@@ -1,13 +1,20 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-ingreso1:
+movement1:
+  id: 1
   concept: Ingreso de Ponsan
   date: 2018-06-23
   amount: 50
   description: Ingreso de Ponsan de vivienda 1ºA
 
-ingreso2:
+movement2:
+  id: 2
   concept: Ingreso de Tsukki
   date: 2018-06-23
   amount: 60
   description: Ingreso de Tsukki de vivienda 2ºA
+
+movement2:
+  id: 3
+  concept: Ingreso de Ponsan
+  date: 2018-06-23
+  amount: 50
+  description: Ingreso de Ponsan de vivienda 1ºA

@@ -21,7 +21,7 @@ class Apartment < ApplicationRecord
   has_one :owner, through: :apartment_owner
 
   validates :floor, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}, uniqueness: {scope: :letter}
-  validates :letter, presence: true
+  validates :letter, presence: true, length: {is: 1}
   validates :fee, presence: true, numericality: { greater_than_or_equal_to: 0}
   validates_inclusion_of :apartment_contribution, :in => 0..1
 
@@ -40,13 +40,13 @@ class Apartment < ApplicationRecord
     end
 
     def destroy_apartment_owners
-      unless self.owner.nil?
+      unless self.apartment_owner.nil?
         self.apartment_owner.destroy
       end
     end
 
     def destroy_apartment_users
-      unless self.users.empty?
+      unless self.user_apartments.empty?
         self.user_apartments.destroy_all
       end
     end

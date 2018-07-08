@@ -5,7 +5,7 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @admin = users(:admin)
     @user = users(:user)
-    @pending_payment = pending_payments(:cuota1a)
+    @pending_payment = pending_payments(:pending_payment1)
 
     @concept = 'Cuota de la vivienda 1ºB'
     @description = 'Cuota correspondiente de la vivienda 1ºB'

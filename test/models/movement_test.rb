@@ -4,7 +4,7 @@ class MovementTest < ActiveSupport::TestCase
 
   #TODO nuevo test para los campos nuevos
   def setup
-    @movement = movements(:ingreso1)
+    @movement = movements(:movement1)
   end
 
   test 'Movements - movement should be valid' do

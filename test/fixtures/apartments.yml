@@ -1,13 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-primero:
+apartment1:
+  id: 1
   floor: 1
   letter: A
   fee: 50
   balance: 0
   apartment_contribution: 0.15
 
-segundo:
+apartment2:
+  id: 2
   floor: 2
   letter: B
   fee: 45

@@ -3,11 +3,13 @@
     %tr
       %th= sortable 'name', 'Nombre'
       %th= sortable 'date', 'Fecha'
+      %th= 'Fichero CSV'
       %th= 'Opciones'
     -@statements.each do |statement|
       %tr
         %td= link_to "#{statement.name}", statement_path(statement)
         %td= "#{statement.date}"
+        %td= link_to 'Descargar', statement.bank_statement.service_url
         %td
           = link_to 'Ver', statement_path(statement), class: 'btn btn-xs btn-primary'
           - if current_user.admin?

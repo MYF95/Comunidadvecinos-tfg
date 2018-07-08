@@ -1,16 +1,13 @@
-- provide(:title, 'Extractos bancarios')
+- provide(:title, 'Extractos en la nube')
 
 .row
   .col-xs-12
     .page-header
-      %h1 Extractos bancarios de la comunidad
+      %h1 Archivos originales de los extractos
+.row
+  .col-xs-12
+    %p Los archivos que se ven a continuación son los archivos que se han importado en la aplicación y están guardados en la nube.
 .inner-wrapper
-  -if current_user.admin?
-    .row
-      .col-xs-12.col-sm-4
-        %p= link_to 'Archivos originales', bucket_path, class: 'btn btn-primary'
-      .col-xs-12.col-sm-4.col-sm-offset-3
-        %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
   - if @statements.empty?
     %p No hay ningún extracto bancario en la aplicación.
   - else
@@ -18,7 +15,7 @@
     .col-xs-12
       .pagination
         = will_paginate @statements, class: 'flickr_pagination'
-  = render 'statements/tables/index'
+  = render 'statements/tables/bucket'
   .row
     .col-xs-12
       .pagination

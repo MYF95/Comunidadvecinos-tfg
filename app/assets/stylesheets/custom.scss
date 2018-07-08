@@ -239,6 +239,20 @@ table .glyphicon {
   }
 }
 
+.table.table-hover.table-statement-center{
+  th{
+    text-align: center;
+    vertical-align: middle;
+  }
+  td{
+    text-align: center;
+    vertical-align: middle;
+  }
+  a{
+    margin-right: 5px;
+  }
+}
+
 .table th .current {
   padding-right: 12px;
   background-repeat: no-repeat;

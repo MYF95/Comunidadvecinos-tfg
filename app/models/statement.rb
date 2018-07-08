@@ -1,5 +1,6 @@
 class Statement < ApplicationRecord
   before_destroy :destroy_movements
+  before_destroy :destroy_bank_statement
 
   has_many :statement_movements
   has_many :movements, through: :statement_movements
@@ -17,5 +18,9 @@ class Statement < ApplicationRecord
           end
         end
       end
+    end
+
+    def destroy_bank_statement
+      self.bank_statement.purge
     end
 end

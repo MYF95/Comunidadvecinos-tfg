@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get '/profile/:id',                                                       to: 'users#show', as: 'user_profile'
   get '/:id/users',                                                         to: 'users#user_list', as: 'userlist'
 
+  # Statement custom routes
+  get '/statements/bucket',                                                 to: 'statements#bucket', as: 'bucket'
+
   # Statement with movement routes
   delete '/statements/:id/movements/:movement_id',                          to: 'movements#destroy_statement', as: 'delete_movement_statement'
 

@@ -1,7 +1,7 @@
 class StatementsController < ApplicationController
   helper_method :sort_column, :sort_direction, :sort_movement_column
   before_action :logged_in_user
-  before_action :statement_getter, except: [:index, :new, :create, :import]
+  before_action :statement_getter, except: [:index, :new, :create, :bucket]
 
   def index
     @statements = Statement.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
@@ -66,10 +66,14 @@ class StatementsController < ApplicationController
     end
   end
 
+  def bucket
+    @statements = Statement.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+  end
+
   private
 
     def sort_column
-      Apartment.column_names.include?(params[:sort]) ? params[:sort] : "name"
+      Statement.column_names.include?(params[:sort]) ? params[:sort] : "name"
     end
 
     def sort_direction

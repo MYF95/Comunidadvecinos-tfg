@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   before_action :permissions, except: [:show, :index]
   before_action :user_getter, except: [:user_list, :index, :new, :create]
 
-  def show
-    @apartments = @user.apartments.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+  def index
+    @users = User.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def new
@@ -23,13 +23,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def user_list
-    @apartment = Apartment.find(params[:id])
-    @users = User.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
-  end
-
-  def index
-    @users = User.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+  def show
+    @apartments = @user.apartments.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def destroy
@@ -39,6 +34,11 @@ class UsersController < ApplicationController
       flash[:danger] = 'Ha ocurrido un error intentando eliminar al usuario'
     end
     redirect_to users_path
+  end
+
+  def user_list
+    @apartment = Apartment.find(params[:id])
+    @users = User.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   private

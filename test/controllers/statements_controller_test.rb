@@ -36,7 +36,7 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get statement_path(@statement)
     assert_template 'statements/show'
-    assert_select 'p', "Nombre del extracto: #{@statement.name}"
+    assert_select 'p', "Nombre"
   end
 
   test 'create as non-admin user should redirect to homepage with message' do

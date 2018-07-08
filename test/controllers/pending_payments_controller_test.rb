@@ -37,7 +37,7 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get pending_payment_path(@pending_payment)
     assert_template 'pending_payments/show'
-    assert_select 'p', "Concepto: #{@pending_payment.concept}"
+    assert_select 'p', "Concepto"
   end
 
   test 'create as non-admin user should redirect to homepage with message' do

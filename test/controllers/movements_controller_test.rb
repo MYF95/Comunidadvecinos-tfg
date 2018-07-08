@@ -38,7 +38,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get movement_path(@movement)
     assert_template 'movements/show'
-    assert_select 'h1', 'Datos del movimiento bancario "'+@movement.concept+'"'
+    assert_select 'h1', 'Datos del movimiento bancario'
   end
 
   test 'create as non-admin user should redirect to homepage with message' do

@@ -1,7 +1,13 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  test 'Users - destroy user should destroy association with apartments' do
+
+  end
+
+  test 'Users - destroy user should destroy owner association with apartments' do
+
+  end
+
 end

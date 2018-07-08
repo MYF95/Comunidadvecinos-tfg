@@ -7,22 +7,38 @@ class MovementTest < ActiveSupport::TestCase
     @movement = movements(:ingreso1)
   end
 
-  test '@movement should be valid' do
+  test 'Movements - movement should be valid' do
     assert @movement.valid?
   end
 
-  test 'concept should be present' do
+  test 'Movements - concept should be present' do
     @movement.concept = "";
     assert_not @movement.valid?
   end
 
-  test 'date should be present' do
+  test 'Movements - date should be present' do
     @movement.date = "";
     assert_not @movement.valid?
   end
 
-  test 'amount should be present' do
+  test 'Movements - amount should be present' do
     @movement.amount = "";
     assert_not @movement.valid?
+  end
+
+  test 'Movements - destroy movement should destroy association with statements' do
+
+  end
+
+  test 'Movements - destroy movement should destroy association with apartment' do
+
+  end
+
+  test 'Movements - destroy movement should destroy associated children' do
+
+  end
+
+  test 'Movements - destroy movement should destroy association with parent' do
+
   end
 end

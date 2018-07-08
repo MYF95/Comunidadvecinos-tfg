@@ -7,7 +7,8 @@
 .inner-wrapper
   .row
     .col-xs-12
-      %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+      -if current_user.admin?
+        %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
   - if @statements.empty?
     %p No hay ningún extracto bancario en la aplicación.
   - else
@@ -15,24 +16,12 @@
     .col-xs-12
       .pagination
         = will_paginate @statements, class: 'flickr_pagination'
-  .table-responsive
-    %table.table.table-hover.table-statement
-      %tr
-        %th= sortable 'name', 'Nombre'
-        %th= sortable 'date', 'Fecha'
-        %th= 'Opciones'
-      -@statements.each do |statement|
-        %tr
-          %td= link_to "#{statement.name}", statement_path(statement)
-          %td= "#{statement.date}"
-          %td
-            = link_to 'Ver', statement_path(statement), class: 'btn btn-xs btn-primary'
-            = link_to 'Editar', edit_statement_path(statement), class: 'btn btn-xs btn-primary'
-            = link_to 'Borrar', statement, method: :delete, data: { confirm: '¿Quieres borrar el extracto bancario?'}, class: 'btn btn-xs btn-danger'
+  = render 'statements/tables/index'
   .row
     .col-xs-12
       .pagination
         = will_paginate @statements, class: 'flickr_pagination'
   .row
     .col-xs-12
-      %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+      - if current_user.admin?
+        %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'

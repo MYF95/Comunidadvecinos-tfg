@@ -1,0 +1,23 @@
+.table-responsive
+  %table.table.table-hover.table-statement
+    %tr
+      %th= sortable 'first_name', 'Nombre'
+      %th= sortable 'last_name', 'Apellidos'
+      %th= sortable 'email', 'Email'
+      %th= sortable 'phone_number', 'Teléfono'
+      %th Viviendas asociada
+      %th Opciones
+    -@users.each do |user|
+      -unless current_user == user
+        %tr
+          %td= link_to "#{user.first_name}", user_profile_path(user)
+          %td= "#{user.last_name}"
+          %td= "#{user.email}"
+          %td= "#{user.phone_number}"
+          %td
+            - user.apartments.each do |apartment|
+              = link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+          %td
+            = link_to 'Ver', user_profile_path(user), class: 'btn btn-xs btn-primary'
+            - if current_user.admin?
+              = link_to 'Borrar', user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger'

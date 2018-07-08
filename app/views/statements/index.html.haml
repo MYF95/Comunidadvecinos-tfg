@@ -14,16 +14,16 @@
   - if @statements.empty?
     %p No hay ningún extracto bancario en la aplicación.
   - else
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @statements, class: 'flickr_pagination'
-  = render 'statements/tables/index'
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @statements, class: 'flickr_pagination'
-  .row
-    .col-xs-12.col-sm-4.col-sm-offset-7
-      - if current_user.admin?
-        %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @statements, class: 'flickr_pagination'
+    = render 'statements/tables/index'
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @statements, class: 'flickr_pagination'
+    .row
+      .col-xs-12.col-sm-4.col-sm-offset-7
+        - if current_user.admin?
+          %p= link_to 'Importar extracto bancario', new_statement_path, class: 'btn btn-primary'

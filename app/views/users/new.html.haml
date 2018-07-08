@@ -1,0 +1,49 @@
+- provide(:title, 'Crear usuario')
+
+.row
+  .col-xs-12
+    .page-header
+      %h1 Crear un nuevo usuario
+.inner-wrapper
+  .row
+    .col-xs-12.col-md-8.col-md-offset-2
+      .form-box
+        = form_for(@user, url: user_create_path, method: :post) do |f|
+          = render 'shared/error_message', object: f.object
+          .form-title
+            %span= 'Crear usuario'
+            %hr
+          .form-group
+            .row
+              = f.label 'Nombre', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_field :first_name, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Apellidos', class: 'col-xs-12 col-sm-4 control-label'
+              = f.text_field :last_name, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Fecha de nacimiento', class: 'col-xs-12 col-sm-4 control-label'
+              = f.date_field :birthday, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Correo electrónico', class: 'col-xs-12 col-sm-4 control-label'
+              = f.email_field :email, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Nº de teléfono', class: 'col-xs-12 col-sm-4 control-label'
+              = f.number_field :phone_number, autofocus: true, class: 'col-xs-12 col-sm-4'
+          .form-group
+            .row
+              = f.label 'Contraseña', class: 'col-xs-12 control-label'
+              = f.password_field :password, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+            .row
+              .col-xs-12
+                %em 6 caracteres mínimo
+          .form-group
+            .row
+              = f.label 'Confirmación de contraseña', class: 'col-xs-12 control-label'
+              = f.password_field :password_confirmation, autocomplete: "off", class: 'col-xs-12 col-sm-4 col-sm-offset-4'
+          .form-group
+            .row
+              = f.submit 'Crear usuario', class: 'col-xs-12 col-sm-4 col-sm-offset-4'

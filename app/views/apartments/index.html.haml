@@ -12,7 +12,7 @@
     .col-xs-12
       -if current_user.admin?
         %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'
-  - if @apartments.empty?
+  - if @apartment.nil? || @apartments.empty?
     %p No hay ninguna vivienda disponible.
   -else
     .row
@@ -24,7 +24,7 @@
       .col-xs-12
         .pagination
           = will_paginate @apartments, class: 'flickr_pagination'
-  .row
-    .col-xs-12
-      -if current_user.admin?
-        %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'
+    .row
+      .col-xs-12
+        -if current_user.admin?
+          %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'

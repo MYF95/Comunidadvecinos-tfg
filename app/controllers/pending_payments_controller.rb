@@ -103,30 +103,36 @@ class PendingPaymentsController < ApplicationController
   end
 
   def create_all
-    if check_apartments_contribution
-      months = params[:pending_payment][:months].to_i
-      amount = params[:pending_payment][:amount].to_f
-      Apartment.all.each do |apartment|
-        apartment_fee = pending_payment_fee_calculator(months, amount, apartment)
-        for i in 0..months-1
-          date = params[:pending_payment][:date].to_date
-          month = l(date + i.month, format: "%B")
-          @pending_payment = PendingPayment.new(concept: params[:pending_payment][:concept] + " vivienda #{full_name_apartment(apartment)} de #{month}",
-                                                date: (date + i.month).to_s, amount: apartment_fee, description: params[:pending_payment][:description],
-                                                months: params[:pending_payment][:months])
-          if @pending_payment.save
-            ApartmentPendingPayment.create!(apartment: apartment, pending_payment: @pending_payment)
-            flash[:info] = "Se han creado los pagos pendientes de #{params[:pending_payment][:concept]} correctamente"
-          else
-            flash[:danger] = "Se ha producido un error generando los pagos pendientes de la vivienda #{full_name_apartment(@apartment)}"
-            break
-          end
-        end
-      end
-      redirect_to pending_payments_path
-    else
-      flash[:danger] = 'Hay viviendas con 0% de participación o el total de contribución no suma a 100%. Antes de crear derramas, actualiza las contribución de cada vivienda.'
+    @apartments = Apartment.all
+    if @apartments.empty?
+      flash[:danger] = 'La comunidad no tiene ninguna vivienda, por favor, crea las viviendas de la comunidad primero.'
       redirect_to apartments_path
+    else
+      if check_apartments_contribution
+          months = params[:pending_payment][:months].to_i
+          amount = params[:pending_payment][:amount].to_f
+          Apartment.all.each do |apartment|
+            apartment_fee = pending_payment_fee_calculator(months, amount, apartment)
+            for i in 0..months-1
+              date = params[:pending_payment][:date].to_date
+              month = l(date + i.month, format: "%B")
+              @pending_payment = PendingPayment.new(concept: params[:pending_payment][:concept] + " vivienda #{full_name_apartment(apartment)} de #{month}",
+                                                    date: (date + i.month).to_s, amount: apartment_fee, description: params[:pending_payment][:description],
+                                                    months: params[:pending_payment][:months])
+              if @pending_payment.save
+                ApartmentPendingPayment.create!(apartment: apartment, pending_payment: @pending_payment)
+                flash[:info] = "Se han creado los pagos pendientes de #{params[:pending_payment][:concept]} correctamente"
+              else
+                flash[:danger] = "Se ha producido un error generando los pagos pendientes de la vivienda #{full_name_apartment(@apartment)}"
+                break
+              end
+            end
+          end
+          redirect_to pending_payments_path
+        else
+          flash[:danger] = 'Hay viviendas con 0% de participación o el total de contribución no suma a 100%. Antes de crear derramas, actualiza las contribución de cada vivienda.'
+          redirect_to apartments_path
+      end
     end
   end
 

@@ -16,6 +16,7 @@
   .form-control {
     color: $state-danger-text;
   }
+  display: inline-table;
 }
 
 /* Bootstrap */
@@ -201,6 +202,10 @@ hr{
 
 .alert-notice {
   @extend .alert-info
+}
+
+.alert-alert{
+  @extend .alert-danger
 }
 
 .alert{

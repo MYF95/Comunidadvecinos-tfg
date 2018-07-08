@@ -4,35 +4,25 @@
   .col-xs-12
     .page-header
       %h1 Vecinos de la comunidad
+
 .inner-wrapper
   .row
     .col-xs-12
-      .pagination
-        = will_paginate @users, class: 'flickr_pagination'
-  .table-responsive
-    %table.table.table-hover.table-statement
-      %tr
-        %th= sortable 'first_name', 'Nombre'
-        %th= sortable 'last_name', 'Apellidos'
-        %th= sortable 'email', 'Email'
-        %th= sortable 'phone_number', 'Teléfono'
-        %th Viviendas asociada
-        %th Opciones
-      -@users.each do |user|
-        -unless current_user == user
-          %tr
-            %td= link_to "#{user.first_name}", user_profile_path(user)
-            %td= "#{user.last_name}"
-            %td= "#{user.email}"
-            %td= "#{user.phone_number}"
-            %td
-              - user.apartments.each do |apartment|
-                = link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
-            %td
-              = link_to 'Ver', user_profile_path(user), class: 'btn btn-xs btn-primary'
-              - if current_user.admin?
-                = link_to 'Borrar', user_path(user), data: { confirm: "¿Estás seguro de que quieres borrar al usuario?" }, method: :delete, class: 'btn btn-xs btn-danger'
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @users, class: 'flickr_pagination'
+      - if current_user.admin?
+        %p= link_to 'Crear usuario', new_user_path, class: 'btn btn-primary'
+  - if @users.where.not(id: current_user.id).empty?
+    %p No hay ningún otro usuario en la aplicación.
+  - else
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @users, class: 'flickr_pagination'
+    = render 'users/tables/index'
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @users, class: 'flickr_pagination'
+    .row
+      .col-xs-12
+        -if current_user.admin?
+          %p= link_to 'Crear usuario', new_user_path, class: 'btn btn-primary'

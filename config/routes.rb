@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # User custom routes
   get '/profile/:id',                                                       to: 'users#show', as: 'user_profile'
   get '/:id/users',                                                         to: 'users#user_list', as: 'userlist'
+  post '/users/create',                                                     to: 'users#create', as: 'user_create'
 
   # Statement custom routes
   get '/statements/bucket',                                                 to: 'statements#bucket', as: 'bucket'

@@ -31,12 +31,15 @@
     .col-xs-12
       .page-header
         %h2 Viviendas asociadas
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @apartments, class: 'flickr_pagination'
-  = render 'users/tables/apartments'
-  .row
-    .col-xs-12
-      .pagination
-        = will_paginate @apartments, class: 'flickr_pagination'
+  - if @apartments.empty?
+    %p No hay ninguna vivienda asociada a este usuario
+  - else
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @apartments, class: 'flickr_pagination'
+    = render 'users/tables/apartments'
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @apartments, class: 'flickr_pagination'

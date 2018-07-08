@@ -147,8 +147,8 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # ACTIONS #
   ###########
 
-  # index, new, create, show, edit, update, destroy, users, add_user, remove_user, add_owner, remove_owner,
-  # movements, history, pending_payments, pending_payments_users, pay_pending_payment
+  # All controller actions: index, new, create, show, edit, update, destroy, users, add_user, remove_user, add_owner,
+  # remove_owner, movements, history, pending_payments, pending_payments_users, pay_pending_payment
   #
   # permissions: index, show, users, pending_payments, movements, history
   #

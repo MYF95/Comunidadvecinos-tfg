@@ -12,7 +12,7 @@
     .col-xs-12
       -if current_user.admin?
         %p= link_to 'Crear vivienda', new_apartment_path, class: 'btn btn-primary'
-  - if @apartment.nil? || @apartments.empty?
+  - if @apartments.nil? || @apartments.empty?
     %p No hay ninguna vivienda disponible.
   -else
     .row

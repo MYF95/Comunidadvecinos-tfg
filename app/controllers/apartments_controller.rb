@@ -21,6 +21,10 @@ class ApartmentsController < ApplicationController
 
   def create
     @apartment = Apartment.new(apartment_params)
+    unless @apartment.valid?
+      render 'new'
+      return
+    end
     if total_apartment_contribution(@apartment) > 1
       @apartment.update_attribute(:apartment_contribution, 0)
       if @apartment.save
@@ -53,7 +57,8 @@ class ApartmentsController < ApplicationController
       flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
       redirect_to edit_apartment_path(@apartment)
     else
-      if Apartment.where(floor: params[:apartment][:floor].to_i, letter: params[:apartment][:letter].capitalize).empty?
+      @apartments = Apartment.where.not(id: @apartment.id)
+      if @apartments.where(floor: params[:apartment][:floor].to_i, letter: params[:apartment][:letter].capitalize).empty?
         if @apartment.update_attributes(apartment_params)
           flash[:info] = 'Vivienda actualizada'
           redirect_to @apartment

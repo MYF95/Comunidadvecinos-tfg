@@ -17,12 +17,17 @@ class StatementsController < ApplicationController
       if @statement.date.nil?
         @statement.date = Date.today.to_s
       end
-      import_csv
-      if @statement.save
-        flash[:info] = "¡Nuevo extracto #{@statement.name} creado!"
-        redirect_to @statement
+      if @statement.bank_statement.attached?
+        if @statement.save
+          flash[:info] = "¡Nuevo extracto #{@statement.name} creado!"
+          import_csv
+          redirect_to @statement
+        else
+          flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+          render 'new'
+        end
       else
-        flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
+        flash[:danger] = 'No hay ningún fichero a importar, inténtelo de nuevo.'
         render 'new'
       end
     else

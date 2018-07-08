@@ -40,6 +40,10 @@ class PendingPaymentTest < ActiveSupport::TestCase
   end
 
   test 'Pending Payments - destroy pending payment should destroy association with apartments' do
-
+    assert_difference 'ApartmentPendingPayment.count', -1 do
+      assert_no_difference 'Apartment.count' do
+        @pending_payment.destroy
+      end
+    end
   end
 end

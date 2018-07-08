@@ -1,2 +1,5 @@
-
+apartment_pending_payment1:
+  id: 1
+  apartment_id: 1
+  pending_payment_id: 1
 

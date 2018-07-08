@@ -13,70 +13,97 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     @date = '23-06-2018'
   end
 
-  # FUNCTIONS
+  #################
+  #               #
+  #   FUNCTIONS   #
+  #               #
+  #################
 
   def assert_permissions
     follow_redirect!
     assert_equal flash[:danger], 'Tu cuenta no tiene permisos para realizar esa acción. Por favor, contacta con el administrador para más información.'
   end
 
-  # TESTS
+  #############
+  #           #
+  #   TESTS   #
+  #           #
+  #############
 
-  test 'should get new' do
-    log_in_as(@admin)
-    get new_movement_path
-    assert_response :success
-  end
+  ##########
+  # ROUTES #
+  ##########
 
-  test 'should get index' do
+  test 'Movements - should get index' do
     log_in_as(@user)
     get movements_path
     assert_response :success
   end
 
-  test 'should get correct movement' do
+  test 'Movements - should get show' do
     log_in_as(@user)
     get movement_path(@movement)
     assert_template 'movements/show'
     assert_select 'h1', 'Datos del movimiento bancario'
   end
 
-  test 'create as non-admin user should redirect to homepage with message' do
-    log_in_as(@user)
-    get new_movement_path
-    post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-    assert_permissions
-  end
+  # test 'Movements - new as non-admin user should redirect to homepage with message' do
+  #
+  # end
 
-  test 'edit as non-admin user should redirect to homepage with message' do
+  test 'Movements - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_movement_path(@movement)
     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
     assert_permissions
   end
 
-  test 'delete as non-admin user should redirect to homepage with message' do
+  # test 'Movements - divide as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
+  # test 'Movements - apartments as non-admin user should redirect to homepage with message' do
+  #
+  # end
+
+  test 'Movements - should get new as admin' do
+    log_in_as(@admin)
+    get new_movement_path
+    assert_response :success
+  end
+
+  # test 'Movements - should get edit as admin' do
+  #
+  # end
+  #
+  # test 'Movements - should get divide as admin' do
+  #
+  # end
+  #
+  # test 'Movements - should get apartments as admin' do
+  #
+  # end
+
+  ###########
+  # ACTIONS #
+  ###########
+
+  # All controller actions: index, new, create, show, edit, update, destroy, divide, divide_movement,
+  # apartments, associate_apartment, remove_apartment, children
+  #
+  # permissions: index, show, children
+  #
+  # actions: create, update, destroy, divide_movement, associate_apartment, remove_apartment
+
+
+  test 'Movements - create movement should redirect to homepage with message' do
     log_in_as(@user)
-    get movement_path(@movement)
-    assert_no_difference 'Movement.count' do
-      delete movement_path(@movement)
-    end
+    get new_movement_path
+    post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
     assert_permissions
   end
 
-  #TODO remove create movement
-  # test 'create movement should work properly as admin user' do
-  #   log_in_as(@admin)
-  #   get new_movement_path
-  #   assert_difference 'Movement.count', 1 do
-  #     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-  #   end
-  #   follow_redirect!
-  #   assert_template 'movements/show'
-  #   assert_not flash.empty?
-  # end
-
-  test 'update movement should work properly as admin user with correct data' do
+  test 'Movements - update movement should work properly as admin' do
     log_in_as(@admin)
     get edit_movement_path(@movement)
     patch movement_path(@movement), params: { movement: {description: 'New description'}}
@@ -86,7 +113,16 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'New description', @movement.description
   end
 
-  test 'destroy movement should work properly as admin user' do
+  test 'Movements - delete as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get movement_path(@movement)
+    assert_no_difference 'Movement.count' do
+      delete movement_path(@movement)
+    end
+    assert_permissions
+  end
+
+  test 'Movements - destroy movement should work properly as admin' do
     log_in_as(@admin)
     get movement_path(@movement)
     assert_template 'movements/show'
@@ -96,20 +132,36 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to movements_path
   end
 
-  #TODO tests para crear un extracto, dividir un movimiento, asociar un movimiento a una vivienda
-
-  # test 'create for statement' do
+  # test 'Movements - divide_movement as non-admin user should redirect to homepage with message' do
+  #
   # end
   #
-  # test 'divide movement' do
+  # test 'Movements - divide_movement should work with correct data as admin' do
+  #
   # end
   #
-  # test 'associate apartment' do
+  # test 'Movements - divide_movement should not work with negative or bigger than current amount' do
+  #
   # end
   #
-  # test 'remove apartment' do
+  # test 'Movements - divide_movement should not work if the movement is associated to an apartment' do
+  #
   # end
   #
-  # test 'children' do
+  # test 'Movements - associate_apartment as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
+  # #TODO associate_apartment might be too big, there are many things that have to happen to work
+  # test 'Movements - associate_apartment should work correctly as admin' do
+  #
+  # end
+  #
+  # test 'Movements - remove_apartment as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
+  # test 'Movements - remove_apartment should work correctly as admin' do
+  #
   # end
 end

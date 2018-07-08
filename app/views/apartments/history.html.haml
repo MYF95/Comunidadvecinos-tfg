@@ -36,8 +36,9 @@
                     = pending_payment.paid_by
                 %td
                   = link_to 'Ver', pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
-                  = link_to 'Editar', edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
-                  = link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger'
+                  - if current_user.admin?
+                    = link_to 'Editar', edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
+                    = link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger'
         .row
           .col-xs-12
             .pagination

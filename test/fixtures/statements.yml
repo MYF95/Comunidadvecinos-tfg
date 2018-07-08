@@ -1,9 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-junio:
+statement1:
+  id: 1
   name: Extracto junio 2018
   date: 2018-06-01
 
-julio:
+statement2:
+  id: 2
   name: Extracto julio 2018
   date: 2018-07-01

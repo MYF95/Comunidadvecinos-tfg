@@ -12,7 +12,7 @@ movement2:
   amount: 60
   description: Ingreso de Tsukki de vivienda 2ºA
 
-movement2:
+movement3:
   id: 3
   concept: Ingreso de Ponsan
   date: 2018-06-23

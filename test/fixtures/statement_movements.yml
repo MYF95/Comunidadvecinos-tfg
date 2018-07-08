@@ -1,2 +1,14 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+statement_movement1:
+  id: 1
+  statement_id: 1
+  movement_id: 1
 
+statement_movement2:
+  id: 2
+  statement_id: 1
+  movement_id: 2
+
+statement_movement3:
+  id: 3
+  statement_id: 2
+  movement_id: 1

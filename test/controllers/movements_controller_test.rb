@@ -6,7 +6,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     @admin = users(:admin)
     @user = users(:user)
     @movement = movements(:movement1)
-    @statement = statements(:junio)
+    @statement = statements(:statement1)
 
     @concept = 'Ingreso de ponsan'
     @description = 'Ingreso de Ponsan de la vivienda 1ºA'

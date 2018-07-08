@@ -5,7 +5,7 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @admin = users(:admin)
     @user = users(:user)
-    @statement = statements(:junio)
+    @statement = statements(:statement1)
 
     @name = 'Extracto junio 2018'
     @date = '01-06-2018'

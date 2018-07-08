@@ -82,39 +82,18 @@
           %p= 'Descripción del administrador'
         .col-xs-6.text-left
           %p= "#{@movement.description}"
-      .row
-        %hr/
-        .col-xs-6.text-right
-          %p.button= link_to 'Actualizar movimiento', edit_movement_path(@movement), class: 'btn btn-primary'
-        .col-xs-6.text-left
-          -unless @movement.apartment.nil?
-            %p.button= link_to 'Desasociar movimiento', remove_apartment_path(@movement), method: :delete, data: { confirm: "¿Quieres desasociar el movimiento de la vivienda #{full_name_apartment(@movement.apartment)}?"}, class: 'btn btn-primary'
+      - if current_user.admin?
+        .row
+          %hr/
+          .col-xs-6.text-right
+            %p.button= link_to 'Actualizar movimiento', edit_movement_path(@movement), class: 'btn btn-primary'
+          .col-xs-6.text-left
+            -unless @movement.apartment.nil?
+              %p.button= link_to 'Desasociar movimiento', remove_apartment_path(@movement), method: :delete, data: { confirm: "¿Quieres desasociar el movimiento de la vivienda #{full_name_apartment(@movement.apartment)}?"}, class: 'btn btn-primary'
   - unless @movement.children.empty?
     %hr/
     .row
       .col-xs-12
         .page-header
           %h2 Movimientos descendientes
-    .table-responsive
-      %table.table.table-hover.table-statement
-        %tr
-          %th Concepto
-          %th Fecha
-          %th Cantidad
-          %th Vivienda asociada
-          %th Opciones
-        -@movement.children.each do |movement|
-          %tr
-            %td= link_to "#{movement.child.concept}", movement_path(movement.child)
-            %td= "#{movement.child.date}"
-            %td= "#{movement.child.amount}"
-            %td
-              - if movement.child.apartment.blank?
-                = link_to 'Asociar a vivienda', apartmentlist_path(movement.child)
-              - else
-                = link_to "#{full_name_apartment(movement.child.apartment)}", apartment_path(movement.child.apartment)
-            %td
-              = link_to 'Ver', movement_path(movement.child), class: 'btn btn-xs btn-primary'
-              = link_to 'Dividir', divide_path(movement.child), class: 'btn btn-xs btn-success'
-              = link_to 'Editar', edit_movement_path(movement.child), class: 'btn btn-xs btn-primary'
-              = link_to 'Borrar', movement.child, method: :delete, data: { confirm: '¿Quieres borrar el movimiento bancario?'}, class: 'btn btn-xs btn-danger'
+    = render 'movements/tables/show_children'

@@ -2,7 +2,7 @@ class MovementsController < ApplicationController
   helper_method :sort_column, :sort_direction, :sort_apartment_column
   before_action :logged_in_user
   before_action :movement_getter, except: [:index, :new, :create, :destroy_statement]
-  before_action :permissions, except: [:index, :show]
+  before_action :permissions, except: [:index, :show, :children]
   before_action :check_amount, only: [:associate_apartment]
 
   def index

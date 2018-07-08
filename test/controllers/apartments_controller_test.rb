@@ -66,13 +66,6 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   #
   # end
 
-  test 'Apartments - create as non-admin user should redirect to homepage with message' do
-    log_in_as(@user)
-    get new_apartment_path
-    post apartments_path, params: { apartment: { floor: '1', letter: 'B', fee: '60', apartment_contribution: 0.15}}
-    assert_permissions
-  end
-
   test 'Apartments - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_apartment_path(@apartment)
@@ -80,40 +73,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_permissions
   end
 
-  # test 'Apartments - update as non-admin user should redirect to homepage with message' do
-  #
-  # end
-
-  test 'Apartments - delete as non-admin user should redirect to homepage with message' do
-    log_in_as(@user)
-    get apartment_path(@apartment)
-    assert_no_difference 'Apartment.count' do
-      delete apartment_path(@apartment)
-    end
-    assert_permissions
-  end
-
-  # test 'Apartments - add_user as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
-  # test 'Apartments - remove_user as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
-  # test 'Apartments - add_owner as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
-  # test 'Apartments - remove_owner as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
   # test 'Apartments - pending_payments_users as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
-  # test 'Apartments - pay_pending_payment as non-admin user should redirect to homepage with message' do
   #
   # end
 
@@ -123,22 +83,6 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test 'Apartments - should get add_user as admin' do
-  #
-  # end
-  #
-  # test 'Apartments - should get remove_user as admin' do
-  #
-  # end
-  #
-  # test 'Apartments - should get add_owner as admin' do
-  #
-  # end
-  #
-  # test 'Apartments - should get remove_owner as admin' do
-  #
-  # end
-  #
   # test 'Apartments - should get pending_payment_users as admin' do
   #
   # end
@@ -153,6 +97,13 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # permissions: index, show, users, pending_payments, movements, history
   #
   # actions: create, update, destroy, add_user, remove_user, add_owner, remove_owner, pay_pending_payment
+
+  test 'Apartments - create as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get new_apartment_path
+    post apartments_path, params: { apartment: { floor: '1', letter: 'B', fee: '60', apartment_contribution: 0.15}}
+    assert_permissions
+  end
 
   test 'Apartments - create apartment should work with correct data as admin' do
     log_in_as(@admin)
@@ -174,6 +125,10 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # end
   #
   # test 'Apartments - create apartment should set new apartment_contribution to 0 if total would surpass 1 as admin' do
+  #
+  # end
+  #
+  # test 'Apartments - update as non-admin user should redirect to homepage with message' do
   #
   # end
 
@@ -204,6 +159,15 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   #
   # end
 
+  test 'Apartments - delete as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get apartment_path(@apartment)
+    assert_no_difference 'Apartment.count' do
+      delete apartment_path(@apartment)
+    end
+    assert_permissions
+  end
+
   test 'Apartments - destroy apartment should work as admin' do
     log_in_as(@admin)
     get apartment_path(@apartment)
@@ -213,6 +177,14 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to apartments_path
   end
+
+  # test 'Apartments - add_user as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
+  # test 'Apartments - remove_user as non-admin user should redirect to homepage with message' do
+  #
+  # end
 
   # test 'Apartments - add_user should work if user is not in the apartment as admin' do
   #
@@ -234,6 +206,14 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   #
   # end
   #
+  # test 'Apartments - add_owner as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
+  # test 'Apartments - remove_owner as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
   # test 'Apartments - add_owner should work for chosen user if there was no owner previously as admin' do
   #
   # end
@@ -251,6 +231,10 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   # end
   #
   # test 'Apartments - remove_owner should not work if you do not choose the owner' do
+  #
+  # end
+  #
+  # test 'Apartments - pay_pending_payment as non-admin user should redirect to homepage with message' do
   #
   # end
   #

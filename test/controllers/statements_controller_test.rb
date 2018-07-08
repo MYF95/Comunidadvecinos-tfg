@@ -45,12 +45,9 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'p', "Nombre"
   end
 
-  test 'Statements - create as non-admin user should redirect to homepage with message' do
-    log_in_as(@user)
-    get new_statement_path
-    post statements_path, params: { statement: { name: @name, date: @date}}
-    assert_permissions
-  end
+  # test 'Statements - new as non-admin user should redirect to homepage with message' do
+  #
+  # end
 
   test 'Statements - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
@@ -60,14 +57,9 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
     assert_permissions
   end
 
-  test 'Statements - delete as non-admin user should redirect to homepage with message' do
-    log_in_as(@user)
-    get statement_path(@statement)
-    assert_no_difference 'Statement.count' do
-      delete statement_path(@statement)
-    end
-    assert_permissions
-  end
+  # test 'Statements - bucket as non-admin user should redirect to homepage with message' do
+  #
+  # end
 
   test 'Statements - should get new as admin' do
     log_in_as(@user)
@@ -92,6 +84,13 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
   # permissions: index, show
   #
   # actions: create, update, destroy
+
+  test 'Statements - create as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get new_statement_path
+    post statements_path, params: { statement: { name: @name, date: @date}}
+    assert_permissions
+  end
 
   # test 'Statements - import statement should work with correct data as admin' do
   #
@@ -132,6 +131,15 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
     get edit_statement_path(@statement)
     patch statement_path(@statement), params: { statement: { name: '', date: ''}}
     assert_select 'div.form-alert', 'El formulario contiene algunos errores.'
+  end
+
+  test 'Statements - delete as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get statement_path(@statement)
+    assert_no_difference 'Statement.count' do
+      delete statement_path(@statement)
+    end
+    assert_permissions
   end
 
   test 'destroy statement should work properly as admin user' do

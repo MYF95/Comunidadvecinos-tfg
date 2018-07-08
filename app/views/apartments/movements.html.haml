@@ -3,7 +3,7 @@
 .row
   .col-xs-12
     .page-header
-      %h1= "Movimientos asociados de la vivienda #{full_name_apartment(@apartment)}"
+      %h1= "Movimientos asociados a la vivienda #{full_name_apartment(@apartment)}"
 .inner-wrapper
   .row
     .col-xs-12
@@ -32,8 +32,9 @@
                 %td= "#{movement.description}"
                 %td
                   = link_to 'Ver', movement_path(movement), class: 'btn btn-xs btn-primary'
-                  = link_to 'Cambiar', apartmentlist_path(movement), class: 'btn btn-xs btn-success'
-                  = link_to 'Editar', edit_movement_path(movement), class: 'btn btn-xs btn-primary'
+                  - if current_user.admin?
+                    = link_to 'Cambiar', apartmentlist_path(movement), class: 'btn btn-xs btn-success'
+                    = link_to 'Editar', edit_movement_path(movement), class: 'btn btn-xs btn-primary'
         .row
           .col-xs-12
             .pagination

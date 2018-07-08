@@ -2,11 +2,17 @@ class ApartmentsController < ApplicationController
   helper_method :sort_column, :sort_direction, :sort_pending_payment_column, :sort_movement_column, :sort_user_column
   before_action :logged_in_user
   before_action :apartment_getter, except: [:index, :new, :create]
-  before_action :permissions, except: [:index, :show]
+  before_action :permissions, except: [:index, :show, :users, :pending_payments, :movements, :history]
   before_action :balance_checker, except: [:index, :new, :create]
 
   def index
-    @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+    if current_user.admin?
+      @apartments = Apartment.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+    else
+      unless current_user.apartments.empty?
+        @apartments = current_user.apartments.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+      end
+    end
   end
 
   def new

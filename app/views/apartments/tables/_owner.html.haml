@@ -1,0 +1,16 @@
+.table-responsive
+  %table.table.table-hover.table-statement
+    %tr
+      %th Propietario
+      %th Email
+      %th Teléfono
+      %th Opciones
+    %tr
+      %td= link_to "#{full_name(@apartment.owner)}", user_profile_path(@apartment.owner)
+      %td= "#{@apartment.owner.email}"
+      %td= "#{@apartment.owner.phone_number}"
+      %td
+        = link_to 'Ver', user_profile_path(@apartment.owner), class: 'btn btn-xs btn-primary'
+        - if current_user.admin?
+          = link_to 'Quitar propietario', remove_owner_path(@apartment), data: { confirm: "¿Quieres quitar a #{full_name(@apartment.owner)} como propietario de la vivienda?" }, method: :delete, class: 'btn btn-xs btn-danger'
+  %hr

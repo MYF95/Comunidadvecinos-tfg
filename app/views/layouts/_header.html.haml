@@ -1,32 +1,4 @@
-.container
-  .navbar-header
-    %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#navbar-collapse-header", "data-toggle" => "collapse", :type => "button"}
-      %span.sr-only Toggle navigation
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
-    %a
-      = link_to image_tag('vecinos-logo.png'), root_path, id: 'logo-image', class:'navbar-brand'
-      = link_to 'Comunidad vecinos', root_path , id: 'logo', class: 'navbar-brand'
-  #navbar-collapse-header.collapse.navbar-collapse
-    %ul.nav.navbar-nav.navbar-right
-      - if user_signed_in?
-        %li= link_to 'Viviendas', apartments_path
-        %li= link_to 'Extractos bancarios', statements_path
-        %li.dropdown
-          %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
-            Pagos pendientes
-            %b.caret
-          %ul.dropdown-menu
-            %li= link_to 'Pagos pendientes', pending_payments_path
-            %li= link_to 'Generar pagos pendientes de cuotas', new_pending_payment_path
-        %li= link_to 'Movimientos bancarios', movements_path
-        %li.dropdown
-          %a.dropdown-toggle{:href => '#', 'data-toggle' => 'dropdown'}
-            Usuarios
-            %b.caret
-          %ul.dropdown-menu
-            %li= link_to 'Ver mi perfil', user_profile_path(current_user)
-            %li= link_to 'Ver usuarios', users_path
-            %li.divider
-            %li= link_to 'Logout', destroy_user_session_path, :method => :delete
+- if current_user.try(:admin)
+  = render 'layouts/admin_header'
+- else
+  = render 'layouts/user_header'

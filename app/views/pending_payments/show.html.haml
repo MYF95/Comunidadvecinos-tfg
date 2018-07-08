@@ -46,10 +46,11 @@
             %p Pagador
           .col-xs-6.text-left
             %p= "#{@pending_payment.paid_by}"
-      .row
-        %hr/
-        .col-xs-6.text-right
-          %p.button= link_to 'Actualizar pago pendiente', edit_pending_payment_path(@pending_payment), class: 'btn btn-primary'
-        .col-xs-6.text-left
-          - unless @pending_payment.apartment.nil?
-            %p.button= link_to 'Asociar a otra vivienda', pending_payment_apartment_list_path(@pending_payment), class: 'btn btn-primary'
+      - if current_user.admin?
+        .row
+          %hr/
+          .col-xs-6.text-right
+            %p.button= link_to 'Actualizar pago pendiente', edit_pending_payment_path(@pending_payment), class: 'btn btn-primary'
+          .col-xs-6.text-left
+            - unless @pending_payment.apartment.nil?
+              %p.button= link_to 'Asociar a otra vivienda', pending_payment_apartment_list_path(@pending_payment), class: 'btn btn-primary'

@@ -5,7 +5,19 @@ class PendingPaymentsController < ApplicationController
   before_action :permissions, except: [:index, :show]
 
   def index
-    @pending_payments = PendingPayment.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+    if current_user.admin?
+      @pending_payments = PendingPayment.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+    else
+      apartments = current_user.apartments
+      unless current_user.apartments.empty?
+        pending_payments_array = []
+        apartments.each do |apartment|
+          pending_payments_array << apartment.pending_payments
+        end
+        pending_payments = PendingPayment.where(id: pending_payments_array.map(&:ids))
+        @pending_payments = pending_payments.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+      end
+    end
   end
 
   def new

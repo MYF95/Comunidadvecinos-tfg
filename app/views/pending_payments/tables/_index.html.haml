@@ -1,0 +1,26 @@
+.table-responsive
+  %table.table-statement.table.table-hover
+    %tr
+      %th= sortable 'concept', 'Concepto'
+      %th= sortable 'date', 'Fecha'
+      %th= sortable 'amount', 'Cantidad'
+      %th= sortable 'description', 'Descripción'
+      %th Vivienda asociada
+      %th Opciones
+    -@pending_payments.each do |pending_payment|
+      - unless pending_payment.paid?
+        %tr
+          %td= link_to "#{pending_payment.concept}", pending_payment_path(pending_payment)
+          %td= "#{pending_payment.date}"
+          %td= "#{pending_payment.amount}€"
+          %td= "#{pending_payment.description}"
+          %td
+            - if pending_payment.apartment.blank?
+              = link_to 'Asociar a vivienda', pending_payment_apartment_list_path(pending_payment)
+            - else
+              = link_to "#{full_name_apartment(pending_payment.apartment)}", apartment_path(pending_payment.apartment)
+          %td
+            = link_to 'Ver', pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
+            - if current_user.admin?
+              = link_to 'Editar', edit_pending_payment_path(pending_payment), class: 'btn btn-xs btn-primary'
+              = link_to 'Borrar', pending_payment, method: :delete, data: { confirm: '¿Quieres borrar el pago pendiente?'}, class: 'btn btn-xs btn-danger'

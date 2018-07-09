@@ -1,6 +1,21 @@
 ---
 es:
   activerecord:
+    models:
+      apartment: 'Vivienda'
+      apartment_movement: 'Movimiento de vivienda'
+      apartment_owner: 'Propietario de vivienda'
+      apartment_pending_payment: 'Pago pendiente de vivienda'
+      movement: 'Movimiento'
+      movement_child: 'Descendiente de movimiento'
+      pending_payment: 'Pago pendiente'
+      statement: 'Extracto'
+      statement_movement: 'Movimiento de extracto'
+      user: 'Usuario'
+      user_apartment: 'Usuario de vivienda'
+    attributes:
+      apartment:
+        apartment_contribution: 'Contribución de cuota'
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"

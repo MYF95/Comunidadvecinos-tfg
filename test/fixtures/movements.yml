@@ -16,7 +16,7 @@ movement3:
   id: 3
   concept: Ingreso de Ponsan
   date: 2018-06-23
-  amount: 50
+  amount: 30
   description: Ingreso de Ponsan de vivienda 1ºA
 
 movement_div:
@@ -30,12 +30,12 @@ movement_div1:
   id: 5
   concept: Ingreso de Ponsan div
   date: 2018-06-23
-  amount: 50
+  amount: 25
   description: Ingreso de Ponsan de vivienda 1ºA
 
 movement_div2:
   id: 6
   concept: Ingreso de Ponsan div
   date: 2018-06-23
-  amount: 50
+  amount: 25
   description: Ingreso de Ponsan de vivienda 1ºA

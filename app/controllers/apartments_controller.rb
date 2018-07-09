@@ -22,6 +22,7 @@ class ApartmentsController < ApplicationController
   def create
     @apartment = Apartment.new(apartment_params)
     unless @apartment.valid?
+      flash[:danger] = 'Los datos puestos de la vivienda no son válidos'
       render 'new'
       return
     end
@@ -52,8 +53,8 @@ class ApartmentsController < ApplicationController
   end
 
   def update
-    if total_apartment_contribution(@apartment) > 1
-      @apartment.update_attribute(:apartment_contribution, 0)
+    @apartment.apartment_contribution = params[:apartment][:apartment_contribution]
+    if total_apartment_contribution(@apartment) + @apartment.apartment_contribution.to_f > 1
       flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
       redirect_to edit_apartment_path(@apartment)
     else
@@ -101,7 +102,7 @@ class ApartmentsController < ApplicationController
   def remove_user
     @user = User.find(params[:user_id])
     if @apartment.owner == @user
-      flash[:danger] = 'El usuario que intentas quitar es el propietario. Desasígnalo como propietario antes de quitarlo de la vivienda,'
+      flash[:danger] = 'El usuario que intentas quitar es el propietario. Desasígnalo como propietario antes de quitarlo de la vivienda.'
       redirect_to apartment_users_path(@apartment)
       return
     end

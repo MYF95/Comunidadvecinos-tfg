@@ -9,7 +9,7 @@ pending_payment1:
 pending_payment2:
   id: 2
   concept: Cuota de la vivienda 2ºA
-  date: 2018-06-22
+  date: 2018-06-21
   amount: 60
   description: Cuota correspondiente de la vivienda 2ºA
   paid: false

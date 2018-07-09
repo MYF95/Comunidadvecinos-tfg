@@ -5,13 +5,17 @@ module ApartmentsHelper
   end
 
   def total_apartment_contribution(new_apartment)
-    new_apartment.id.nil? ? @apartment_contribution = new_apartment.apartment_contribution : @apartment_contribution = 0
+    @apartment_contribution = 0
+    if new_apartment.id.nil?
+      @apartment_contribution = new_apartment.apartment_contribution
+    end
+    # new_apartment.id.nil? ?  @apartment_contribution = new_apartment.apartment_contribution : @apartment_contribution = 0
     Apartment.all.each do |apartment|
       unless apartment.apartment_contribution.nil?
         @apartment_contribution += apartment.apartment_contribution
       end
     end
-    @apartment_contribution
+    @apartment_contribution.round(2)
   end
 
   def pp_sortable(column, title = nil)

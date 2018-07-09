@@ -18,8 +18,18 @@ admin:
   encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>
   approved: true
 
-not_approved:
+approved:
   id: 3
+  email: approved@test.com
+  first_name: Approved
+  last_name: Approved
+  birthday: 2018-06-2018
+  admin: false
+  encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>
+  approved: true
+
+not_approved:
+  id: 4
   email: not_approved@test.com
   first_name: Not
   last_name: Approved

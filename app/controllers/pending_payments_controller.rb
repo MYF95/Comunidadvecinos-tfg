@@ -170,11 +170,11 @@ class PendingPaymentsController < ApplicationController
     end
 
     def pending_payment_fee_calculator(months, amount, apartment)
-      (amount / Apartment.all.count * apartment.apartment_contribution / months).round(2)
+      (amount * apartment.apartment_contribution / months).round(2)
     end
 
     def check_apartments_contribution
-      Apartment.where(apartment_contribution: 0.0).count < 1 && total_apartment_contribution(Apartment.first).equal?(1.0)
+      Apartment.where(apartment_contribution: 0.0).count < 1 && total_apartment_contribution.equal?(1.0)
     end
 
     def permissions

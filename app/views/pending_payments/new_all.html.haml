@@ -25,11 +25,11 @@
           .form-group
             .row
               = f.label 'Fecha de inicio', class: 'col-xs-12 col-sm-4 control-label'
-              = f.date_field :date, class: 'col-xs-12 col-sm-4'
+              = f.date_field :date, required: true, class: 'col-xs-12 col-sm-4'
           .form-group
             .row
               = f.label 'Cantidad', class: 'col-xs-12 col-sm-4 control-label'
-              = f.number_field :amount, min: 0, class: 'col-xs-12 col-sm-4'
+              = f.number_field :amount, min: 0, step: :any, class: 'col-xs-12 col-sm-4'
           .form-group
             .row
               = f.label 'Descripción', class: 'col-xs-12 col-sm-4 control-label'
@@ -37,7 +37,7 @@
           .form-group
             .row
               = f.label 'Meses', class: 'col-xs-12 col-sm-4 control-label'
-              = f.number_field :months, min: 1, class: 'col-xs-12 col-sm-4'
+              = f.number_field :months, min: 1, value: 1, class: 'col-xs-12 col-sm-4'
           .form-group
             .row
               = f.submit 'Crear pago pendiente', class: 'col-xs-12 col-sm-4 col-sm-offset-4'

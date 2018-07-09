@@ -4,16 +4,18 @@ module ApartmentsHelper
     "#{apartment.floor}º#{apartment.letter.capitalize}"
   end
 
-  def total_apartment_contribution(new_apartment)
+  def apartment_contribution(new_apartment)
     @apartment_contribution = 0
-    if new_apartment.id.nil?
-      @apartment_contribution = new_apartment.apartment_contribution
+    Apartment.where.not(id: new_apartment.id).each do |apartment|
+      @apartment_contribution += apartment.apartment_contribution
     end
-    # new_apartment.id.nil? ?  @apartment_contribution = new_apartment.apartment_contribution : @apartment_contribution = 0
+    @apartment_contribution.round(2)
+  end
+
+  def total_apartment_contribution
+    @apartment_contribution = 0
     Apartment.all.each do |apartment|
-      unless apartment.apartment_contribution.nil?
-        @apartment_contribution += apartment.apartment_contribution
-      end
+      @apartment_contribution += apartment.apartment_contribution
     end
     @apartment_contribution.round(2)
   end

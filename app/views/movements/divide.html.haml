@@ -22,7 +22,7 @@
           .form-group
             .row
               = f.label 'Cantidad', class: 'col-xs-12 col-sm-4 control-label'
-              = f.number_field :amount, min: 0, class: 'col-xs-12 col-sm-4'
+              = f.number_field :amount, min: 0, step: :any, class: 'col-xs-12 col-sm-4'
           .form-group
             .row
               = f.label 'Descripción de administrador', class: 'col-xs-12 col-sm-4 control-label'

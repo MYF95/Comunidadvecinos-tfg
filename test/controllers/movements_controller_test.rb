@@ -47,24 +47,29 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'h1', 'Datos del movimiento bancario'
   end
 
-  # test 'Movements - new as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Movements - new as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get new_movement_path
+    assert_permissions
+  end
 
   test 'Movements - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_movement_path(@movement)
-    post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-    assert_equal flash[:danger], 'Esta operación no está permitida actualmente'
+    assert_permissions
   end
 
-  # test 'Movements - divide as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
-  # test 'Movements - apartments as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Movements - divide as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get divide_path(@movement)
+    assert_permissions
+  end
+
+  test 'Movements - apartments as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get apartmentlist_path(@movement)
+    assert_permissions
+  end
 
   test 'Movements - should get new as admin' do
     log_in_as(@admin)
@@ -72,17 +77,23 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test 'Movements - should get edit as admin' do
-  #
-  # end
-  #
-  # test 'Movements - should get divide as admin' do
-  #
-  # end
-  #
-  # test 'Movements - should get apartments as admin' do
-  #
-  # end
+  test 'Movements - should get edit as admin' do
+    log_in_as(@admin)
+    get edit_movement_path(@movement)
+    assert_response :success
+  end
+
+  test 'Movements - should get divide as admin' do
+    log_in_as(@admin)
+    get divide_path(@movement)
+    assert_response :success
+  end
+
+  test 'Movements - should get apartments as admin' do
+    log_in_as(@admin)
+    get apartmentlist_path(@movement)
+    assert_response :success
+  end
 
   ###########
   # ACTIONS #

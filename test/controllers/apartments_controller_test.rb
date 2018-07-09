@@ -6,6 +6,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     @admin = users(:admin)
     @user = users(:user)
     @apartment = apartments(:apartment1)
+    @pending_payment = pending_payments(:pending_payment1)
   end
 
   #################
@@ -35,9 +36,23 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test 'Apartments - should show user apartments only if not admin' do
-  #
-  # end
+  test 'Apartments - should show user apartments only if user is not admin' do
+    log_in_as(@user)
+    apartments = @user.apartments.count
+    get apartments_path
+    assert_select "table" do |elements|
+      assert_select elements, 'tr', apartments + 1
+    end
+  end
+
+  test 'Apartments - show as admin should get all apartments' do
+    log_in_as(@admin)
+    apartments = Apartment.all.count
+    get apartments_path
+    assert_select "table" do |elements|
+      assert_select elements, 'tr', apartments + 1
+    end
+  end
 
   test 'Apartments - should get show' do
     log_in_as(@user)
@@ -46,25 +61,39 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'h1', "Datos de la vivienda #{full_name_apartment @apartment}"
   end
 
-  # test 'Apartments - should get users' do
-  #
-  # end
-  #
-  # test 'Apartments - should get movements' do
-  #
-  # end
-  #
-  # test 'Apartments - should get pending_payments' do
-  #
-  # end
-  #
-  # test 'Apartments - should get history' do
-  #
-  # end
-  #
-  # test 'Apartments - new as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Apartments - should get users' do
+    log_in_as(@user)
+    get apartment_users_path(@apartment)
+    assert_template 'apartments/users'
+    assert_select 'h1', "Usuarios de la vivienda #{full_name_apartment @apartment}"
+  end
+
+  test 'Apartments - should get movements' do
+    log_in_as(@user)
+    get apartment_movements_path(@apartment)
+    assert_template 'apartments/movements'
+    assert_select 'h1', "Movimientos asociados a la vivienda #{full_name_apartment @apartment}"
+  end
+
+  test 'Apartments - should get pending_payments' do
+    log_in_as(@user)
+    get apartment_pending_payments_path(@apartment)
+    assert_template 'apartments/pending_payments'
+    assert_select 'h1', "Pagos pendientes de la vivienda #{full_name_apartment @apartment}"
+  end
+
+  test 'Apartments - should get history' do
+    log_in_as(@user)
+    get apartment_history_path(@apartment)
+    assert_template 'apartments/history'
+    assert_select 'h1', "Contabilidad de pagos de la vivienda #{full_name_apartment @apartment}"
+  end
+
+  test 'Apartments - new as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get new_apartment_path(@apartment)
+    assert_permissions
+  end
 
   test 'Apartments - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
@@ -73,9 +102,11 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_permissions
   end
 
-  # test 'Apartments - pending_payments_users as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Apartments - pending_payments_users as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get pending_payment_users_path(@apartment, @pending_payment)
+    assert_permissions
+  end
 
   test 'Apartments - should get new as admin' do
     log_in_as(@admin)
@@ -83,9 +114,17 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test 'Apartments - should get pending_payment_users as admin' do
-  #
-  # end
+  test 'Apartments - should get edit as admin' do
+    log_in_as(@admin)
+    get edit_apartment_path(@apartment)
+    assert_response :success
+  end
+
+  test 'Apartments - should get pending_payment_users as admin' do
+    log_in_as(@admin)
+    get edit_apartment_path(@apartment, @pending_payment)
+    assert_response :success
+  end
 
   ###########
   # ACTIONS #

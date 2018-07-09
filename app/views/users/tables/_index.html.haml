@@ -5,7 +5,7 @@
       %th= sortable 'last_name', 'Apellidos'
       %th= sortable 'email', 'Email'
       %th= sortable 'phone_number', 'Teléfono'
-      %th Viviendas asociada
+      %th Viviendas asociadas
       %th Opciones
       -if @users.where(approved: false).any?
         %th= sortable 'approved', 'Pendiente de aprobación'

@@ -113,6 +113,10 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
   # test 'Statements - import statement should not work if attached file is not csv' do
   #
   # end
+  #
+  # test 'Statements - import statement CSV should at least have the required columns in Movement model' do
+  #
+  # end
 
   # test 'create statement should work properly as admin user' do
   #   log_in_as(@admin)

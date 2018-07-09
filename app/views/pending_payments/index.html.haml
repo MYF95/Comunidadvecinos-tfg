@@ -13,7 +13,7 @@
       - if current_user.admin?
         %p= link_to 'Crear pago pendiente', pending_payment_new_all_path, class: 'btn btn-primary'
   - if @pending_payments.nil? || @pending_payments.where(paid: false).empty?
-    %p No hay pagos pendientes de ninguna vivienda ahora mismo.
+    %p No hay pagos pendientes de ninguna vivienda ahora mismo
   - else
     .row
       .col-xs-12

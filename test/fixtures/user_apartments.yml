@@ -2,8 +2,3 @@ user_apartment1:
   id: 1
   user_id: 1
   apartment_id: 1
-
-user_apartment2:
-  id: 2
-  user_id: 2
-  apartment_id: 1

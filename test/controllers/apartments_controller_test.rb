@@ -256,10 +256,10 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   test 'Apartments Controller 027 - add_user should work if user is not in the apartment as admin' do
     log_in_as(@admin)
     assert_difference 'UserApartment.count', 1 do
-      get add_user_path(@other_apartment, @user)
+      get add_user_path(@other_apartment, @admin)
     end
-    assert_equal @other_apartment.users.last, @user
-    assert_equal flash[:info], "#{@user.first_name} añadido a la vivienda"
+    assert_equal @other_apartment.users.last, @admin
+    assert_equal flash[:info], "#{@admin.first_name} añadido a la vivienda"
   end
 
   test 'Apartments Controller 028 - add_user should not work if user is already associated with apartment' do
@@ -267,7 +267,7 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'UserApartment.count' do
       get add_user_path(@apartment, @user)
     end
-    assert_equal flash[:danger], 'El usuario ya está en la vivienda'
+    assert_equal flash[:danger], 'El usuario ya está en una vivienda, desasigna al usuario de su vivienda actual si se quiere cambiar la vivienda'
   end
 
   test 'Apartments Controller 029 - remove_user as non-admin user should redirect to homepage with message' do
@@ -281,9 +281,9 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
   test 'Apartments Controller 030 - remove_user should work for non-owner user in apartment as admin' do
     log_in_as(@admin)
     assert_difference 'UserApartment.count', -1 do
-      delete remove_user_path(@apartment, @admin)
+      delete remove_user_path(@apartment, @user)
     end
-    assert_equal flash[:info], "#{@admin.first_name} ha sido quitado de la vivienda"
+    assert_equal flash[:info], "#{@user.first_name} ha sido quitado de la vivienda"
   end
 
   test 'Apartments Controller 031 - remove_user should work if chosen user is owner of apartment' do
@@ -317,18 +317,18 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
       get add_owner_path(@other_apartment, @user)
     end
     assert_equal @other_apartment.owner, @user
-    assert_equal flash[:info], "#{@user.first_name} añadido a la vivienda"
+    assert_equal flash[:info], "Se ha añadido a #{full_name(@user)} como propietario de la vivienda #{full_name_apartment(@other_apartment)}"
   end
 
   test 'Apartments Controller 035 - add_owner should work if chosen user was already in the apartment as admin' do
     log_in_as(@admin)
-    get add_user_path(@other_apartment, @user)
-    assert_includes @other_apartment.users, @user
+    get add_user_path(@other_apartment, @admin)
+    assert_includes @other_apartment.users, @admin
     assert_difference 'ApartmentOwner.count', 1 do
-      get add_owner_path(@other_apartment, @user)
+      get add_owner_path(@other_apartment, @admin)
     end
-    assert_equal @other_apartment.owner, @user
-    assert_equal flash[:info], 'El usuario ya estaba en la vivienda y se ha añadido como propietario.'
+    assert_equal @other_apartment.owner, @admin
+    assert_equal flash[:info], "Se ha añadido a #{full_name(@admin)} como propietario de la vivienda #{full_name_apartment(@other_apartment)}"
   end
 
   test 'Apartments Controller 036 - add_owner should not work if there is already an owner in the apartment' do
@@ -403,5 +403,13 @@ class ApartmentsControllerTest < ActionDispatch::IntegrationTest
     balance_checker
     assert_equal flash[:danger], "La vivienda #{full_name_apartment(@apartment)} no tiene suficiente saldo para pagar el pago pendiente"
     assert_equal @apartment.balance, balance
+  end
+
+  test 'Apartments Controller 043 - add_user should not work if user is already in another apartment' do
+    log_in_as(@admin)
+    assert_no_difference 'UserApartment.count' do
+      get add_user_path(@other_apartment, @user)
+    end
+    assert_equal flash[:danger], 'El usuario ya está en una vivienda, desasigna al usuario de su vivienda actual si se quiere cambiar la vivienda'
   end
 end

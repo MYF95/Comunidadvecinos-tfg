@@ -26,6 +26,7 @@ class UsersController < ApplicationController
 
   def show
     @apartments = @user.apartments.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+    @owned_apartments = @user.owned_apartments.order(sort_apartment_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
   end
 
   def destroy

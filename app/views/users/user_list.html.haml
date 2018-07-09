@@ -17,14 +17,14 @@
         %th= sortable 'phone_number', 'Teléfono'
         %th Opciones
       -@users.each do |user|
-        -unless @apartment.owner == user
-          %tr
-            %td= link_to "#{full_name(user)}", user_profile_path(user)
-            %td= "#{user.email}"
-            %td= "#{user.phone_number}"
-            %td
-              -unless @apartment.users.exists?(user.id)
-                = link_to 'Añadir usuario', add_user_path(@apartment, user), class: 'btn btn-xs btn-success'
+        %tr
+          %td= link_to "#{full_name(user)}", user_profile_path(user)
+          %td= "#{user.email}"
+          %td= "#{user.phone_number}"
+          %td
+            - unless @apartment.users.exists?(user.id)
+              = link_to 'Añadir usuario', add_user_path(@apartment, user), class: 'btn btn-xs btn-success'
+            - unless @apartment.owner == user
               = link_to 'Añadir propietario', add_owner_path(@apartment, user), data: {confirm: "¿Quieres añadir a #{full_name(user)} como propietario de la vivienda?"}, class: 'btn btn-xs btn-success'
   .row
     .col-xs-12

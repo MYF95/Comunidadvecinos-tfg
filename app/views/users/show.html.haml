@@ -30,16 +30,32 @@
   .row
     .col-xs-12
       .page-header
-        %h2 Viviendas asociadas
+        %h2 Vivienda en la que reside el usuario
   - if @apartments.empty?
-    %p No hay ninguna vivienda asociada a este usuario
+    %p Este usuario no está residiendo en ninguna vivienda
   - else
     .row
       .col-xs-12
         .pagination
           = will_paginate @apartments, class: 'flickr_pagination'
-    = render 'users/tables/apartments'
+    = render 'users/tables/apartments', apartments: @apartments
     .row
       .col-xs-12
         .pagination
           = will_paginate @apartments, class: 'flickr_pagination'
+  .row
+    .col-xs-12
+      .page-header
+        %h2 Viviendas pertenecientes al usuario
+  - if @owned_apartments.empty?
+    %p Este usuario no tiene ninguna vivienda como propiedad
+  - else
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @owned_apartments, class: 'flickr_pagination'
+    = render 'users/tables/apartments', apartments: @owned_apartments
+    .row
+      .col-xs-12
+        .pagination
+          = will_paginate @owned_apartments, class: 'flickr_pagination'

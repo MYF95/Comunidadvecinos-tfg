@@ -66,7 +66,7 @@ class ApartmentTest < ActiveSupport::TestCase
   end
 
   test 'Apartment Model 010 - destroy apartment should destroy association with users' do
-    assert_difference 'UserApartment.count', -2 do
+    assert_difference 'UserApartment.count', -1 do
       assert_no_difference 'User.count' do
         @apartment.destroy
       end

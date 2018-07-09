@@ -90,11 +90,11 @@ class ApartmentsController < ApplicationController
 
   def add_user
     @user = User.find(params[:user_id])
-    @user_apartment = UserApartment.find_by(user: @user, apartment: @apartment)
-    if @user_apartment.nil?
+    current_apartment = UserApartment.find_by(user: @user)
+    if current_apartment.nil?
       create_user_apartment
     else
-      flash[:danger] = 'El usuario ya está en la vivienda'
+      flash[:danger] = 'El usuario ya está en una vivienda, desasigna al usuario de su vivienda actual si se quiere cambiar la vivienda'
       redirect_to @apartment
     end
   end
@@ -120,17 +120,11 @@ class ApartmentsController < ApplicationController
     if @apartment.owner.nil?
       @apartment_owner = ApartmentOwner.new(apartment_id: @apartment.id, user_id: @user.id)
       if @apartment_owner.save
-        @user_apartment = UserApartment.find_by(user: @user, apartment: @apartment)
-        if @user_apartment.nil?
-          create_user_apartment
-        else
-          flash[:info] = 'El usuario ya estaba en la vivienda y se ha añadido como propietario.'
-          redirect_to @apartment
-        end
+        flash[:info] = "Se ha añadido a #{full_name(@user)} como propietario de la vivienda #{full_name_apartment(@apartment)}"
       else
         flash[:danger] = 'Hubo un problema asignando al usuario como propietario de la vivienda'
-        redirect_to apartment_users_path(@apartment)
       end
+      redirect_to apartment_users_path(@apartment)
     else
       flash[:danger] = 'La vivienda ya tiene un propietario. Si quieres cambiar de propietario a la vivienda, desasocia el propietario primero para asegurar que quieres realizar la acción.'
       redirect_to apartment_users_path(@apartment)

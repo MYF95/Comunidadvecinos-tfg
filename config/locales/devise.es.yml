@@ -89,6 +89,10 @@ es:
       updated: Se ha cambiado tu contraseña. Ya iniciaste sesión.
       updated_not_active: Tu contraseña fue cambiada.
     registrations:
+      user:
+        signed_up_but_not_approved: 'Tu cuenta se ha enviado para la aprobación de un administrador.'
+    failure:
+      not_approved: 'Tu cuenta no ha sido verificada por un administrador todavía.'
       destroyed: "¡Adiós! Tu cuenta ha sido cancelada correctamente. Esperamos verte pronto."
       edit:
         are_you_sure: "¿Está usted seguro?"

@@ -38,7 +38,16 @@ class UsersController < ApplicationController
 
   def user_list
     @apartment = Apartment.find(params[:id])
-    @users = User.order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+    @users = User.where(approved: true).order(sort_column + " " + sort_direction).paginate(per_page: 7, page: params[:page])
+  end
+
+  def approve
+    if @user.update_attribute(:approved, true)
+      flash[:info] = "#{full_name(@user)} ha sido verificado"
+    else
+      flash[:danger] = 'Ha ocurrido un error en el sistema al intentar verificar la cuenta.'
+    end
+    redirect_to users_path
   end
 
   private

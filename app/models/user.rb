@@ -4,6 +4,18 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  def active_for_authentication?
+    super && approved?
+  end
+
+  def inactive_message
+    if !approved?
+      :not_approved
+    else
+      super
+    end
+  end
+
   before_destroy :destroy_user_apartments
   before_destroy :destroy_owned_apartments
 

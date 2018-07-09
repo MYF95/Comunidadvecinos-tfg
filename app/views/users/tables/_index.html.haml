@@ -6,6 +6,8 @@
       %th= sortable 'email', 'Email'
       %th= sortable 'phone_number', 'Teléfono'
       %th Viviendas asociada
+      -if @users.where(approved: false).any?
+        %th= sortable 'approved', 'Pendiente de aprobación'
       %th Opciones
     -@users.each do |user|
       -unless current_user == user
@@ -17,6 +19,9 @@
           %td
             - user.apartments.each do |apartment|
               = link_to "#{full_name_apartment(apartment)}", apartment_path(apartment)
+          -unless user.approved
+            %td
+              = link_to 'Verificar usuario', approve_user_path(user), data: { confirm: "¿Verificar la cuenta del usuario #{full_name(user)}?"}
           %td
             = link_to 'Ver', user_profile_path(user), class: 'btn btn-xs btn-primary'
             - if current_user.admin?

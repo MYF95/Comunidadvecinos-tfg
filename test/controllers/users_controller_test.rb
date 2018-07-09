@@ -55,11 +55,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # ACTIONS #
   ###########
 
-  # All controller actions: index, new, create, show, destroy, user_list
+  # All controller actions: index, new, create, show, destroy, user_list, approve
   #
   # permissions: index, show
   #
-  # actions: create, destroy
+  # actions: create, destroy, approve
 
   # test 'Users - create user as non-admin user should redirect to homepage with message' do
   #
@@ -78,6 +78,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # end
   #
   # test 'Users - destroy user should work as admin' do
+  #
+  # end
+  #
+  # test 'Users - approve as non-admin user should redirect to homepage with message' do
+  #
+  # end
+  #
+  # test 'Users - approve should work as admin' do
   #
   # end
 end

@@ -6,6 +6,7 @@ user:
   birthday: 2018-06-27
   admin: false
   encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>
+  approved: true
 
 admin:
   id: 2
@@ -15,3 +16,14 @@ admin:
   birthday: 2018-06-27
   admin: true
   encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>
+  approved: true
+
+not_approved:
+  id: 3
+  email: not_approved@test.com
+  first_name: Not
+  last_name: Approved
+  birthday: 2018-06-2018
+  admin: false
+  encrypted_password: <%= User.new.send(:password_digest, 'chicken') %>
+  approved: false

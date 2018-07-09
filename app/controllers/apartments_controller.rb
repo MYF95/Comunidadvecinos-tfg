@@ -26,7 +26,7 @@ class ApartmentsController < ApplicationController
       render 'new'
       return
     end
-    if apartment_contribution(@apartment) + @apartment.apartment_contribution.to_f > 1
+    if total_apartment_contribution + @apartment.apartment_contribution.to_f > 1
       @apartment.update_attribute(:apartment_contribution, 0)
       if @apartment.save
         flash[:info] ="La vivienda #{full_name_apartment(@apartment)} ha sido creada, pero la contribución de la cuota supera el máximo de la comunidad. Por favor, actualiza el valor de la contribución."
@@ -54,7 +54,7 @@ class ApartmentsController < ApplicationController
 
   def update
     @apartment.apartment_contribution = params[:apartment][:apartment_contribution]
-    if apartment_contribution(@apartment) + @apartment.apartment_contribution.to_f > 1
+    if total_apartment_contribution + @apartment.apartment_contribution.to_f > 1
       flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
       redirect_to edit_apartment_path(@apartment)
     else
@@ -101,11 +101,6 @@ class ApartmentsController < ApplicationController
 
   def remove_user
     @user = User.find(params[:user_id])
-    if @apartment.owner == @user
-      flash[:danger] = 'El usuario que intentas quitar es el propietario. Desasígnalo como propietario antes de quitarlo de la vivienda.'
-      redirect_to apartment_users_path(@apartment)
-      return
-    end
     @userapartment = UserApartment.find_by(user: @user, apartment: @apartment)
     if @userapartment.blank?
       flash[:danger] = "#{@user.first_name} no está en la vivienda"

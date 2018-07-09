@@ -18,3 +18,24 @@ movement3:
   date: 2018-06-23
   amount: 50
   description: Ingreso de Ponsan de vivienda 1ºA
+
+movement_div:
+  id: 4
+  concept: Ingreso de Ponsan padre
+  date: 2018-06-23
+  amount: 50
+  description: Ingreso de Ponsan de vivienda 1ºA
+
+movement_div1:
+  id: 5
+  concept: Ingreso de Ponsan div
+  date: 2018-06-23
+  amount: 50
+  description: Ingreso de Ponsan de vivienda 1ºA
+
+movement_div2:
+  id: 6
+  concept: Ingreso de Ponsan div
+  date: 2018-06-23
+  amount: 50
+  description: Ingreso de Ponsan de vivienda 1ºA

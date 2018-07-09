@@ -1,1 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+movement_children1:
+  id: 1
+  parent_id: 4
+  child_id: 5
+
+movement_children2:
+  id: 2
+  parent_id: 4
+  child_id: 6

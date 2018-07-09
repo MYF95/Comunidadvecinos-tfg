@@ -31,18 +31,10 @@
     .col-xs-12
       .page-header
         %h2 Vivienda en la que reside el usuario
-  - if @apartments.empty?
+  - if @user.apartments.empty?
     %p Este usuario no está residiendo en ninguna vivienda
   - else
-    .row
-      .col-xs-12
-        .pagination
-          = will_paginate @apartments, class: 'flickr_pagination'
-    = render 'users/tables/apartments', apartments: @apartments
-    .row
-      .col-xs-12
-        .pagination
-          = will_paginate @apartments, class: 'flickr_pagination'
+    = render 'users/tables/apartments', apartments: @user.apartments
   .row
     .col-xs-12
       .page-header

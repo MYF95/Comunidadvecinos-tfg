@@ -10,19 +10,16 @@
     .col-xs-12
       - if current_user.admin?
         %p= link_to 'Crear usuario', new_user_path, class: 'btn btn-primary'
-  - if @users.where.not(id: current_user.id).empty?
-    %p No hay ningún otro usuario en la aplicación
-  - else
-    .row
-      .col-xs-12
-        .pagination
-          = will_paginate @users, class: 'flickr_pagination'
-    = render 'users/tables/index'
-    .row
-      .col-xs-12
-        .pagination
-          = will_paginate @users, class: 'flickr_pagination'
-    .row
-      .col-xs-12
-        -if current_user.admin?
-          %p= link_to 'Crear usuario', new_user_path, class: 'btn btn-primary'
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @users, class: 'flickr_pagination'
+  = render 'users/tables/index'
+  .row
+    .col-xs-12
+      .pagination
+        = will_paginate @users, class: 'flickr_pagination'
+  .row
+    .col-xs-12
+      -if current_user.admin?
+        %p= link_to 'Crear usuario', new_user_path, class: 'btn btn-primary'

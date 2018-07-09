@@ -42,38 +42,44 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get statement_path(@statement)
     assert_template 'statements/show'
-    assert_select 'p', "Nombre"
+    assert_select 'h1', "#{@statement.name}"
   end
 
-  # test 'Statements - new as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Statements - new as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get new_statement_path
+    assert_permissions
+  end
 
   test 'Statements - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_statement_path(@statement)
-    assert_template 'statements/edit'
-    post statements_path, params: { statement: { name: @name, date: @date}}
     assert_permissions
   end
 
-  # test 'Statements - bucket as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Statements - bucket as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get bucket_path
+    assert_permissions
+  end
 
   test 'Statements - should get new as admin' do
-    log_in_as(@user)
+    log_in_as(@admin)
     get new_statement_path
     assert_response :success
   end
 
-  # test 'Statements - should get edit as admin' do
-  #
-  # end
-  #
-  # test 'Statements - should get bucket as admin' do
-  #
-  # end
+  test 'Statements - should get edit as admin' do
+    log_in_as(@admin)
+    get edit_statement_path(@statement)
+    assert_response :success
+  end
+
+  test 'Statements - should get bucket as admin' do
+    log_in_as(@admin)
+    get bucket_path
+    assert_response :success
+  end
 
   ###########
   # ACTIONS #
@@ -101,6 +107,10 @@ class StatementsControllerTest < ActionDispatch::IntegrationTest
   # end
   #
   # test 'Statements - import statement without attachment should not work' do
+  #
+  # end
+  #
+  # test 'Statements - import statement should not work if attached file is not csv' do
   #
   # end
 

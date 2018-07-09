@@ -22,7 +22,6 @@ class StatementsController < ApplicationController
         return unless check_csv.nil?
         flash[:info] = "¡Nuevo extracto #{@statement.name} creado!"
         return if import_csv.nil?
-        redirect_to @statement
       else
         flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
         render 'new'
@@ -112,6 +111,7 @@ class StatementsController < ApplicationController
           end
         end
       end
+      redirect_to @statement
     end
 
     def check_csv
@@ -127,7 +127,7 @@ class StatementsController < ApplicationController
       if row['Fecha Movimiento'].nil? && row['Concepto'].nil? && row['Importe'].nil?
         @statement.destroy
         flash[:danger] = 'El CSV importado no tiene las columnas mínimas de "Fecha Movimiento", "Concepto" e "Importe" para ser procesado.'
-        redirect_to new_statement_path
+        # redirect_to new_statement_path
         false
       end
     end

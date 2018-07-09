@@ -43,27 +43,32 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get pending_payment_path(@pending_payment)
     assert_template 'pending_payments/show'
-    assert_select 'p', "Concepto"
+    assert_select 'h1', 'Datos del pago pendiente'
   end
 
-  # test 'Pending-Payments - new as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Pending-Payments - new as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get new_pending_payment_path
+    assert_permissions
+  end
 
   test 'Pending Payments - edit as non-admin user should redirect to homepage with message' do
     log_in_as(@user)
     get edit_pending_payment_path(@pending_payment)
-    post pending_payments_path, params: { pending_payment: { concept: @concept, date: @date, amount: '50', description: @description}}
     assert_permissions
   end
 
-  # test 'Pending Payments - apartments as non-admin user should redirect to homepage with message' do
-  #
-  # end
-  #
-  # test 'Pending Payments - new_all as non-admin user should redirect to homepage with message' do
-  #
-  # end
+  test 'Pending Payments - apartments as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get pending_payment_apartment_list_path(@pending_payment)
+    assert_permissions
+  end
+
+  test 'Pending Payments - new_all as non-admin user should redirect to homepage with message' do
+    log_in_as(@user)
+    get pending_payment_new_all_path
+    assert_permissions
+  end
 
   test 'Pending Payments - should get new as admin' do
     log_in_as(@admin)
@@ -71,17 +76,23 @@ class PendingPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test 'Pending Payments - should get edit as admin' do
-  #
-  # end
-  #
-  # test 'Pending Payments - should get new_all as admin' do
-  #
-  # end
-  #
-  # test 'Pending Payments - should get apartments as admin' do
-  #
-  # end
+  test 'Pending Payments - should get edit as admin' do
+    log_in_as(@admin)
+    get edit_pending_payment_path(@pending_payment)
+    assert_response :success
+  end
+
+  test 'Pending Payments - should get new_all as admin' do
+    log_in_as(@admin)
+    get pending_payment_new_all_path
+    assert_response :success
+  end
+
+  test 'Pending Payments - should get apartments as admin' do
+    log_in_as(@admin)
+    get pending_payment_apartment_list_path(@pending_payment)
+    assert_response :success
+  end
 
   ###########
   # ACTIONS #

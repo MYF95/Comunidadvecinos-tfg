@@ -88,11 +88,13 @@ es:
       send_paranoid_instructions: Si tu correo existe en nuestra base de datos, recibirás un correo con instrucciones sobre cómo resetear tu contraseña en tu bandeja de entrada.
       updated: Se ha cambiado tu contraseña. Ya iniciaste sesión.
       updated_not_active: Tu contraseña fue cambiada.
+    failure:
+      not_approved: 'Tu cuenta no ha sido verificada por un administrador todavía.'
+      user:
+        not_found_in_database: 'El email que intenta poner no está vinculado con ninguna cuenta.'
     registrations:
       user:
         signed_up_but_not_approved: 'Tu cuenta se ha enviado para la aprobación de un administrador.'
-    failure:
-      not_approved: 'Tu cuenta no ha sido verificada por un administrador todavía.'
       destroyed: "¡Adiós! Tu cuenta ha sido cancelada correctamente. Esperamos verte pronto."
       edit:
         are_you_sure: "¿Está usted seguro?"

@@ -1,7 +1,7 @@
 class MovementsController < ApplicationController
   helper_method :sort_column, :sort_direction, :sort_apartment_column
   before_action :logged_in_user
-  before_action :movement_getter, except: [:index, :new, :create] #:destroy_statement]
+  before_action :movement_getter, except: [:index, :new, :create]
   before_action :permissions, except: [:index, :show, :children, :create]
   before_action :check_amount, only: [:associate_apartment]
 
@@ -14,16 +14,8 @@ class MovementsController < ApplicationController
   end
 
   def create
-    flash[:danger] = 'Esta operación no está permitida actualmente'
+    flash[:danger] = 'Esta operación no está permitida'
     redirect_to root_path
-    # @movement = Movement.new(movement_params)
-    # if @movement.save
-    #   flash[:info] = "¡Nuevo movimiento #{@movement.concept} creado!"
-    #   redirect_to @movement
-    # else
-    #   flash[:danger] = 'Ha ocurrido un error en el sistema, por favor, vuelva a intentarlo.'
-    #   render 'new'
-    # end
   end
 
   def show

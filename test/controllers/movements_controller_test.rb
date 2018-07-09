@@ -163,7 +163,6 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
   #
   # end
   #
-  # #TODO associate_apartment might be too big, there are many things that have to happen to work
   # test 'Movements Controller 020 - associate_apartment should work correctly as admin' do
   #
   # end

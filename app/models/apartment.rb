@@ -1,6 +1,4 @@
 class Apartment < ApplicationRecord
-  #TODO en caso de que la planta sea 0, que se ponga como BajoºA
-
   before_destroy :destroy_apartment_movements
   before_destroy :destroy_apartment_pending_payments
   before_destroy :destroy_apartment_owners

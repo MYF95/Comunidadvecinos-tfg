@@ -1,7 +1,7 @@
 module ApartmentsHelper
 
   def full_name_apartment(apartment)
-    "#{apartment.floor}º#{apartment.letter.capitalize}"
+    apartment.floor.zero? ? "Bajoº#{apartment.letter.capitalize}" : "#{apartment.floor}º#{apartment.letter.capitalize}"
   end
 
   def apartment_contribution(new_apartment)

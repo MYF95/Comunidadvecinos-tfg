@@ -1,5 +1,4 @@
 class Movement < ApplicationRecord
-  #TODO seed with correct params movement
   before_destroy :destroy_apartment_movements
   before_destroy :destroy_movement_children
   before_destroy :destroy_statement_movements

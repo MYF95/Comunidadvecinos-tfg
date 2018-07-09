@@ -42,23 +42,17 @@ class MovementsController < ApplicationController
   end
 
   def destroy
-    destroy_movement
+    if @movement.parent.nil?
+      destroy_movement
+    else
+      @parent = Movement.find(@movement.parent.parent_id)
+      @parent.children.each do |child|
+        Movement.find(child.child_id).destroy
+      end
+      flash[:info] = 'Se han eliminado todas los movimientos del movimiento dividido'
+      redirect_to movements_path
+    end
   end
-
-  # def destroy_statement
-  #   @statement = Statement.find(params[:id])
-  #   @movement = Movement.find(params[:movement_id])
-  #   if @movement.statements.count > 1
-  #     if StatementMovement.find_by(statement: @statement, movement: @movement).destroy
-  #       flash[:info] = "Movimiento borrado del extracto #{@statement.name}"
-  #     else
-  #       flash[:danger] = 'Ha ocurrido un error intentando eliminar el movimiento del extracto'
-  #     end
-  #     redirect_to @statement
-  #   else
-  #     destroy_movement
-  #   end
-  # end
 
   def divide
   end
@@ -177,6 +171,7 @@ class MovementsController < ApplicationController
         flash[:info] = 'Movimiento borrado'
         redirect_to movements_path
       else
+        flash[:danger] = 'Ha ocurrido un error al intentar eliminar el movimiento'
         redirect_to root_url
       end
     end

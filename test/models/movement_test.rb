@@ -8,26 +8,26 @@ class MovementTest < ActiveSupport::TestCase
     @movement_child = movements(:movement_div1)
   end
 
-  test 'Movements - movement should be valid' do
+  test 'Movements Model 001 - movement should be valid' do
     assert @movement.valid?
   end
 
-  test 'Movements - concept should be present' do
-    @movement.concept = "";
+  test 'Movements Model 002 - concept should be present' do
+    @movement.concept = ""
     assert_not @movement.valid?
   end
 
-  test 'Movements - date should be present' do
-    @movement.date = "";
+  test 'Movements Model 003 - date should be present' do
+    @movement.date = ""
     assert_not @movement.valid?
   end
 
-  test 'Movements - amount should be present' do
-    @movement.amount = "";
+  test 'Movements Model 004 - amount should be present' do
+    @movement.amount = ""
     assert_not @movement.valid?
   end
 
-  test 'Movements - destroy movement should destroy association with statements' do
+  test 'Movements Model 005 - destroy movement should destroy association with statements' do
     assert_difference 'StatementMovement.count', -2 do
       assert_no_difference 'Statement.count'  do
         @movement.destroy
@@ -35,7 +35,7 @@ class MovementTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Movements - destroy movement should destroy association with apartment' do
+  test 'Movements Model 006 - destroy movement should destroy association with apartment' do
     assert_difference 'ApartmentMovement.count', -1 do
       assert_no_difference 'Apartment.count'  do
         @movement.destroy
@@ -43,7 +43,7 @@ class MovementTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Movements - destroy movement should destroy associated children' do
+  test 'Movements Model 007 - destroy movement should destroy associated children' do
     assert_difference 'MovementChild.count', -2 do
       assert_difference 'Movement.count', -3  do
         @movement_parent.destroy
@@ -51,7 +51,7 @@ class MovementTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Movements - destroy movement should destroy association with parent' do
+  test 'Movements Model 008 - destroy movement should destroy association with parent' do
     assert_difference 'MovementChild.count', -1 do
       assert_difference 'Movement.count', -1  do
         @movement_child.destroy

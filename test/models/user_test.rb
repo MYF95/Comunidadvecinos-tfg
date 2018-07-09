@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
     @user = users(:user)
   end
 
-  test 'Users - destroy user should destroy association with apartments' do
+  test 'Users Model 001 - destroy user should destroy association with apartments' do
     assert_difference 'UserApartment.count', -1 do
       assert_no_difference 'Apartment.count' do
         @user.destroy
@@ -13,7 +13,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Users - destroy user should destroy owner association with apartments' do
+  test 'Users Model 002 - destroy user should destroy owner association with apartments' do
     assert_difference 'ApartmentOwner.count', -1 do
       assert_no_difference 'Apartment.count' do
         @user.destroy

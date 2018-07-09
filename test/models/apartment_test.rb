@@ -8,21 +8,21 @@ class ApartmentTest < ActiveSupport::TestCase
     @user_apartment = user_apartments(:user_apartment1)
   end
 
-  test 'Apartment - should be valid' do
+  test 'Apartment Model 001 - should be valid' do
     assert @apartment.valid?
   end
 
-  test 'Apartment - floor should be present' do
+  test 'Apartment Model 002 - floor should be present' do
     @apartment.floor = ""
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - letter should be present' do
+  test 'Apartment Model 003 - letter should be present' do
     @apartment.letter = ""
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - letter should be of length 1' do
+  test 'Apartment Model 004 - letter should be of length 1' do
     @apartment.letter = ""
     assert_not @apartment.valid?
     @apartment.letter = "A"
@@ -31,22 +31,22 @@ class ApartmentTest < ActiveSupport::TestCase
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - floor should not be negative' do
+  test 'Apartment Model 005 - floor should not be negative' do
     @apartment.floor = -1
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - fee should be present' do
-    @apartment.fee = "";
+  test 'Apartment Model 006 - fee should be present' do
+    @apartment.fee = ""
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - fee should not be negative' do
+  test 'Apartment Model 007 - fee should not be negative' do
     @apartment.fee = -1
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - apartment_contribution should be between 0 and 1' do
+  test 'Apartment Model 008 - apartment_contribution should be between 0 and 1' do
     @apartment.apartment_contribution = 0
     assert @apartment.valid?
     @apartment.apartment_contribution = 1
@@ -57,7 +57,7 @@ class ApartmentTest < ActiveSupport::TestCase
     assert_not @apartment.valid?
   end
 
-  test 'Apartment - destroy apartment should destroy association with movements' do
+  test 'Apartment Model 009 - destroy apartment should destroy association with movements' do
     assert_difference 'ApartmentMovement.count', -2 do
       assert_no_difference 'Movement.count' do
         @apartment.destroy
@@ -65,7 +65,7 @@ class ApartmentTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Apartment - destroy apartment should destroy association with users' do
+  test 'Apartment Model 010 - destroy apartment should destroy association with users' do
     assert_difference 'UserApartment.count', -2 do
       assert_no_difference 'User.count' do
         @apartment.destroy
@@ -73,7 +73,7 @@ class ApartmentTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Apartment - destroy apartment should destroy association with owner' do
+  test 'Apartment Model 011 - destroy apartment should destroy association with owner' do
     assert_difference 'ApartmentOwner.count', -1 do
       assert_no_difference 'User.count' do
         @apartment.destroy
@@ -81,7 +81,7 @@ class ApartmentTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Apartment - destroy apartment should destroy association with pending payments' do
+  test 'Apartment Model 012 - destroy apartment should destroy association with pending payments' do
     assert_difference 'ApartmentPendingPayment.count', -1 do
       assert_no_difference 'PendingPayment.count' do
         @apartment.destroy

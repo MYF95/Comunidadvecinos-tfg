@@ -9,12 +9,14 @@
   .row
     .col-xs-12
       - if current_user.admin?
-        %p= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary'
+        %p= link_to 'Añadir Propietario/Usuarios', userlist_path(@apartment), class: 'btn btn-primary'
   .row
     .col-xs-12
-      -unless @apartment.owner.nil?
-        .page-subheader
-          %h2 Propietario de la vivienda
+      .page-subheader
+        %h2 Propietario de la vivienda
+      - if @apartment.owner.nil?
+        %p Esta vivienda no tiene propietario
+      - else
         = render 'apartments/tables/owner'
   .row
     .col-xs-12
@@ -37,4 +39,4 @@
   .row
     .col-xs-12
       - if current_user.admin?
-        %p.button= link_to 'Añadir usuarios', userlist_path(@apartment), class: 'btn btn-primary '
+        %p.button= link_to 'Añadir Propietario/Usuarios', userlist_path(@apartment), class: 'btn btn-primary '

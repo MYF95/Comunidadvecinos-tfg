@@ -9,7 +9,7 @@
     .col-xs-12
       .row
         .col-xs-6.text-right
-          %p Dueño
+          %p Propietario
         .col-xs-6.text-left
           - if @apartment.owner.nil?
             %p= 'Sin propietario'
@@ -33,7 +33,7 @@
       .row
         %hr/
         .col-xs-6.text-right
-          %p.button= link_to 'Usuarios de la vivienda', apartment_users_path(@apartment), class: 'btn btn-primary'
+          %p.button= link_to 'Propietarios/Usuarios', apartment_users_path(@apartment), class: 'btn btn-primary'
         .col-xs-6.text-left
           %p.button= link_to 'Contabilidad de pagos', apartment_history_path(@apartment), class: 'btn btn-primary'
   %hr/

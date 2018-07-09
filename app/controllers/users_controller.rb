@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.update_attribute(:approved, true)
     if @user.save
       flash[:info] = "Se ha creado el usuario #{full_name(@user)}"
       redirect_to users_path

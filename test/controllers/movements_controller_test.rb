@@ -111,7 +111,7 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get new_movement_path
     post movements_path, params: { movement: { concept: @concept, date: @date, amount: '50', description: @description}}
-    assert_equal flash[:danger], 'Esta operación no está permitida actualmente'
+    assert_equal flash[:danger], 'Esta operación no está permitida'
   end
 
   test 'Movements Controller 012 - update movement should work properly as admin' do

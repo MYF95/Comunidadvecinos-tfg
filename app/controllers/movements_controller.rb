@@ -46,6 +46,21 @@ class MovementsController < ApplicationController
     end
   end
 
+  def destroy_statement
+    @statement = Statement.find(params[:id])
+    @movement = Movement.find(params[:movement_id])
+    if @movement.statements.count > 1
+      if StatementMovement.find_by(statement: @statement, movement: @movement).destroy
+        flash[:info] = "Movimiento borrado del extracto #{@statement.name}"
+      else
+        flash[:danger] = 'Ha ocurrido un error intentando eliminar el movimiento del extracto'
+      end
+      redirect_to @statement
+    else
+      destroy_movement
+    end
+  end
+
   def divide
   end
 

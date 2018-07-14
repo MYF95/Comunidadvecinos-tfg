@@ -54,7 +54,7 @@ class ApartmentsController < ApplicationController
 
   def update
     @apartment.apartment_contribution = params[:apartment][:apartment_contribution]
-    if total_apartment_contribution + @apartment.apartment_contribution.to_f > 1
+    if apartment_contribution(@apartment) + @apartment.apartment_contribution.to_f > 1
       flash[:danger] = "La contribución que intentas poner en la vivienda #{full_name_apartment(@apartment)} supera el máximo."
       redirect_to edit_apartment_path(@apartment)
     else

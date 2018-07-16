@@ -101,12 +101,7 @@ class MovementsController < ApplicationController
       old_apartment = @apartmentmovement.apartment
       if @apartmentmovement.update_attribute(:apartment, @apartment)
         flash[:info] = "Se ha cambiado la asociación a la vivienda #{full_name_apartment(@apartment)}"
-        while old_apartment.balance - @movement.amount < 0
-          newest_pending_payment = old_apartment.pending_payments.where(paid: true).order('date desc').first
-          break if newest_pending_payment.nil?
-          newest_pending_payment.update_attributes(paid: false, paid_by: nil)
-          flash[:info] = "El cambio de asociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
-        end
+        check_paid_pending_payments(old_apartment)
         old_apartment.update_attribute(:balance, old_apartment.balance - @movement.amount)
         @apartment.update_attribute(:balance, @apartment.balance + @movement.amount)
       else
@@ -121,12 +116,7 @@ class MovementsController < ApplicationController
     @apartmentmovement = ApartmentMovement.find_by(apartment: @movement.apartment, movement: @movement)
     if @apartmentmovement.destroy
       flash[:info] = "Movimiento desasociado de la vivienda #{full_name_apartment(@apartment)}"
-      while @apartment.balance - @movement.amount < 0
-        newest_pending_payment = @apartment.pending_payments.where(paid: true).order('date desc').first
-        break if newest_pending_payment.nil?
-        newest_pending_payment.update_attributes(paid: false, paid_by: nil)
-        flash[:info] = "La desasociación de movimiento ha cancelado el pago(s) más reciente(s) de la vivienda. Se han generado pagos pendientes."
-      end
+      check_paid_pending_payments(@apartment)
       @apartment.update_attribute(:balance, @apartment.balance - @movement.amount)
     else
       flash[:danger] = 'Ha ocurrido un error al desasociar el movimiento de la vivienda'
@@ -174,6 +164,9 @@ class MovementsController < ApplicationController
     end
 
     def destroy_movement
+      unless @movement.apartment.nil?
+        check_paid_pending_payments(@movement.apartment)
+      end
       if @movement.destroy
         flash[:info] = 'Movimiento borrado'
         redirect_to movements_path

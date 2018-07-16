@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApartmentsHelper
+  include MovementsHelper
   include UsersHelper
   protect_from_forgery with: :exception
   before_action :set_locale
